@@ -418,7 +418,6 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
-      margin-top: clamp(60px, 10vh, 110px);
       animation: fadeInSlideRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
@@ -668,12 +667,12 @@
        Editorial Typography: Playfair Display + Plus Jakarta / Inter
        ══════════════════════════════════════════════════════════════════ */
 
-    /* Persistent Slim Chapter Progress Rail */
+    /* Persistent Slim Chapter Progress Rail (Hidden in Hero, Glides in for Chapters) */
     .chapter-nav-rail {
       position: fixed;
       right: 28px;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-50%) translateX(24px);
       z-index: 50;
       display: flex;
       flex-direction: column;
@@ -685,7 +684,17 @@
       border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 9999px;
       box-shadow: 0 15px 35px -10px rgba(23, 75, 56, 0.12);
-      transition: var(--transition-smooth);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .chapter-nav-rail.visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(-50%) translateX(0);
     }
 
     .chapter-indicator-dot {
@@ -2758,7 +2767,6 @@
         max-width: 100%;
         text-align: center;
         align-items: center;
-        margin-top: 0;
       }
 
       .cta-group {
@@ -4158,10 +4166,26 @@
 
     document.addEventListener('DOMContentLoaded', () => {
 
-      // ── 1. CHAPTER PROGRESS RAIL INTERSECTION OBSERVER ──
+      // ── 1. CHAPTER PROGRESS RAIL INTERSECTION OBSERVER & HERO VISIBILITY ──
+      const navRail = document.querySelector('.chapter-nav-rail');
       const dots = document.querySelectorAll('.chapter-indicator-dot');
       const sectionIds = ['hero-wrapper', 'chapter-01', 'chapter-02', 'chapter-03', 'chapter-04', 'chapter-05', 'chapter-06', 'chapter-07', 'chapter-08'];
       const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+      function updateNavRailVisibility() {
+        if (!navRail) return;
+        const heroEl = document.getElementById('hero-wrapper');
+        const heroBottom = heroEl ? heroEl.getBoundingClientRect().bottom : 0;
+        // Show rail once scrolled past the hero section (rest of website)
+        if (heroBottom <= 150) {
+          navRail.classList.add('visible');
+        } else {
+          navRail.classList.remove('visible');
+        }
+      }
+
+      window.addEventListener('scroll', updateNavRailVisibility, { passive: true });
+      updateNavRailVisibility();
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -4170,6 +4194,13 @@
             dots.forEach(dot => {
               dot.classList.toggle('active', dot.dataset.target === currentId);
             });
+            if (navRail) {
+              if (currentId === 'hero-wrapper') {
+                navRail.classList.remove('visible');
+              } else {
+                navRail.classList.add('visible');
+              }
+            }
           }
         });
       }, { root: null, rootMargin: '-20% 0px -40% 0px', threshold: 0.1 });
