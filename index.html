@@ -1690,100 +1690,99 @@
       border: 1px solid rgba(255, 255, 255, 0.9);
       box-shadow: 0 30px 70px -20px rgba(23, 75, 56, 0.12);
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      min-height: 580px;
+      grid-template-columns: 1.35fr 1fr;
+      align-items: stretch;
+      min-height: auto;
     }
 
     #leaflet-map {
       width: 100%;
       height: 100%;
-      min-height: 580px;
+      min-height: 520px;
       z-index: 1;
     }
 
     .map-sidebar {
-      padding: 36px 32px;
+      padding: 24px 22px;
       background: #F7F8F3;
       border-left: 1px solid rgba(23, 75, 56, 0.08);
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      overflow-y: auto;
-      max-height: 600px;
+      gap: 12px;
+      overflow: visible !important;
+      max-height: none !important;
+    }
+
+    .map-sidebar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
     }
 
     .map-sidebar-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 21px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--forest-deep);
+      letter-spacing: -0.2px;
+      margin: 0;
     }
 
-    .map-layer-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .map-pill-btn {
-      padding: 6px 14px;
-      border-radius: 9999px;
-      background: #ffffff;
-      border: 1px solid rgba(23, 75, 56, 0.15);
-      font-size: 12px;
+    .map-sidebar-count {
+      font-size: 11px;
       font-weight: 600;
-      color: var(--forest-green);
-      cursor: pointer;
-      transition: var(--transition-smooth);
-    }
-
-    .map-pill-btn:hover,
-    .map-pill-btn.active {
-      background: var(--forest-green);
-      color: #ffffff;
+      color: var(--primary);
+      background: rgba(16, 185, 129, 0.12);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
     }
 
     .location-cards-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .loc-card-item {
-      padding: 16px 18px;
+      padding: 12px 15px;
       background: #ffffff;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1px solid rgba(23, 75, 56, 0.1);
       cursor: pointer;
       transition: var(--transition-smooth);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 3px;
     }
 
     .loc-card-item:hover,
     .loc-card-item.selected {
       border-color: var(--primary);
-      box-shadow: 0 10px 20px -5px rgba(23, 75, 56, 0.12);
+      box-shadow: 0 8px 18px -4px rgba(23, 75, 56, 0.12);
       transform: translateX(4px);
     }
 
     .loc-name {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--forest-deep);
+      line-height: 1.25;
     }
 
     .loc-type {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--primary);
+      letter-spacing: 0.2px;
     }
 
     .loc-summary {
-      font-size: 12.5px;
+      font-size: 11.5px;
       color: var(--botanical-grey);
-      line-height: 1.45;
+      line-height: 1.42;
+      margin: 2px 0 0;
     }
 
     /* ── CHAPTER 04: THE HOME: GREEN SPACE MAPS (FULL WIDTH GREEN BACKGROUND) ── */
@@ -3636,7 +3635,10 @@
           <div id="leaflet-map" aria-label="Interactive Habitat Map of Kozhikode and Western Ghats"></div>
 
           <aside class="map-sidebar">
-            <h3 class="map-sidebar-title">Western Ghats Habitat Reserves</h3>
+            <div class="map-sidebar-top">
+              <h3 class="map-sidebar-title">Western Ghats Habitat Reserves</h3>
+              <span class="map-sidebar-count">4 Priority Sites</span>
+            </div>
 
             <div class="location-cards-list">
 
