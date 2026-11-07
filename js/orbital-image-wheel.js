@@ -113,17 +113,12 @@ export function initOrbitalImageWheel(container, options = {}) {
         opacity = 1.0;
         darkIntensity = 0.0;
         cardScale = 1.06;
-      } else if (dist < 0.95) {
-        // Immediate neighbor cards (top and bottom): softly dimmed and scaled down to 0.88x
-        const t = (dist - 0.12) / 0.83;
+      } else if (dist < 0.85) {
+        // Immediate neighbor cards (exactly 1 top and 1 bottom)
+        const t = (dist - 0.12) / 0.73;
         opacity = 1.0 - t * 0.32;
         darkIntensity = 0.15 + t * 0.35;
         cardScale = 1.06 - t * 0.18;
-      } else if (dist < 1.35) {
-        const t = (dist - 0.95) / 0.40;
-        opacity = Math.max(0, 0.65 - t * 0.65);
-        darkIntensity = 0.60;
-        cardScale = 0.86;
       } else {
         opacity = 0;
         cardScale = 0.82;
@@ -138,6 +133,7 @@ export function initOrbitalImageWheel(container, options = {}) {
       // 100% GPU transform & opacity
       card.style.transform = `translate3d(${Math.round(x - cardWidth / 2)}px, ${Math.round(y - cardHeight / 2)}px, ${depth}px) rotate(${tilt.toFixed(2)}deg) scale(${cardScale.toFixed(3)})`;
       card.style.opacity = opacity.toFixed(3);
+      card.style.visibility = opacity > 0.01 ? 'visible' : 'hidden';
       if (cardDim) {
         cardDim.style.opacity = darkIntensity.toFixed(2);
       }

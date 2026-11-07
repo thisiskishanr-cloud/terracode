@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Green Tomorrow — Building the Sustainable Future | Kerala Biodiversity</title>
+  <title>Green Tomorrow — Building a Sustainable Future | Western Ghats Biodiversity</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="./css/orbital-image-wheel.css">
   <!-- Accordion Gallery CSS -->
   <link rel="stylesheet" href="./css/accordion-gallery.css">
+  <!-- Spotlight Card CSS -->
+  <link rel="stylesheet" href="./css/spotlight-card.css">
 
   <style>
     :root {
@@ -238,13 +240,13 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       font-size: 21px;
-      box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.45);
+      box-shadow: 0 8px 16px -4px rgba(4, 120, 87, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.6);
     }
 
@@ -711,7 +713,7 @@
       height: 24px;
       border-radius: 12px;
       background: var(--forest-green);
-      box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+      box-shadow: none;
     }
 
     .chapter-tooltip {
@@ -932,9 +934,17 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      padding: 120px 48px;
+      padding: 60px 48px 50px;
       max-width: 1480px;
       margin: 0 auto;
+    }
+
+    #chapter-01.story-chapter {
+      padding-top: 100px;
+    }
+
+    #chapter-08.story-chapter {
+      padding-bottom: 100px;
     }
 
     .chapter-header {
@@ -950,23 +960,26 @@
     .chapter-tag {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 18px;
-      border-radius: 9999px;
-      background: rgba(23, 75, 56, 0.08);
-      border: 1px solid rgba(23, 75, 56, 0.18);
+      gap: 0;
+      padding: 0;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
       color: var(--forest-green);
-      font-size: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11.5px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
     }
 
     .chapter-tag-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--primary-light);
+      display: none !important;
+    }
+
+    .chapter-04-header .chapter-tag,
+    .warning-header-dark .chapter-tag {
+      color: rgba(255, 255, 255, 0.72) !important;
     }
 
     .chapter-title {
@@ -978,6 +991,10 @@
       letter-spacing: -1px;
     }
 
+    #chapter-01 .chapter-title {
+      color: var(--primary);
+    }
+
     .chapter-subtitle {
       font-family: 'Inter', sans-serif;
       font-size: clamp(16px, 1.3vw, 19px);
@@ -987,16 +1004,17 @@
       max-width: 780px;
     }
 
-    /* Continuous Narrative Bridge Transition Between Chapters */
+    /* Continuous Narrative Bridge Transition Between Chapters - Perfectly Centralized */
     .narrative-bridge {
       position: relative;
       z-index: 1;
       max-width: 860px;
-      margin: 40px auto 0;
-      padding: 32px 36px;
+      margin: 110px auto 0;
+      padding: 34px 40px;
       text-align: center;
       background: rgba(255, 255, 255, 0.72);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 20px;
       box-shadow: 0 15px 35px -10px rgba(23, 75, 56, 0.06);
@@ -1008,6 +1026,7 @@
       font-style: italic;
       color: var(--forest-green);
       line-height: 1.55;
+      margin: 0;
     }
 
     /* ── CHAPTER 01: THE BEGINNING: A LIVING WORLD ── */
@@ -1423,16 +1442,16 @@
 
     .spotlight-badge {
       display: inline-block;
-      padding: 5px 14px;
-      border-radius: 9999px;
-      background: rgba(16, 185, 129, 0.25);
-      border: 1px solid rgba(16, 185, 129, 0.5);
+      padding: 0;
+      background: transparent;
+      border: none;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #a7f3d0;
-      margin-bottom: 12px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 10px;
     }
 
     .spotlight-title {
@@ -1605,17 +1624,27 @@
       width: 100% !important;
       max-width: 100% !important;
       margin: 0 !important;
-      padding: 60px 0 100px !important;
+      padding: 60px 0 70px !important;
       background: linear-gradient(
         180deg,
         #14462E 0px,
         #14462E 60px,
         #2A3F22 150px,
-        #44381C 250px,
-        #352012 340px,
-        #24150D 430px,
-        #1B0F08 530px,
-        #1B0F08 100%
+        #44381C 260px,
+        #503521 380px,
+        #4A2E1C 520px,
+        #4A2E1C calc(100% - 780px),
+        #4E311F calc(100% - 715px),
+        #593924 calc(100% - 635px),
+        #6A442C calc(100% - 545px),
+        #825537 calc(100% - 450px),
+        #9F6F4D calc(100% - 350px),
+        #BE8E6B calc(100% - 250px),
+        #D7AE8D calc(100% - 160px),
+        #E9CCB2 calc(100% - 90px),
+        #F3E2D3 calc(100% - 45px),
+        #F7EFE6 calc(100% - 15px),
+        #F7F8F3 100%
       );
       position: relative;
       z-index: 2;
@@ -1664,6 +1693,16 @@
       background: #4A2D1C;
       border-color: rgba(245, 158, 11, 0.7);
       box-shadow: 0 35px 75px -15px rgba(0, 0, 0, 0.8);
+    }
+
+    .challenge-card.spotlight-card,
+    .cascade-step-item.spotlight-card {
+      border-color: transparent;
+    }
+
+    .challenge-card.spotlight-card:hover,
+    .cascade-step-item.spotlight-card:hover {
+      border-color: transparent;
     }
 
     .challenge-img-container {
@@ -1786,15 +1825,21 @@
 
 
     .bridge-warning-closing {
-      background: rgba(30, 16, 9, 0.65) !important;
-      border: 1px solid rgba(217, 119, 6, 0.3) !important;
+      background: rgba(94, 60, 38, 0.62) !important;
+      border: 1px solid rgba(245, 158, 11, 0.38) !important;
       backdrop-filter: blur(20px);
-      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5) !important;
-      margin-top: 50px !important;
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 18px 45px -12px rgba(60, 35, 18, 0.35) !important;
+      margin-top: 130px !important;
+      margin-bottom: 0 !important;
     }
 
     .bridge-warning-closing .narrative-bridge-text {
-      color: #FEF3C7 !important;
+      color: #FFFBEB !important;
+    }
+
+    #chapter-06.story-chapter {
+      padding-top: 60px !important;
     }
 
     /* ── CHAPTER 06: THE EVIDENCE: WATER MONITORING & WILDLIFE REPORTS ── */
@@ -1875,11 +1920,12 @@
 
     .ind-status-pill {
       font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 9999px;
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--primary);
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(23, 75, 56, 0.08);
+      color: var(--forest-green);
+      border: 1px solid rgba(23, 75, 56, 0.12);
     }
 
     .ind-value {
@@ -2172,6 +2218,49 @@
       height: 100%;
     }
 
+    .energy-wheel-header {
+      position: absolute;
+      top: 0;
+      left: -50px;
+      z-index: 10;
+      max-width: 310px;
+      pointer-events: auto;
+    }
+
+    .energy-wheel-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(22px, 1.9vw, 28px);
+      font-weight: 700;
+      color: var(--forest-deep);
+      line-height: 1.22;
+      margin: 8px 0 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .energy-wheel-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--botanical-grey);
+      max-width: 275px;
+      margin: 0;
+    }
+
+    @media (max-width: 960px) {
+      .energy-wheel-header {
+        position: relative;
+        top: auto;
+        left: auto;
+        max-width: 100%;
+        margin-bottom: 24px;
+        text-align: center;
+      }
+
+      .energy-wheel-subtitle {
+        max-width: 100%;
+      }
+    }
+
     /* Right Column: Floating Windmill popping out of the website */
     .energy-turbine-stage {
       position: relative;
@@ -2299,16 +2388,17 @@
       transition: width 0.2s ease;
     }
 
-    /* Green Citizen Wall */
+    /* Green Citizen Wall - Deep Emerald Forest Theme */
     .citizen-wall-container {
-      background: #ffffff;
+      background: linear-gradient(135deg, var(--forest-green) 0%, var(--forest-deep) 100%);
       border-radius: 32px;
-      padding: 44px;
-      border: 1px solid rgba(23, 75, 56, 0.12);
-      box-shadow: 0 25px 55px -15px rgba(23, 75, 56, 0.08);
+      padding: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 25px 60px -15px rgba(13, 46, 34, 0.35);
       display: flex;
       flex-direction: column;
       gap: 28px;
+      color: #ffffff;
     }
 
     .citizen-wall-header {
@@ -2319,6 +2409,30 @@
       gap: 16px;
     }
 
+    .citizen-wall-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .citizen-wall-sub {
+      font-size: 14.5px;
+      line-height: 1.5;
+      color: rgba(232, 245, 233, 0.88);
+      margin-top: 6px;
+      max-width: 720px;
+    }
+
+    .citizen-wall-tag {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      color: #A7F3D0 !important;
+      font-size: 11.5px !important;
+      letter-spacing: 1.2px !important;
+    }
+
     .citizen-wall-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -2326,95 +2440,59 @@
     }
 
     .citizen-contribution-card {
-      padding: 20px 22px;
-      background: #F7F8F3;
-      border-radius: 18px;
-      border: 1px solid rgba(23, 75, 56, 0.08);
+      padding: 22px 24px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .citizen-contribution-card:hover {
+      background: rgba(255, 255, 255, 0.13);
+      border-color: rgba(167, 243, 208, 0.45);
+      transform: translateY(-3px);
     }
 
     .contrib-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
 
     .contrib-author {
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 700;
-      color: var(--forest-deep);
+      color: #ffffff;
     }
 
     .contrib-role-tag {
-      font-size: 10.5px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 500;
       padding: 2px 8px;
-      border-radius: 9999px;
-      background: var(--mist-green);
-      color: var(--forest-green);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      white-space: nowrap;
     }
 
     .contrib-action {
       font-size: 13px;
-      line-height: 1.5;
-      color: var(--text-muted);
+      line-height: 1.55;
+      color: rgba(232, 245, 233, 0.90);
+      margin: 0;
     }
 
     .contrib-date {
       font-size: 11.5px;
-      color: var(--text-light);
+      color: rgba(167, 243, 208, 0.70);
       margin-top: 4px;
-    }
-
-    .action-cta-banner {
-      background: linear-gradient(135deg, var(--forest-green) 0%, var(--forest-deep) 100%);
-      border-radius: 28px;
-      padding: 50px 48px;
-      color: #ffffff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 28px;
-      margin-top: 40px;
-    }
-
-    .action-cta-text {
-      max-width: 650px;
-    }
-
-    .action-cta-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #ffffff;
-    }
-
-    .action-cta-sub {
-      font-size: 16px;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    .action-cta-btn {
-      padding: 16px 36px;
-      border-radius: 9999px;
-      background: #10b981;
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: var(--transition-smooth);
-      box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.5);
-    }
-
-    .action-cta-btn:hover {
-      background: #059669;
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.7);
     }
 
     /* ── CHAPTER 08: THE FUTURE: GLOBAL EARTH & MODERN TYPOGRAPHY ── */
@@ -2607,97 +2685,161 @@
       margin-top: 6px;
     }
 
-    /* Minimal Documentary Footer */
+    /* ── MINIMAL MODERN FOOTER ── */
     .documentary-footer {
-      background: #091e16;
-      color: #ffffff;
-      padding: 70px 48px 40px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 2;
+      background: #061811;
+      color: #E6F0EB;
+      padding: 85px 48px 45px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
     }
 
     .footer-content-inner {
-      max-width: 1480px;
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 55px;
     }
 
     .footer-top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 32px;
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+      gap: 48px;
+    }
+
+    @media (max-width: 1024px) {
+      .footer-top-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-top-row {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .documentary-footer {
+        padding: 60px 24px 35px;
+      }
     }
 
     .footer-brand-col {
-      max-width: 420px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
+      padding-right: 24px;
+    }
+
+    .footer-brand-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-brand-badge {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(230, 240, 235, 0.45);
     }
 
     .footer-brand-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: #ffffff;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #FFFFFF;
+      text-transform: uppercase;
     }
 
     .footer-brand-desc {
-      font-size: 13.5px;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.65);
-    }
-
-    .footer-links-group {
-      display: flex;
-      gap: 48px;
-      flex-wrap: wrap;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(230, 240, 235, 0.65);
+      margin: 0;
+      max-width: 380px;
     }
 
     .footer-links-col {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .footer-links-head {
-      font-size: 13px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #6ee7b7;
-      margin-bottom: 4px;
+      letter-spacing: 0.16em;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 6px;
     }
 
     .footer-link-a {
-      color: rgba(255, 255, 255, 0.7);
+      font-family: 'Inter', sans-serif;
+      color: rgba(230, 240, 235, 0.68);
       text-decoration: none;
       font-size: 13.5px;
-      transition: var(--transition-smooth);
+      line-height: 1.45;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
     }
 
     .footer-link-a:hover {
-      color: #ffffff;
+      color: #FFFFFF;
+      transform: translateX(3px);
     }
 
     .footer-bottom-bar {
-      padding-top: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 18px;
+      font-family: 'Inter', sans-serif;
       font-size: 12.5px;
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(230, 240, 235, 0.48);
     }
 
     .footer-citation-note {
-      font-size: 11.5px;
-      color: rgba(255, 255, 255, 0.45);
+      font-size: 12px;
+      color: rgba(230, 240, 235, 0.42);
+    }
+
+    .footer-back-to-top {
+      color: rgba(230, 240, 235, 0.72);
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      transition: all 0.2s ease;
+    }
+
+    .footer-back-to-top:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+      transform: translateY(-2px);
     }
 
     /* Modal for Detailed Scientific Species View */
@@ -2949,7 +3091,12 @@
       }
 
       .story-chapter {
-        padding: 80px 24px;
+        padding: 50px 24px 40px;
+      }
+
+      .narrative-bridge {
+        margin: 70px auto 0;
+        padding: 24px 20px;
       }
 
       .chapter-04-green-section,
@@ -3061,13 +3208,13 @@
         <!-- Left Column: Positioned behind the 3D tree so leaves and branches overlay it -->
         <section class="hero-left">
           <h1 class="hero-title">
-            Green Tomorrow – <span class="gradient-text">Building a Sustainable Future</span>
+            Green Tomorrow –<br>
+            <span class="gradient-text">Sustaining the Western Ghats</span>
           </h1>
 
           <p class="hero-description">
-            An interactive, community-oriented platform dedicated to discovering local biodiversity, exploring green
-            sanctuaries, monitoring river and wetland quality, and reporting citizen wildlife observations across
-            Kerala, Kozhikode, and the Western Ghats.
+            An interactive platform dedicated to discovering the irreplaceable biodiversity of the Western Ghats,
+            protecting endemic flora and fauna, and exploring grassroots conservation for a sustainable future.
           </p>
 
           <div class="mini-stats">
@@ -3102,23 +3249,19 @@
 
     <!-- Layer 3: Top Navigation & Right Cards (In Front of 3D Tree, z-index: 3) -->
     <div class="hero-layout layer-front">
-      <header class="navbar">
-        <a href="#" class="brand">
-          <div class="brand-icon">🌱</div>
-          <div class="brand-text">TERRA<span>CODE</span></div>
-        </a>
+      <header class="navbar" style="min-height: 44px; visibility: hidden; pointer-events: none;">
       </header>
 
       <main class="hero-body">
         <!-- Geometry balance spacer (exact dimensions of hero-left, invisible) -->
         <div class="hero-left" style="visibility: hidden; pointer-events: none; animation: none;">
           <h1 class="hero-title">
-            Green Tomorrow – <span class="gradient-text">Building a Sustainable Future</span>
+            Green Tomorrow –<br>
+            <span class="gradient-text">Sustaining the Western Ghats</span>
           </h1>
           <p class="hero-description">
-            An interactive, community-oriented platform dedicated to discovering local biodiversity, exploring green
-            sanctuaries, monitoring river and wetland quality, and reporting citizen wildlife observations across
-            Kerala, Kozhikode, and the Western Ghats.
+            An interactive platform dedicated to discovering the irreplaceable biodiversity of the Western Ghats,
+            protecting endemic flora and fauna, and exploring grassroots conservation for a sustainable future.
           </p>
           <div class="mini-stats" style="height: 60px;"></div>
         </div>
@@ -3156,29 +3299,26 @@
     <div class="chapter-indicator-dot active" data-target="hero-wrapper" title="Hero: 3D Specimen">
       <span class="chapter-tooltip">Hero • 3D Tree</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-01" title="Chapter 01: The Beginning">
-      <span class="chapter-tooltip">01 • The Beginning</span>
+    <div class="chapter-indicator-dot" data-target="chapter-01" title="Chapter 01: The Western Ghats">
+      <span class="chapter-tooltip">01 • Western Ghats</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-02" title="Chapter 02: The Connection">
-      <span class="chapter-tooltip">02 • Connection</span>
+    <div class="chapter-indicator-dot" data-target="chapter-03" title="Chapter 02: Endemic Species">
+      <span class="chapter-tooltip">02 • Endemic Species</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-03" title="Chapter 03: Species Guide">
-      <span class="chapter-tooltip">03 • Species Guide</span>
+    <div class="chapter-indicator-dot" data-target="chapter-04" title="Chapter 03: Sanctuaries &amp; Corridors">
+      <span class="chapter-tooltip">03 • Habitats &amp; Sanctuaries</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-04" title="Chapter 04: Green Maps">
-      <span class="chapter-tooltip">04 • Green Maps</span>
+    <div class="chapter-indicator-dot" data-target="chapter-05" title="Chapter 04: Ecological Threats">
+      <span class="chapter-tooltip">04 • Ecological Threats</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-05" title="Chapter 05: The Warning">
-      <span class="chapter-tooltip">05 • Challenges</span>
+    <div class="chapter-indicator-dot" data-target="chapter-06" title="Chapter 05: Habitat Health">
+      <span class="chapter-tooltip">05 • Habitat Health</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-06" title="Chapter 06: Water & Wildlife">
-      <span class="chapter-tooltip">06 • Water &amp; Wildlife</span>
+    <div class="chapter-indicator-dot" data-target="chapter-07" title="Chapter 06: Conservation Action">
+      <span class="chapter-tooltip">06 • Conservation Action</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-07" title="Chapter 07: The Action">
-      <span class="chapter-tooltip">07 • Conservation</span>
-    </div>
-    <div class="chapter-indicator-dot" data-target="chapter-08" title="Chapter 08: The Future">
-      <span class="chapter-tooltip">08 • The Future</span>
+    <div class="chapter-indicator-dot" data-target="chapter-08" title="Chapter 07: Sustainable Future">
+      <span class="chapter-tooltip">07 • Sustainable Future</span>
     </div>
   </nav>
 
@@ -3192,29 +3332,29 @@
     <section id="chapter-01" class="story-chapter">
       <div class="chapter-header">
         <div class="chapter-tag">
-          <span class="chapter-tag-dot"></span>
-          <span>Chapter 01 • The Beginning</span>
+          <span>Chapter 01 / The Western Ghats</span>
         </div>
-        <h2 class="chapter-title">A world full of life. A future worth protecting.</h2>
+        <h2 class="chapter-title">Older than the Himalayas. An ancient sanctuary of life.</h2>
         <p class="chapter-subtitle">
-          Every forest, river, wetland and living species is part of a natural system that sustains our planet. But how
-          much do we really know about the nature around us?
+          Rising along the southwestern coast of India, the Western Ghats are one of the world's eight "hottest hotspots"
+          of biological diversity. To build a sustainable future, we must first discover the irreplaceable living wonders
+          that shelter here.
         </p>
       </div>
 
       <!-- Cinematic Western Ghats Forest Scene -->
       <div class="forest-hero-card">
-        <img src="./assets/images/western-ghats.jpg"
+        <img src="./assets/images/western-ghats.jpg?v=2"
           onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=85&w=1920&auto=format&fit=crop';"
-          alt="Ancient misty mountain ridges and lush tropical canopy of the Western Ghats, Kerala" class="forest-hero-img" loading="eager" />
+          alt="Ancient misty mountain ridges, cascading waterfall and lush tropical canopy of the Western Ghats, Kerala" class="forest-hero-img" loading="eager" />
         <div class="forest-hero-overlay"></div>
         <div class="forest-hero-content">
-          <span class="forest-hero-badge">UNESCO World Heritage Biodiversity Hotspot</span>
+          <span class="forest-hero-badge">UNESCO World Heritage • Global Biodiversity Hotspot</span>
           <h3 class="forest-hero-title">The Western Ghats of Kerala</h3>
           <p class="forest-hero-desc">
-            Older than the Himalayas, these ancient forested ridges intercept the Arabian Sea monsoon, giving birth to
-            44 rivers that quench Kerala and sheltering over 5,000 vascular plant species, 139 mammal species, and 508
-            avian species.
+            Older than the Himalayas, these mist-shrouded forested ridges capture the Arabian Sea monsoon, giving birth to
+            44 perennial rivers and sheltering over 5,000 vascular plant species, 139 mammal species, and 508
+            avian species — with over a third found nowhere else on planet Earth.
           </p>
         </div>
       </div>
@@ -3222,106 +3362,18 @@
       <!-- Narrative Bridge -->
       <div class="narrative-bridge">
         <p class="narrative-bridge-text">
-          "But a forest is not just a collection of trees. It is a world where every living thing has a purpose."
+          "Now, discover the extraordinary endemic flora and fauna that call these ancient peaks home."
         </p>
       </div>
     </section>
 
-    <!-- ── CHAPTER 02 – THE CONNECTION: UNDERSTANDING BIODIVERSITY ── -->
-    <section id="chapter-02" class="story-chapter">
-      <div class="chapter-header">
-        <div class="chapter-tag">
-          <span class="chapter-tag-dot"></span>
-          <span>Chapter 02 • The Connection</span>
-        </div>
-        <h2 class="chapter-title">Nature works as one connected system.</h2>
-        <p class="chapter-subtitle">
-          Biodiversity is the variety of life on Earth — including plants, animals, microorganisms and the ecosystems
-          they form. Every organism contributes to the balance of nature.
-        </p>
-      </div>
-
-      <!-- Interactive Ecosystem Interdependence Illustration -->
-      <div class="ecosystem-diagram-container">
-        <div class="ecosystem-nodes-grid">
-
-          <div class="eco-node-card active" data-node="trees">
-            <div class="eco-node-icon">🌳</div>
-            <h4 class="eco-node-title">Canopy Trees</h4>
-            <p class="eco-node-role">
-              Trees provide shelter, food, temperature regulation, and complex vertical habitats from soil roots to
-              emergent crowns.
-            </p>
-            <div class="eco-connection-badge">
-              <span>Anchor of forest architecture</span>
-            </div>
-          </div>
-
-          <div class="eco-node-card" data-node="birds">
-            <div class="eco-node-icon">🦜</div>
-            <h4 class="eco-node-title">Birds &amp; Frugivores</h4>
-            <p class="eco-node-role">
-              Birds disperse seeds across deep forest valleys, driving natural forest regeneration and genetic
-              diversity.
-            </p>
-            <div class="eco-connection-badge">
-              <span>Primary long-range seed dispersal</span>
-            </div>
-          </div>
-
-          <div class="eco-node-card" data-node="insects">
-            <div class="eco-node-icon">🐝</div>
-            <h4 class="eco-node-title">Insects &amp; Pollinators</h4>
-            <p class="eco-node-role">
-              Insects support pollination, nutrient cycling, and form the base of food webs sustaining amphibians,
-              birds, and reptiles.
-            </p>
-            <div class="eco-connection-badge">
-              <span>Catalysts of plant reproduction</span>
-            </div>
-          </div>
-
-          <div class="eco-node-card" data-node="water">
-            <div class="eco-node-icon">💧</div>
-            <h4 class="eco-node-title">Water &amp; Streams</h4>
-            <p class="eco-node-role">
-              Perennial streams and marshlands sustain terrestrial and aquatic life, feeding riparian corridors across
-              Kozhikode to the sea.
-            </p>
-            <div class="eco-connection-badge">
-              <span>Lifeline of terrestrial biology</span>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="ecosystem-insight-banner">
-          <div class="insight-icon">💡</div>
-          <div class="insight-text">
-            <strong>Ecological Principle:</strong> If one species disappears, the effects can cascade unpredictably
-            through the food web. The removal of a single primary seed disperser like the Malabar Grey Hornbill
-            diminishes the regeneration of over 80 indigenous hardwood tree species.
-          </div>
-        </div>
-      </div>
-
-      <!-- Narrative Bridge -->
-      <div class="narrative-bridge">
-        <p class="narrative-bridge-text">
-          "Now that we understand how nature is connected, let's discover the living species that make our local
-          ecosystems unique."
-        </p>
-      </div>
-    </section>
-
-    <!-- ── CHAPTER 03 – THE LIFE: LOCAL SPECIES GUIDE ── -->
+    <!-- ── CHAPTER 02 – THE LIFE: ENDEMIC SPECIES GUIDE ── -->
     <section id="chapter-03" class="story-chapter">
       <div class="chapter-header">
         <div class="chapter-tag">
-          <span class="chapter-tag-dot"></span>
-          <span>Chapter 03 • Pillar 01: Local Species Guides</span>
+          <span>Chapter 02 / Pillar 01: Endemic Species Guide</span>
         </div>
-        <h2 class="chapter-title">Meet the lives that make our forests extraordinary.</h2>
+        <h2 class="chapter-title">Meet the lives found nowhere else on planet Earth.</h2>
       </div>
 
       <!-- Species Accordion Gallery (React Bits) -->
@@ -3329,12 +3381,12 @@
 
       <!-- Species of the Month Editorial Feature -->
       <div class="species-spotlight-card">
-        <img src="https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?q=80&w=900&auto=format&fit=crop"
+        <img src="./assets/images/species/purple-frog.jpg"
           alt="Purple Frog Spotlight" class="spotlight-img" loading="lazy" />
         <div>
-          <span class="spotlight-badge">⭐ Species of the Month • Western Ghats</span>
+          <span class="spotlight-badge">Species Spotlight &bull; Western Ghats Living Fossil</span>
           <h3 class="spotlight-title">Nasikabatrachus sahyadrensis</h3>
-          <p class="spotlight-sub">The Purple Frog — Living Dinosaur of Kerala's Soil</p>
+          <p class="spotlight-sub">The Sahyadri Purple Frog — Living Fossil of Kerala's Ancient Soil</p>
           <p class="spotlight-desc">
             Discovered in 2003 in Idukki, this extraordinary amphibian is an evolutionary relic that coexisted with
             dinosaurs over 65 million years ago. It spends virtually its entire life underground, emerging for only a
@@ -3347,24 +3399,21 @@
       <!-- Narrative Bridge -->
       <div class="narrative-bridge">
         <p class="narrative-bridge-text">
-          "Every species needs a home. And those homes are the natural spaces that we must learn to recognise and
-          protect."
+          "Every species depends on a specific natural sanctuary. To safeguard them, we must learn to recognize and protect their forest homes."
         </p>
       </div>
     </section>
 
-    <!-- ── CHAPTER 04 – THE HOME: GREEN SPACE MAPS (FULL-WIDTH GREEN BACKGROUND) ── -->
+    <!-- ── CHAPTER 03 – THE HOME: GREEN SPACE MAPS (FULL-WIDTH GREEN BACKGROUND) ── -->
     <section id="chapter-04" class="chapter-04-green-section">
       <div class="chapter-04-green-inner">
         <div class="chapter-header chapter-04-header">
-          <div class="chapter-tag" style="background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25); color: #E8F5E9;">
-            <span class="chapter-tag-dot" style="background: #52B788;"></span>
-            <span>Chapter 04 • Pillar 02: Green-Space Maps</span>
+          <div class="chapter-tag">
+            <span>Chapter 03 / Pillar 02: Protected Sanctuaries &amp; Corridors</span>
           </div>
-          <h2 class="chapter-title" style="color: #ffffff;">Every habitat tells a different story.</h2>
+          <h2 class="chapter-title" style="color: #ffffff;">Every sanctuary anchors a critical ecological corridor.</h2>
           <p class="chapter-subtitle" style="color: rgba(232, 245, 233, 0.88);">
-            A forest, wetland, riverbank or mangrove may look like a separate natural space. In reality, each forms part
-            of a wider ecological network across Kozhikode and the Western Ghats.
+            A rainforest ridge, freshwater wetland, or mangrove estuary may look like a separate natural space. In reality, each forms a crucial link in the unbroken ecological corridor of Kerala and the Western Ghats.
           </p>
         </div>
 
@@ -3374,13 +3423,7 @@
           <div id="leaflet-map" aria-label="Interactive Habitat Map of Kozhikode and Western Ghats"></div>
 
           <aside class="map-sidebar">
-            <h3 class="map-sidebar-title">Local Green Sanctuaries</h3>
-
-            <div class="map-layer-pills">
-              <button class="map-pill-btn active" data-layer="all">All Sanctuaries</button>
-              <button class="map-pill-btn" data-layer="wetlands">Mangroves &amp; Wetlands</button>
-              <button class="map-pill-btn" data-layer="forests">Evergreen Foothills</button>
-            </div>
+            <h3 class="map-sidebar-title">Western Ghats Habitat Reserves</h3>
 
             <div class="location-cards-list">
 
@@ -3388,26 +3431,23 @@
                 <div class="loc-name">Kadalundi–Vallikkunnu Community Reserve</div>
                 <div class="loc-type">Mangrove Estuary &amp; Intertidal Mudflats</div>
                 <p class="loc-summary">
-                  India's first community reserve. Vital staging flyway for over 100 species of migratory shorebirds, sea
-                  eagles, and rare avicennia mangrove groves.
+                  India's premier community reserve. Crucial coastal flyway for over 100 species of migratory shorebirds, otters, and rare Avicennia mangrove groves connecting river to sea.
                 </p>
               </div>
 
               <div class="loc-card-item" data-lat="11.2660" data-lng="75.7952" data-idx="1">
                 <div class="loc-name">Sarovaram Bio Park</div>
-                <div class="loc-type">Urban Wetland &amp; Canal Ecosystem • Kozhikode</div>
+                <div class="loc-type">Urban Wetland &amp; Freshwater Canal Reserve</div>
                 <p class="loc-summary">
-                  A 200-acre protected urban wetland network within Kozhikode city, purifying city runoff and hosting
-                  otters, night herons, and freshwater fish.
+                  A 200-acre protected urban wetland network within Kozhikode, purifying regional storm runoff while providing shelter to otters, night herons, and endemic freshwater fish.
                 </p>
               </div>
 
               <div class="loc-card-item" data-lat="11.5540" data-lng="75.9220" data-idx="2">
                 <div class="loc-name">Kakkayam Forest Reserve</div>
-                <div class="loc-type">Upland Shola Foothills &amp; River Source</div>
+                <div class="loc-type">Upland Shola Foothills &amp; Perennial River Source</div>
                 <p class="loc-summary">
-                  Pristine rainforest habitat sheltering Asian elephants, Malabar hornbills, and endemic torrent frogs,
-                  feeding the perennial Kuttiyadi river basin.
+                  High-rainfall wet evergreen rainforest sanctuary protecting wild Asian elephants, endangered hornbills, and the pristine headwaters of the Kuttiyadi river.
                 </p>
               </div>
 
@@ -3415,8 +3455,7 @@
                 <div class="loc-name">Janakikkadu Eco Reserve</div>
                 <div class="loc-type">Dense Lowland Evergreen Forest • Kozhikode</div>
                 <p class="loc-summary">
-                  131 hectares of rich biodiversity containing over 200 rare medicinal plant species and rich butterflies,
-                  conserved through participatory forestry.
+                  131 hectares of rich Western Ghats biodiversity containing over 200 rare medicinal plant species, flying squirrels, and endemic butterflies.
                 </p>
               </div>
 
@@ -3428,89 +3467,82 @@
         <!-- Narrative Bridge inside Chapter 04 -->
         <div class="narrative-bridge bridge-green-narrative">
           <p class="narrative-bridge-text">
-            "But these natural homes are changing. And when habitats change, the lives that depend on them change too."
+            "Yet across this mountain spine, these ancient habitats face mounting human pressures. When ecosystems are severed, the web of life begins to fray."
           </p>
         </div>
       </div>
     </section>
 
-    <!-- ── CHAPTER 05 – THE WARNING: ENVIRONMENTAL CHALLENGES (EXPANDED FULL-WIDTH SIDEWAYS) ── -->
+    <!-- ── CHAPTER 04 – THE WARNING: ENVIRONMENTAL CHALLENGES (EXPANDED FULL-WIDTH SIDEWAYS) ── -->
     <section id="chapter-05" class="warning-fullwidth-chapter">
       <div class="warning-content-inner">
         <div class="chapter-header warning-header-dark">
-          <div class="chapter-tag" style="background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25); color: #E8F5E9;">
-            <span class="chapter-tag-dot" style="background: #52B788;"></span>
-            <span>Chapter 05 • The Warning</span>
+          <div class="chapter-tag">
+            <span>Chapter 04 / Ecological Threats</span>
           </div>
-          <h2 class="chapter-title">The natural balance is under pressure.</h2>
+          <h2 class="chapter-title">The living balance is under severe pressure.</h2>
           <p class="chapter-subtitle">
-            As human activities expand, the spaces that support biodiversity face increasing pressure. Habitat
-            fragmentation, wetland degradation, water pollution and human-wildlife conflict are changing the
-            relationship between people and nature.
+            Unplanned infrastructure expansion, invasive species, and climate shifts threaten the Western Ghats' fragile
+            ecological equilibrium. Understanding these threats is vital to building a sustainable future.
           </p>
         </div>
 
         <!-- 4 Core Regional Challenges Grid -->
         <div class="warning-challenges-grid">
 
-          <div class="challenge-card">
+          <div class="challenge-card spotlight-card">
             <div class="challenge-img-container">
               <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=900&auto=format&fit=crop"
                 alt="Highway slicing through forest canopy" class="challenge-img" loading="lazy" />
-              <span class="challenge-tag-pill">Fragmentation</span>
             </div>
             <div class="challenge-body">
               <h3 class="challenge-title">1. Linear Habitat Fragmentation</h3>
               <p class="challenge-desc">
-                Highways, unscientific hillside cutting, and transmission corridors slice through ancient elephant
-                migration pathways and disconnect arboreal canopies, preventing arboreal mammals like the Nilgiri Langur
-                from crossing.
+                Highways, steep hillside cutting, and transmission corridors slice through ancient elephant
+                migration pathways and disconnect arboreal canopies, preventing endangered mammals like the Nilgiri Langur
+                and Lion-tailed Macaque from crossing safely.
               </p>
             </div>
           </div>
 
-          <div class="challenge-card">
+          <div class="challenge-card spotlight-card">
             <div class="challenge-img-container">
               <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?q=80&w=900&auto=format&fit=crop"
                 alt="Degraded wetland and waste" class="challenge-img" loading="lazy" />
-              <span class="challenge-tag-pill">Wetland Loss</span>
             </div>
             <div class="challenge-body">
-              <h3 class="challenge-title">2. Wetland &amp; Mangrove Encroachment</h3>
+              <h3 class="challenge-title">2. Shola &amp; Wetland Encroachment</h3>
               <p class="challenge-desc">
-                Encroachment, plastic deposition, and unregulated landfilling destroy natural sponge basins,
-                exacerbating catastrophic coastal flooding in Kozhikode and eradicating nursery habitats for native
-                estuarine fish.
+                Encroachment, unscientific landfilling, and exotic monoculture plantations destroy the natural water-sponge basins
+                of the Ghats, triggering devastating summer droughts and severe monsoon mudslides.
               </p>
             </div>
           </div>
 
-          <div class="challenge-card">
+          <div class="challenge-card spotlight-card">
             <div class="challenge-img-container">
               <img src="https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?q=80&w=900&auto=format&fit=crop"
                 alt="Polluted waterway with plastic debris" class="challenge-img" loading="lazy" />
-              <span class="challenge-tag-pill">Water Contamination</span>
             </div>
             <div class="challenge-body">
-              <h3 class="challenge-title">3. Riparian &amp; River Pollution</h3>
+              <h3 class="challenge-title">3. Watershed &amp; Stream Degradation</h3>
               <p class="challenge-desc">
-                Untreated industrial effluents, agricultural nitrate leaching, and urban microplastics in rivers like
-                the Chaliyar and Kallai deplete dissolved oxygen levels, causing seasonal fish kills and algal blooms.
+                Agricultural pesticide runoff, chemical effluents, and plastic waste in river basins disrupt pristine
+                stream chemistry, threatening sensitive endemic amphibians, stream frogs, and native fish.
               </p>
             </div>
           </div>
 
-          <div class="challenge-card">
+          <div class="challenge-card spotlight-card">
             <div class="challenge-img-container">
               <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=900&auto=format&fit=crop"
                 alt="Elephant near human settlement boundary" class="challenge-img" loading="lazy" />
-              <span class="challenge-tag-pill">Fringe Friction</span>
             </div>
             <div class="challenge-body">
-              <h3 class="challenge-title">4. Human-Wildlife Conflict</h3>
+              <h3 class="challenge-title">4. Human-Wildlife Fringe Conflict</h3>
               <p class="challenge-desc">
-                Depletion of natural bamboo fodder in forest borders drives wild elephants and wild boars into farming
-                homesteads in Wayanad and rural Kozhikode, requiring compassionate bio-fencing and ecological corridors.
+                Depletion of native bamboo and natural fodder inside forest boundaries forces wild elephants and leopards into
+                fringe agricultural homesteads, demanding compassionate bio-fencing and protected corridors.
               </p>
             </div>
           </div>
@@ -3519,31 +3551,31 @@
 
         <!-- Interactive Educational Scene: What Happens When a Wetland Disappears -->
         <div class="wetland-disappearance-scene">
-          <h3 class="scene-title">🌊 What happens when a wetland disappears?</h3>
+          <h3 class="scene-title">🌿 What happens when a forest microhabitat collapses?</h3>
           <div class="cascade-steps-grid">
-            <div class="cascade-step-item">
+            <div class="cascade-step-item spotlight-card">
               <span class="step-num">Cascade 01</span>
-              <h4 class="step-head">Flood Buffer Loss</h4>
-              <p class="step-desc">Natural sponge effect is erased; monsoon storm runoff overflows directly into streets
-                within minutes.</p>
+              <h4 class="step-head">Soil &amp; Sponge Loss</h4>
+              <p class="step-desc">Natural soil sponge effect is erased; monsoon storm runoff tears through fragile slopes,
+                causing violent flash floods within minutes.</p>
             </div>
-            <div class="cascade-step-item">
+            <div class="cascade-step-item spotlight-card">
               <span class="step-num">Cascade 02</span>
-              <h4 class="step-head">Aquatic Nursery Collapses</h4>
-              <p class="step-desc">Fish, freshwater crabs, and amphibians lose spawning shallows, collapsing local fish
-                stocks.</p>
+              <h4 class="step-head">Breeding Streams Crash</h4>
+              <p class="step-desc">Endemic torrent frogs, crabs, and rheophilic fish lose sheltered gravel beds, collapsing
+                local populations.</p>
             </div>
-            <div class="cascade-step-item">
+            <div class="cascade-step-item spotlight-card">
               <span class="step-num">Cascade 03</span>
-              <h4 class="step-head">Avian Staging Erased</h4>
-              <p class="step-desc">Migratory plovers and terns traveling thousands of miles find no feeding mudflats to
-                rest.</p>
+              <h4 class="step-head">Canopy Regeneration Halts</h4>
+              <p class="step-desc">Migratory canopy birds and frugivores find no food trees to nest, disrupting the seed
+                dispersal of primary rainforest giants.</p>
             </div>
-            <div class="cascade-step-item">
+            <div class="cascade-step-item spotlight-card">
               <span class="step-num">Cascade 04</span>
-              <h4 class="step-head">Aquifer Depletion</h4>
-              <p class="step-desc">Groundwater recharge dries up; surrounding community drinking-water wells face summer
-                saline intrusion.</p>
+              <h4 class="step-head">Regional Aquifer Depletion</h4>
+              <p class="step-desc">Mountain aquifers dry up; surrounding agricultural valleys and community drinking-water
+                wells face severe summer water crises.</p>
             </div>
           </div>
         </div>
@@ -3551,25 +3583,24 @@
         <!-- Narrative Bridge at the bottom of Chapter 05 -->
         <div class="narrative-bridge bridge-warning-closing">
           <p class="narrative-bridge-text">
-            "If we cannot see the full extent of these changes, how can we protect the ecosystems around us? The answer
-            begins with observation and evidence."
+            "If we cannot recognize the subtle signs of habitat decline, how can we protect the living world around us?
+            The path forward demands ecological observation and evidence."
           </p>
         </div>
 
       </div>
     </section>
 
-    <!-- ── CHAPTER 06 – THE EVIDENCE: WATER MONITORING AND WILDLIFE REPORTS ── -->
+    <!-- ── CHAPTER 05 – THE EVIDENCE: HABITAT HEALTH & ECOLOGICAL MONITORING ── -->
     <section id="chapter-06" class="story-chapter">
       <div class="chapter-header">
         <div class="chapter-tag">
-          <span class="chapter-tag-dot"></span>
-          <span>Chapter 06 • The Evidence</span>
+          <span>Chapter 05 / Habitat Health</span>
         </div>
-        <h2 class="chapter-title">Observation, Science, and Local Evidence.</h2>
+        <h2 class="chapter-title">Reading the vital signs of Western Ghats ecosystems.</h2>
         <p class="chapter-subtitle">
-          Conservation cannot rely on assumptions. By measuring chemical water health and documenting wildlife
-          sightings, communities create the empirical foundation needed to demand environmental protection.
+          Building a sustainable future requires sound ecological science. By monitoring forest stream chemistry,
+          microclimate temperatures, and indicator species, communities gather the data needed to safeguard vulnerable habitats.
         </p>
       </div>
 
@@ -3579,25 +3610,25 @@
         <div class="water-dashboard-card" id="water-watch">
           <div class="water-header-row">
             <div>
-              <span class="chapter-tag" style="margin-bottom: 8px;">Pillar 03 • Water Monitoring Station</span>
+              <span class="chapter-tag" style="margin-bottom: 8px;">Pillar 03 / Watershed &amp; Stream Health Station</span>
               <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: var(--forest-deep);">
-                Water carries the story of an ecosystem.
+                Living waters are the lifeblood of the Ghats.
               </h3>
               <p style="font-size: 14.5px; color: var(--botanical-grey); margin-top: 4px;">
-                Water quality cannot be judged by clarity alone. Physical, chemical, and biological markers reveal the
-                hidden health of our rivers and wetlands.
+                Western Ghats headwaters sustain 44 rivers and thousands of endemic species. Monitoring physical and chemical
+                stream markers reveals the ecological health of forest catchments.
               </p>
             </div>
 
             <div>
               <label for="water-site-select"
-                style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--forest-green); display: block; margin-bottom: 6px;">Monitoring
+                style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--forest-green); display: block; margin-bottom: 6px;">Catchment
                 Station</label>
               <select id="water-site-select" class="water-location-select">
-                <option value="kadalundi">Kadalundi Estuary • Mangrove Station</option>
-                <option value="chaliyar">Chaliyar River • Feroke Riparian Base</option>
-                <option value="kallai">Kallai River • Urban Canal Stretch</option>
-                <option value="kakkayam">Kakkayam Reservoir • Upland Source</option>
+                <option value="kadalundi">Kadalundi Estuary • Mangrove Nursery Station</option>
+                <option value="chaliyar">Chaliyar River • Foothill Riparian Corridor</option>
+                <option value="kallai">Kallai Estuary • Coastal Riparian Transition</option>
+                <option value="kakkayam">Kakkayam Reservoir • Upland Shola Source</option>
               </select>
             </div>
           </div>
@@ -3614,8 +3645,7 @@
                 <span class="ind-value" id="val-ph">7.4</span>
                 <span class="ind-unit">pH</span>
               </div>
-              <p class="ind-meaning">Measures acidity or alkalinity. Neutral 6.5–8.5 is essential for native fish gill
-                and egg development.</p>
+              <p class="ind-meaning">Amphibian Bio-Indicator: Neutral stream pH is essential for skin respiration and egg development in endemic torrent frogs.</p>
             </div>
 
             <div class="indicator-card">
@@ -3627,8 +3657,7 @@
                 <span class="ind-value" id="val-do">6.8</span>
                 <span class="ind-unit">mg/L</span>
               </div>
-              <p class="ind-meaning">Crucial for aquatic organisms. Values below 4.0 mg/L induce acute asphyxiation in
-                native river fish.</p>
+              <p class="ind-meaning">Stream Fauna Respiration: High oxygen saturation sustains rheophilic stream fish, freshwater crabs, and aquatic insect larvae.</p>
             </div>
 
             <div class="indicator-card">
@@ -3640,8 +3669,7 @@
                 <span class="ind-value" id="val-tur">4.2</span>
                 <span class="ind-unit">NTU</span>
               </div>
-              <p class="ind-meaning">Measures suspended sediments. High turbidity prevents sunlight penetration for
-                aquatic macrophyte photosynthesis.</p>
+              <p class="ind-meaning">Canopy Siltation Marker: Low turbidity ensures sunlight reaches aquatic riverbed moss where hornbills and kingfishers hunt.</p>
             </div>
 
             <div class="indicator-card">
@@ -3653,8 +3681,7 @@
                 <span class="ind-value" id="val-temp">26.8</span>
                 <span class="ind-unit">°C</span>
               </div>
-              <p class="ind-meaning">Regulates dissolved oxygen capacity and metabolic rates of cold-blooded aquatic
-                invertebrates.</p>
+              <p class="ind-meaning">Microclimate Equilibrium: Regulates dissolved gas levels and metabolic rates of temperature-sensitive montane aquatic species.</p>
             </div>
 
             <div class="indicator-card">
@@ -3666,8 +3693,7 @@
                 <span class="ind-value" id="val-ec">420</span>
                 <span class="ind-unit">µS/cm</span>
               </div>
-              <p class="ind-meaning">Measures dissolved ionic minerals. Spikes indicate urban runoff, sewage seepage, or
-                industrial effluent discharge.</p>
+              <p class="ind-meaning">Dissolved Mineral Baseline: Gauges baseline dissolved minerals; sharp spikes reveal soil erosion or agricultural leaching.</p>
             </div>
 
             <div class="indicator-card">
@@ -3679,16 +3705,13 @@
                 <span class="ind-value" id="val-nit">0.8</span>
                 <span class="ind-unit">mg/L</span>
               </div>
-              <p class="ind-meaning">Agricultural fertilizer runoff marker. Elevated nitrates trigger rapid
-                eutrophication and algal suffocations.</p>
+              <p class="ind-meaning">Nutrient Balance: Pristine forest springs maintain minimal nitrates, preventing weed choking of native forest pools.</p>
             </div>
 
           </div>
 
           <div class="water-data-disclaimer">
-            * Demonstrated data curated from Kerala State Pollution Control Board (KSPCB) public seasonal baseline
-            models. Verified sample records logged November 2026. Basic indicators do not certify potable drinking water
-            without complete microbiological pathology testing.
+            * Ecological baseline indicators curated from Western Ghats watershed research and Kerala environmental survey data. Habitat biometric tracking provides conservationists with empirical benchmarks to protect endangered stream ecosystems.
           </div>
         </div>
 
@@ -3697,23 +3720,21 @@
       <!-- Narrative Bridge -->
       <div class="narrative-bridge">
         <p class="narrative-bridge-text">
-          "When individual observations come together, they become something much more powerful: a shared understanding
-          of our environment."
+          "When ecological science joins hands with community stewardship, observation turns into conservation. Together, we can build a sustainable future."
         </p>
       </div>
     </section>
 
-    <!-- ── CHAPTER 07 – THE ACTION: COMMUNITY CONSERVATION ── -->
+    <!-- ── CHAPTER 06 – THE ACTION: COMMUNITY CONSERVATION ── -->
     <section id="chapter-07" class="story-chapter">
       <div class="chapter-header">
         <div class="chapter-tag">
-          <span class="chapter-tag-dot"></span>
-          <span>Chapter 07 • The Action</span>
+          <span>Chapter 06 / Conservation in Action</span>
         </div>
         <h2 class="chapter-title">Conservation is not just something we watch. It is something we do.</h2>
         <p class="chapter-subtitle">
-          Real sustainability requires collaborative participation. From school environmental clubs to community
-          mangrove nurseries, local stewardship is the true guardian of biodiversity.
+          Building a sustainable future for the Western Ghats requires local stewardship and clean, low-impact innovation.
+          From indigenous sapling rewilding to eco-sensitive clean energy, communities lead the way.
         </p>
       </div>
 
@@ -3724,8 +3745,7 @@
           <span class="pillar-num">01 / DISCOVERY</span>
           <h3 class="pillar-title">OBSERVE</h3>
           <p class="pillar-desc">
-            Document native flora and avian visitors in your neighborhood, backyard, and local groves using mobile
-            photography.
+            Document sightings of endemic flora, butterflies, and rare birds in your region to enrich open-access Western Ghats biodiversity maps.
           </p>
           <a href="#chapter-03" class="pillar-cta-link">Explore Species Guide &rarr;</a>
         </div>
@@ -3734,17 +3754,16 @@
           <span class="pillar-num">02 / SCIENCE</span>
           <h3 class="pillar-title">MEASURE</h3>
           <p class="pillar-desc">
-            Participate in school water testing drives along community ponds and rivers using low-cost pH and turbidity
-            test kits.
+            Monitor local forest stream health, seasonal rainfall, and microclimates to detect ecological stress before habitats decline.
           </p>
-          <a href="#water-watch" class="pillar-cta-link">View Monitoring Benchmarks &rarr;</a>
+          <a href="#water-watch" class="pillar-cta-link">View Habitat Health Station &rarr;</a>
         </div>
 
         <div class="action-pillar-card">
-          <span class="pillar-num">03 / EVIDENCE</span>
-          <h3 class="pillar-title">OBSERVE</h3>
+          <span class="pillar-num">03 / CORRIDORS</span>
+          <h3 class="pillar-title">PROTECT</h3>
           <p class="pillar-desc">
-            Document local species, track seasonal migrations, and take part in regional watershed biodiversity counts.
+            Safeguard wildlife migration routes by advocating for animal underpasses and preserving sacred groves that link fragmented forests.
           </p>
           <a href="#action-banner" class="pillar-cta-link">Get Involved &rarr;</a>
         </div>
@@ -3767,6 +3786,15 @@
 
           <!-- Left Side: Orbital Image Wheel (Curving around the 3D Windmill) -->
           <div class="energy-methods-col">
+            <div class="energy-wheel-header">
+              <span class="chapter-tag" style="margin-bottom: 8px;">
+                <span>Pillar 04 / Ecological Energy</span>
+              </span>
+              <h3 class="energy-wheel-title">Decentralized Clean Energy</h3>
+              <p class="energy-wheel-subtitle">
+                Low-impact renewable technologies designed to power forest-fringe communities without damming rivers or fragmenting wildlife corridors.
+              </p>
+            </div>
             <div id="orbital-image-wheel-root"></div>
           </div>
 
@@ -3795,16 +3823,15 @@
       </div>
 
       <!-- Green Citizen Wall of Contributions -->
-      <div class="citizen-wall-container">
+      <div class="citizen-wall-container" id="action-banner">
         <div class="citizen-wall-header">
           <div>
-            <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 26px; color: var(--forest-deep);">
-              Green Citizen Wall</h3>
-            <p style="font-size: 14px; color: var(--botanical-grey); margin-top: 4px;">Honoring grassroot contributions
-              from students, researchers, and local residents across Kozhikode.</p>
+            <h3 class="citizen-wall-title">Green Citizen Wall</h3>
+            <p class="citizen-wall-sub">Honoring grassroots conservation contributions from students, researchers, and local stewards across Kerala and the Western Ghats.</p>
           </div>
-          <span class="chapter-tag" style="background: rgba(16, 185, 129, 0.15); color: var(--primary);">Verified Field
-            Community</span>
+          <span class="chapter-tag citizen-wall-tag">
+            <span>Verified Field Community</span>
+          </span>
         </div>
 
         <div class="citizen-wall-grid">
@@ -3821,10 +3848,10 @@
 
           <div class="citizen-contribution-card">
             <div class="contrib-top">
-              <span class="contrib-author">Kozhikode River Protectors</span>
+              <span class="contrib-author">Western Ghats River Protectors</span>
               <span class="contrib-role-tag">Community Action</span>
             </div>
-            <p class="contrib-action">Organized community water quality monitoring along 6 stretches of Kallai river and
+            <p class="contrib-action">Restored native riparian buffer vegetation along 6 stretches of the river basin and
               planted 400 mangrove saplings.</p>
             <span class="contrib-date">Kallai Estuary • Verified Nov 2026</span>
           </div>
@@ -3842,29 +3869,15 @@
         </div>
       </div>
 
-      <!-- Action Call To Action Banner -->
-      <div class="action-cta-banner" id="action-banner">
-        <div class="action-cta-text">
-          <h3 class="action-cta-title">Your observation matters.</h3>
-          <p class="action-cta-sub">
-            Whether you document a bird on your balcony, test your school well water, or report a wetland threat, you
-            become an active defender of Kerala's living heritage.
-          </p>
-        </div>
-        <a href="#action-banner" class="action-cta-btn">
-          Become a Nature Observer &rarr;
-        </a>
-      </div>
-
       <!-- Narrative Bridge -->
       <div class="narrative-bridge">
         <p class="narrative-bridge-text">
-          "Every small action becomes meaningful when thousands of people choose to protect the same future."
+          "Every local action becomes meaningful when thousands of people choose to protect the same living future."
         </p>
       </div>
     </section>
 
-    <!-- ── CHAPTER 08 – THE FUTURE: GLOBAL EARTH & MODERN TYPOGRAPHY ── -->
+    <!-- ── CHAPTER 07 – THE FUTURE: GLOBAL EARTH & MODERN TYPOGRAPHY ── -->
     <section id="chapter-08" class="story-chapter">
 
       <div class="closing-experience-container modern-world-closing">
@@ -3895,12 +3908,12 @@
 
           <!-- Modern Concise Statement -->
           <p class="modern-world-subtext">
-            A sustainable future begins with local action. Every species documented in Kerala, every preserved wetland,
-            and every monitored stream safeguards the global web of life.
+            A sustainable future begins with local biodiversity stewardship. Safeguarding the ancient forests, rivers,
+            and endemic wildlife of the Western Ghats protects the planetary web of life for generations to come.
           </p>
 
           <div class="world-closing-manifesto">
-            DISCOVER • OBSERVE • UNDERSTAND • PROTECT
+            DISCOVER • OBSERVE • RESTORE • PRESERVE
           </div>
 
         </div>
@@ -3908,65 +3921,57 @@
 
     </section>
 
-    <!-- Minimal Editorial Documentary Footer -->
+    <!-- ── MINIMAL MODERN FOOTER ── -->
     <footer class="documentary-footer">
       <div class="footer-content-inner">
 
         <div class="footer-top-row">
 
           <div class="footer-brand-col">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 24px;">🌱</span>
-              <span class="footer-brand-title">GREEN TOMORROW</span>
+            <div class="footer-brand-header">
+              <span class="footer-brand-badge">Ecological Initiative</span>
+              <div class="footer-brand-title">GREEN TOMORROW</div>
             </div>
             <p class="footer-brand-desc">
-              Building the Sustainable Future. An interactive, community-oriented initiative dedicated to local
-              biodiversity discovery, green space mapping, river monitoring, and grassroots conservation across Kerala
-              and the Western Ghats.
+              Dedicated to documenting, preserving, and restoring the irreplaceable biodiversity of the Western Ghats for a resilient and sustainable future.
             </p>
           </div>
 
-          <div class="footer-links-group">
-            <div class="footer-links-col">
-              <span class="footer-links-head">Navigation</span>
-              <a href="#hero-wrapper" class="footer-link-a">Home / 3D Specimen</a>
-              <a href="#chapter-01" class="footer-link-a">The Beginning</a>
-              <a href="#chapter-02" class="footer-link-a">Biodiversity System</a>
-              <a href="#chapter-03" class="footer-link-a">Local Species Guide</a>
-            </div>
+          <div class="footer-links-col">
+            <span class="footer-links-head">Navigation</span>
+            <a href="#hero-wrapper" class="footer-link-a">Home / 3D Specimen</a>
+            <a href="#chapter-01" class="footer-link-a">The Western Ghats</a>
+            <a href="#chapter-03" class="footer-link-a">Endemic Species Guide</a>
+            <a href="#chapter-04" class="footer-link-a">Habitat Sanctuaries</a>
+          </div>
 
-            <div class="footer-links-col">
-              <span class="footer-links-head">Citizen Science</span>
-              <a href="#chapter-04" class="footer-link-a">Green Space Maps</a>
-              <a href="#chapter-05" class="footer-link-a">Environmental Challenges</a>
-              <a href="#water-watch" class="footer-link-a">Water Watch Station</a>
-              <a href="#action-banner" class="footer-link-a">Community Action</a>
-            </div>
+          <div class="footer-links-col">
+            <span class="footer-links-head">Conservation</span>
+            <a href="#chapter-05" class="footer-link-a">Ecological Threats</a>
+            <a href="#water-watch" class="footer-link-a">Habitat Health Station</a>
+            <a href="#energy-conservation" class="footer-link-a">Ecological Energy</a>
+            <a href="#action-banner" class="footer-link-a">Community Field Wall</a>
+          </div>
 
-            <div class="footer-links-col">
-              <span class="footer-links-head">Verified Data Sources</span>
-              <a href="https://www.iucnredlist.org" target="_blank" rel="noopener noreferrer" class="footer-link-a">IUCN
-                Red List</a>
-              <a href="https://ipbes.net/global-assessment" target="_blank" rel="noopener noreferrer"
-                class="footer-link-a">IPBES 2019 Assessment</a>
-              <a href="https://bsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Botanical
-                Survey of India (BSI)</a>
-              <a href="https://zsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Zoological
-                Survey of India (ZSI)</a>
-              <a href="https://keralapcb.nic.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Kerala
-                State Pollution Control Board</a>
-            </div>
+          <div class="footer-links-col">
+            <span class="footer-links-head">Verified Data Sources</span>
+            <a href="https://www.iucnredlist.org" target="_blank" rel="noopener noreferrer" class="footer-link-a">IUCN Red List</a>
+            <a href="https://ipbes.net/global-assessment" target="_blank" rel="noopener noreferrer" class="footer-link-a">IPBES Assessment</a>
+            <a href="https://bsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Botanical Survey of India</a>
+            <a href="https://zsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Zoological Survey of India</a>
+            <a href="https://keralapcb.nic.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Kerala Pollution Control Board</a>
           </div>
 
         </div>
 
         <div class="footer-bottom-bar">
           <div>
-            &copy; 2026 Green Tomorrow — Competition Category: Biodiversity &amp; Local Nature. All rights reserved.
+            &copy; 2026 Green Tomorrow &bull; Biodiversity &amp; Local Nature Conservation. All rights reserved.
           </div>
           <div class="footer-citation-note">
-            Geographical Focus: Kozhikode &amp; the Western Ghats Biodiversity Hotspot, Kerala, India.
+            11.2588&deg; N, 75.7804&deg; E &bull; Kozhikode &amp; the Western Ghats, Kerala
           </div>
+          <a href="#hero-wrapper" class="footer-back-to-top">Back to Top &uarr;</a>
         </div>
 
       </div>
@@ -4417,13 +4422,14 @@
        ══════════════════════════════════════════════════════════════════ -->
   <script type="module">
     import { initAccordionGallery } from './js/accordion-gallery.js';
+    import { initSpotlightCards } from './js/spotlight-card.js';
 
     document.addEventListener('DOMContentLoaded', () => {
 
       // ── 1. CHAPTER PROGRESS RAIL INTERSECTION OBSERVER & HERO VISIBILITY ──
       const navRail = document.querySelector('.chapter-nav-rail');
       const dots = document.querySelectorAll('.chapter-indicator-dot');
-      const sectionIds = ['hero-wrapper', 'chapter-01', 'chapter-02', 'chapter-03', 'chapter-04', 'chapter-05', 'chapter-06', 'chapter-07', 'chapter-08'];
+      const sectionIds = ['hero-wrapper', 'chapter-01', 'chapter-03', 'chapter-04', 'chapter-05', 'chapter-06', 'chapter-07', 'chapter-08'];
       const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
       function updateNavRailVisibility() {
@@ -4468,72 +4474,63 @@
         });
       });
 
-      // ── 2. CHAPTER 02: ECOSYSTEM INTERACTIVE NODES ──
-      const ecoCards = document.querySelectorAll('.eco-node-card');
-      ecoCards.forEach(card => {
-        card.addEventListener('click', () => {
-          ecoCards.forEach(c => c.classList.remove('active'));
-          card.classList.add('active');
-        });
-      });
-
-      // ── 3. CHAPTER 03: SPECIES ACCORDION GALLERY (REACT BITS) ──
+      // ── 2. CHAPTER 02: SPECIES ACCORDION GALLERY (REACT BITS) ──
       const galleryContainer = document.getElementById('species-accordion-gallery');
 
       const speciesItems = [
         {
           speciesId: 'squirrel',
-          image: 'https://images.unsplash.com/photo-1504006833117-8886a355efbf?q=80&w=900&auto=format&fit=crop',
+          image: './assets/images/species/malabar-giant-squirrel.jpg',
           label: 'Malabar Giant Squirrel',
           subtitle: 'Ratufa indica',
-          category: 'Canopy Mammal',
-          highlight: 'IUCN: Least Concern • Keystone canopy seed disperser across Kerala.',
-          alt: 'Malabar Giant Squirrel in forest canopy'
+          category: 'Fauna • Canopy Mammal',
+          highlight: 'IUCN: Least Concern • Keystone canopy seed disperser across Kerala rainforests.',
+          alt: 'Malabar Giant Squirrel (Ratufa indica) in forest canopy'
         },
         {
           speciesId: 'hornbill',
-          image: 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?q=80&w=900&auto=format&fit=crop',
+          image: './assets/images/species/malabar-grey-hornbill.jpg',
           label: 'Malabar Grey Hornbill',
           subtitle: 'Ocyceros griseus',
-          category: 'Avian Frugivore',
+          category: 'Fauna • Avian Frugivore',
           highlight: 'IUCN: Vulnerable • Revered as "Farmer of the Forest" for dispersing canopy seeds.',
-          alt: 'Malabar Grey Hornbill perched on branch'
+          alt: 'Malabar Grey Hornbill (Ocyceros griseus) perched on branch'
         },
         {
           speciesId: 'purplefrog',
-          image: 'https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?q=80&w=900&auto=format&fit=crop',
+          image: './assets/images/species/purple-frog.jpg',
           label: 'Purple Frog (Mahabali)',
           subtitle: 'Nasikabatrachus sahyadrensis',
-          category: 'Endemic Living Fossil',
+          category: 'Fauna • Endemic Living Fossil',
           highlight: 'IUCN: Endangered • Subterranean living fossil of the Western Ghats.',
-          alt: 'Purple Frog in moist forest habitat'
+          alt: 'Purple Frog (Nasikabatrachus sahyadrensis) in moist forest habitat'
         },
         {
           speciesId: 'langur',
-          image: 'https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=900&auto=format&fit=crop',
+          image: './assets/images/species/nilgiri-langur.jpg',
           label: 'Nilgiri Langur',
           subtitle: 'Semnopithecus johnii',
-          category: 'Shola Primate',
+          category: 'Fauna • Shola Primate',
           highlight: 'IUCN: Vulnerable • Threatened by illegal poaching and canopy fragmentation.',
-          alt: 'Nilgiri Langur in evergreen forest'
+          alt: 'Nilgiri Langur (Semnopithecus johnii) in evergreen forest'
         },
         {
           speciesId: 'glidingfrog',
-          image: 'https://images.unsplash.com/photo-1535083783855-76ae62b2914e?q=80&w=900&auto=format&fit=crop',
+          image: './assets/images/species/malabar-gliding-frog.jpg',
           label: 'Malabar Gliding Frog',
           subtitle: 'Rhacophorus malabaricus',
-          category: 'Canopy Glider',
+          category: 'Fauna • Canopy Glider',
           highlight: 'IUCN: Least Concern • Bio-indicator of pristine rainforest canopies.',
-          alt: 'Malabar Gliding Frog on lush leaf'
+          alt: 'Malabar Gliding Frog (Rhacophorus malabaricus) on lush leaf'
         },
         {
           speciesId: 'neelakurinji',
-          image: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=900&auto=format&fit=crop',
+          image: './assets/images/species/neelakurinji.jpg',
           label: 'Neelakurinji',
           subtitle: 'Strobilanthes kunthiana',
-          category: 'Shola Montane Flora',
+          category: 'Flora • Shola Montane Flora',
           highlight: 'Endemic Shola Flora • Mass synchronous 12-year bloom sustaining native pollinators.',
-          alt: 'Neelakurinji violet flowers blooming on hill slopes'
+          alt: 'Neelakurinji (Strobilanthes kunthiana) violet flowers blooming on hill slopes'
         }
       ];
 
@@ -4544,9 +4541,14 @@
         if (!data || !modal || !modalTarget) return;
 
         modalTarget.innerHTML = `
+          ${data.image ? `
+            <div style="width: 100%; height: 220px; border-radius: 16px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(23, 75, 56, 0.12); box-shadow: 0 10px 25px -8px rgba(0,0,0,0.15);">
+              <img src="${data.image}" alt="${data.common}" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+          ` : ''}
           <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--primary); letter-spacing: 1px;">Scientific Biodiversity Dossier</div>
           <h3 style="font-family: 'Playfair Display', serif; font-size: 28px; color: var(--forest-deep); margin: 6px 0 2px;">${data.common}</h3>
-          <p style="font-size: 14px; font-style: italic; color: var(--botanical-grey); margin-bottom: 18px;">${data.scientific} • ${data.group}</p>
+          <p style="font-size: 14px; font-style: italic; color: var(--botanical-grey); margin-bottom: 18px;">${data.scientific} &bull; ${data.group}</p>
           
           <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; line-height: 1.6; color: var(--text-main);">
             <div><strong>Distribution:</strong> ${data.distribution}</div>
@@ -4598,7 +4600,8 @@
         squirrel: {
           common: "Malabar Giant Squirrel (Shekru)",
           scientific: "Ratufa indica",
-          group: "Mammalia (Rodentia)",
+          group: "Fauna • Mammalia (Rodentia)",
+          image: "./assets/images/species/malabar-giant-squirrel.jpg",
           distribution: "Moist deciduous and semi-evergreen forests of Kerala, Western Ghats.",
           habitat: "Dense high-canopy evergreen rainforests; strictly arboreal.",
           role: "Major frugivore and keystone seed predator/disperser. Caches large rainforest seeds in canopy platforms.",
@@ -4608,7 +4611,8 @@
         hornbill: {
           common: "Malabar Grey Hornbill",
           scientific: "Ocyceros griseus",
-          group: "Aves (Bucerotiformes)",
+          group: "Fauna • Aves (Bucerotiformes)",
+          image: "./assets/images/species/malabar-grey-hornbill.jpg",
           distribution: "Western Ghats endemic, found from southern Gujarat to Kerala tip.",
           habitat: "Dense primary rainforests, cardamom plantations, and Shola valleys.",
           role: "Revered as 'The Farmer of the Forest'. Disperses large rainforest drupes over long flight paths.",
@@ -4618,7 +4622,8 @@
         purplefrog: {
           common: "Purple Frog (Mahabali Frog)",
           scientific: "Nasikabatrachus sahyadrensis",
-          group: "Amphibia (Anura: Sooglossidae)",
+          group: "Fauna • Amphibia (Anura: Sooglossidae)",
+          image: "./assets/images/species/purple-frog.jpg",
           distribution: "Narrow mountain range of Western Ghats (Idukki, Palakkad, Wayanad).",
           habitat: "Deep subterranean loam soil tunnels along torrential monsoon streams.",
           role: "Biological living fossil (65+ million years lineage). Preys heavily on subterranean termites.",
@@ -4628,7 +4633,8 @@
         langur: {
           common: "Nilgiri Langur (Black Leaf Monkey)",
           scientific: "Semnopithecus johnii",
-          group: "Mammalia (Primates: Cercopithecidae)",
+          group: "Fauna • Mammalia (Primates: Cercopithecidae)",
+          image: "./assets/images/species/nilgiri-langur.jpg",
           distribution: "Western Ghats endemic (Nilgiris, Anamalai, Periyar, Cardamom Hills).",
           habitat: "Evergreen rainforests and temperate montane Shola groves (900–2000m).",
           role: "Upper-canopy folivore; consumes tough fibrous leaves and disperses native seeds.",
@@ -4638,7 +4644,8 @@
         glidingfrog: {
           common: "Malabar Gliding Frog",
           scientific: "Rhacophorus malabaricus",
-          group: "Amphibia (Rhacophoridae)",
+          group: "Fauna • Amphibia (Rhacophoridae)",
+          image: "./assets/images/species/malabar-gliding-frog.jpg",
           distribution: "Endemic to the Western Ghats rainforest corridor of Kerala & Karnataka.",
           habitat: "Rainforest canopy overhanging stagnant forest pools and slow streams.",
           role: "Can glide up to 10–12 meters between canopy branches using expansive webbed feet.",
@@ -4648,7 +4655,8 @@
         neelakurinji: {
           common: "Neelakurinji",
           scientific: "Strobilanthes kunthiana",
-          group: "Plantae (Lamiales: Acanthaceae)",
+          group: "Flora • Plantae (Lamiales: Acanthaceae)",
+          image: "./assets/images/species/neelakurinji.jpg",
           distribution: "Endemic to the Shola grassland slopes of Western Ghats (Munnar, Nilgiris).",
           habitat: "Montane open grasslands between 1300m and 2400m altitude.",
           role: "Undergoes periodic synchronous mass flowering once every 12 years, sustaining massive pollinator spikes.",
@@ -4853,6 +4861,43 @@
         document.getElementById('val-ec-status').textContent = d.ecStatus;
         document.getElementById('val-nit').textContent = d.nit;
         document.getElementById('val-nit-status').textContent = d.nitStatus;
+      });
+
+      // ── CHAPTER 05 SPOTLIGHT CARDS (REACT BITS) ──
+      initSpotlightCards('#chapter-05 .challenge-card', {
+        theme: 'dark',
+        surface: '#3A2215',
+        border: 'rgba(217, 119, 6, 0.35)',
+        shadow: '0 25px 60px -15px rgba(0, 0, 0, 0.65)',
+        spotlightColor: '#ffffff',
+        intensity: 0.18,
+        spotlightSize: 280,
+        softness: 0.7,
+        shape: 'circle',
+        borderGlow: 0.65,
+        proximity: 90,
+        smoothing: 0.3,
+        ambient: false,
+        flare: true,
+        grain: 0
+      });
+
+      initSpotlightCards('#chapter-05 .cascade-step-item', {
+        theme: 'dark',
+        surface: '#2E1B10',
+        border: 'rgba(217, 119, 6, 0.28)',
+        shadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)',
+        spotlightColor: '#ffffff',
+        intensity: 0.15,
+        spotlightSize: 220,
+        softness: 0.7,
+        shape: 'circle',
+        borderGlow: 0.6,
+        proximity: 70,
+        smoothing: 0.3,
+        ambient: false,
+        flare: true,
+        grain: 0
       });
 
     });
