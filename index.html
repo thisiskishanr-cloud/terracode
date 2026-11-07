@@ -2293,9 +2293,75 @@
     }
 
     @media (max-width: 960px) {
+      .energy-conservation-section {
+        margin: 50px 0 60px 0 !important;
+        padding: 0 !important;
+      }
+
       .energy-conservation-layout {
-        grid-template-columns: 1fr;
-        gap: 36px;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        gap: 0 !important;
+        margin: 0 auto !important;
+        padding: 0 12px !important;
+      }
+
+      .energy-methods-col {
+        width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      .energy-wheel-header {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        max-width: 100% !important;
+        margin: 0 auto 20px auto !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+
+      .energy-wheel-title {
+        font-size: clamp(22px, 5.8vw, 28px) !important;
+        text-align: center !important;
+        margin: 8px 0 8px !important;
+      }
+
+      .energy-wheel-subtitle {
+        font-size: 13.5px !important;
+        line-height: 1.55 !important;
+        max-width: 480px !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+      }
+
+      /* ── STRICT: COMPLETELY REMOVE WINDMILL FROM MOBILE (ZERO SPACE RESERVED) ── */
+      .energy-turbine-stage,
+      .energy-turbine-sticky-wrap,
+      #energy-turbine-canvas,
+      .floating-shadow-blur,
+      .energy-loading-overlay {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        width: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+        visibility: hidden !important;
       }
     }
 
@@ -2376,10 +2442,9 @@
 
     @media (max-width: 960px) {
       .energy-turbine-sticky-wrap {
-        position: relative;
-        top: 0;
-        height: 480px;
-        transform: translateX(0);
+        display: none !important;
+        height: 0 !important;
+        width: 0 !important;
       }
     }
 
@@ -5014,27 +5079,28 @@
     const container = document.querySelector('.energy-turbine-sticky-wrap');
     const loadingOverlay = document.getElementById('energy-loading-overlay');
     const progressFill = document.getElementById('energy-progress-fill');
+    let isDesktopTurbineInitialized = false;
 
-    if (canvas && container) {
-      const isTurbineMobile = window.innerWidth <= 900 || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    function initDesktopTurbine() {
+      if (!canvas || !container) return;
+
       const scene = new THREE.Scene();
-
       const camera = new THREE.PerspectiveCamera(36, container.clientWidth / container.clientHeight, 0.1, 150);
 
       const renderer = new THREE.WebGLRenderer({
         canvas,
         alpha: true,
-        antialias: !isTurbineMobile,
-        powerPreference: isTurbineMobile ? 'default' : 'high-performance'
+        antialias: true,
+        powerPreference: 'high-performance'
       });
       renderer.setClearColor(0x000000, 0); // Pure transparent, no frame or window
       renderer.setSize(container.clientWidth, container.clientHeight, false);
-      renderer.setPixelRatio(isTurbineMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.05;
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = isTurbineMobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
       // ── TURBINE WEBGL CONTEXT RESILIENCE ──
       let isTurbineContextLost = false;
@@ -5069,8 +5135,7 @@
       const sunLight = new THREE.DirectionalLight(0xfff8ee, 2.2);
       sunLight.position.set(5.5, 11, 6.5);
       sunLight.castShadow = true;
-      const turbineShadowMapSize = isTurbineMobile ? 1024 : 2048;
-      sunLight.shadow.mapSize.set(turbineShadowMapSize, turbineShadowMapSize);
+      sunLight.shadow.mapSize.set(2048, 2048);
       sunLight.shadow.camera.near = 0.5;
       sunLight.shadow.camera.far = 25;
       sunLight.shadow.bias = -0.00015;
@@ -5271,6 +5336,26 @@
       }
       animate();
     }
+
+    function checkAndInitTurbine() {
+      const isTurbineMobile = window.innerWidth <= 960 || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+      if (isTurbineMobile) {
+        // Mobile: Completely remove windmill, cancel loading overlay, reserve zero space
+        if (loadingOverlay) loadingOverlay.style.display = 'none';
+        if (canvas) canvas.style.display = 'none';
+        const turbineStage = document.querySelector('.energy-turbine-stage');
+        if (turbineStage) turbineStage.style.display = 'none';
+      } else if (!isDesktopTurbineInitialized) {
+        // Desktop: Initialize full Three.js scene & load model
+        isDesktopTurbineInitialized = true;
+        initDesktopTurbine();
+      }
+    }
+
+    checkAndInitTurbine();
+    window.addEventListener('resize', () => {
+      checkAndInitTurbine();
+    });
 
     // ══════════════════════════════════════════════════════════════════
     // ORBITAL IMAGE WHEEL INITIALIZATION (orbital-image-wheel.tsx)

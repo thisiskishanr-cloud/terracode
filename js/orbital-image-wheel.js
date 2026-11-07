@@ -30,7 +30,7 @@ export function initOrbitalImageWheel(container, options = {}) {
   container.setAttribute('aria-label', 'Clean Energy Methods Orbital Wheel');
   container.setAttribute('tabindex', '0');
 
-  // Build DOM: Stage for Widescreen 3D cards ONLY (pill bar completely removed)
+  // Build DOM: Stage for Widescreen 3D cards + mobile responsive navigation controls
   container.innerHTML = `
     <div class="orbital-wheel-stage" id="oiw-stage">
       ${items.map((item, i) => `
@@ -50,11 +50,19 @@ export function initOrbitalImageWheel(container, options = {}) {
         </figure>
       `).join('')}
     </div>
+    <div class="oiw-mobile-controls" aria-hidden="false">
+      <button type="button" class="oiw-nav-btn oiw-prev-btn" aria-label="Previous energy solution">&#8592;</button>
+      <span class="oiw-nav-counter">0${defaultSelected + 1} / 0${n}</span>
+      <button type="button" class="oiw-nav-btn oiw-next-btn" aria-label="Next energy solution">&#8594;</button>
+    </div>
   `;
 
   const stage = container.querySelector('.orbital-wheel-stage');
   const cardEls = Array.from(stage.querySelectorAll('.oiw-card'));
   const cardDims = Array.from(stage.querySelectorAll('.oiw-card-dim'));
+  const counterEl = container.querySelector('.oiw-nav-counter');
+  const prevBtn = container.querySelector('.oiw-prev-btn');
+  const nextBtn = container.querySelector('.oiw-next-btn');
 
   let pos = defaultSelected;
   let target = defaultSelected;
@@ -83,10 +91,22 @@ export function initOrbitalImageWheel(container, options = {}) {
 
     const stageWidth = stage.clientWidth || 540;
     const stageHeight = stage.clientHeight || 520;
+    const isMobile = (window.innerWidth <= 768) || (stageWidth <= 520);
 
-    // Position focused card gracefully beside the turbine (no big empty gap, no collision)
-    const focusX = Math.round(stageWidth - cardWidth / 2 - 45);
-    const centerX = focusX + radius;
+    // Responsive card dimensions: on mobile adapt fluidly to screen width
+    const curCardWidth = isMobile
+      ? Math.min(Math.round(stageWidth * 0.90), 380)
+      : cardWidth;
+    const curCardHeight = isMobile
+      ? Math.round(curCardWidth * (185 / 380))
+      : cardHeight;
+
+    // Desktop: position focused card beside the turbine (leaving room on right)
+    // Mobile: position focused card horizontally CENTERED with zero overflow
+    const focusX = isMobile
+      ? Math.round(stageWidth / 2)
+      : Math.round(stageWidth - cardWidth / 2 - 45);
+    const centerX = isMobile ? focusX : (focusX + radius);
     const centerY = Math.round(stageHeight / 2);
 
     for (let i = 0; i < n; i++) {
@@ -94,44 +114,57 @@ export function initOrbitalImageWheel(container, options = {}) {
       const cardDim = cardDims[i];
       if (!card) continue;
 
+      if (isMobile) {
+        card.style.width = `${curCardWidth}px`;
+        card.style.height = `${curCardHeight}px`;
+      } else {
+        card.style.width = `${cardWidth}px`;
+        card.style.height = `${cardHeight}px`;
+      }
+
       // Non-infinite linear mapping along circular arc
       const diff = i - next;
       const theta = focusAnchor - diff * stepAngle;
       const dist = Math.abs(diff * stepAngle);
 
-      // Orbital position relative to center of curvature (windmill)
-      const x = centerX + Math.cos(theta) * radius;
-      const y = centerY + Math.sin(theta) * radius;
+      // Desktop: circular orbital arc wrapping the windmill
+      // Mobile: centered vertical deck with balanced depth
+      const x = isMobile ? focusX : (centerX + Math.cos(theta) * radius);
+      const y = isMobile
+        ? centerY + (diff * (curCardHeight * 0.76))
+        : (centerY + Math.sin(theta) * radius);
 
-      // Central active card vs adjacent receding cards (maximum central prominence):
+      // Central active card vs adjacent receding cards:
       let opacity = 0;
       let darkIntensity = 0;
       let cardScale = 1.0;
 
       if (dist < 0.12) {
-        // CENTRAL HERO CARD: 100% visible, elevated 1.06x scale, zero darkening
+        // CENTRAL HERO CARD: 100% visible, elevated scale, zero darkening
         opacity = 1.0;
         darkIntensity = 0.0;
-        cardScale = 1.06;
+        cardScale = isMobile ? 1.03 : 1.06;
       } else if (dist < 0.85) {
         // Immediate neighbor cards (exactly 1 top and 1 bottom)
         const t = (dist - 0.12) / 0.73;
         opacity = 1.0 - t * 0.32;
         darkIntensity = 0.15 + t * 0.35;
-        cardScale = 1.06 - t * 0.18;
+        cardScale = (isMobile ? 1.03 : 1.06) - t * 0.18;
       } else {
         opacity = 0;
-        cardScale = 0.82;
+        cardScale = 0.80;
       }
 
       const depth = Math.round((1 - Math.min(dist, 1)) * 90);
 
-      // Curvature tangent tilt
+      // Curvature tangent tilt (gentle on mobile, original arc on desktop)
       const deltaY = y - centerY;
-      const tilt = clamp(-deltaY / radius, -0.65, 0.65) * 12;
+      const tilt = isMobile
+        ? clamp(-deltaY / 160, -0.25, 0.25) * 3
+        : clamp(-deltaY / radius, -0.65, 0.65) * 12;
 
       // 100% GPU transform & opacity
-      card.style.transform = `translate3d(${Math.round(x - cardWidth / 2)}px, ${Math.round(y - cardHeight / 2)}px, ${depth}px) rotate(${tilt.toFixed(2)}deg) scale(${cardScale.toFixed(3)})`;
+      card.style.transform = `translate3d(${Math.round(x - curCardWidth / 2)}px, ${Math.round(y - curCardHeight / 2)}px, ${depth}px) rotate(${tilt.toFixed(2)}deg) scale(${cardScale.toFixed(3)})`;
       card.style.opacity = opacity.toFixed(3);
       card.style.visibility = opacity > 0.01 ? 'visible' : 'hidden';
       if (cardDim) {
@@ -163,11 +196,24 @@ export function initOrbitalImageWheel(container, options = {}) {
     if (newIdx !== activeIndex) {
       activeIndex = newIdx;
       cardEls.forEach((c, idx) => c.classList.toggle('oiw-card--active', idx === newIdx));
+      if (counterEl) {
+        counterEl.textContent = `0${newIdx + 1} / 0${n}`;
+      }
       if (onChange) onChange(newIdx, items[newIdx]);
     }
 
     startLoop();
   }
+
+  prevBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    applyTarget(Math.max(0, Math.round(target) - 1), true);
+  });
+
+  nextBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    applyTarget(Math.min(n - 1, Math.round(target) + 1), true);
+  });
 
   // Wheel handling: advances cards 0..n-1 ONLY when the whole section is visible on screen.
   // Reverts to normal webpage scroll once card 8 is reached (down) or card 1 is reached (up).

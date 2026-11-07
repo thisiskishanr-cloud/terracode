@@ -193,3 +193,90 @@
   border-color: rgba(255, 255, 255, 0.25);
   box-shadow: none;
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE OPTIMIZATION & ART-DIRECTED CONTROLS
+   When the 3D windmill is removed on mobile, cards are centered,
+   fluidly scaled to viewport width, and supported by touch navigation.
+   ══════════════════════════════════════════════════════════════════ */
+.oiw-mobile-controls {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .orbital-wheel-container {
+    height: 440px;
+    min-height: 440px;
+    perspective: 1000px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .orbital-wheel-stage {
+    height: 380px;
+    overflow: hidden;
+  }
+
+  .oiw-card {
+    border-radius: 16px;
+    box-shadow: 0 12px 28px -8px rgba(6, 78, 59, 0.25), 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .oiw-card-title {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
+  .oiw-card-desc {
+    font-size: 11.5px;
+    line-height: 1.35;
+    -webkit-line-clamp: 2;
+  }
+
+  .oiw-card-scrim {
+    padding: 12px 16px;
+  }
+
+  .oiw-mobile-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 8px;
+    z-index: 10;
+    position: relative;
+  }
+
+  .oiw-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #064E3B;
+    border: 1px solid rgba(167, 243, 208, 0.35);
+    color: #ECFDF5;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .oiw-nav-btn:active {
+    background: #047857;
+    transform: scale(0.92);
+  }
+
+  .oiw-nav-counter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #064E3B;
+    background: rgba(6, 78, 59, 0.08);
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(6, 78, 59, 0.15);
+  }
+}
