@@ -1560,15 +1560,64 @@
       line-height: 1.45;
     }
 
-    /* ── CHAPTER 05: THE WARNING: ENVIRONMENTAL CHALLENGES (DROUGHT & STRESS PALETTE) ── */
+    /* Green section before Chapter 05 */
+    .bridge-green-transition {
+      width: 100%;
+      background: #14462E;
+      padding: 70px 24px 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .bridge-green-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .bridge-green-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-style: italic;
+      color: #E8F5E9;
+      line-height: 1.6;
+    }
+
+    /* ── CHAPTER 05: FULL-WIDTH SIDEWAYS, GREEN TO BROWN TRANSITION ACROSS TEXT, BROWN TILL END ── */
+    .warning-fullwidth-chapter,
     .warning-dark-atmosphere {
-      background: linear-gradient(180deg, #174B38 0%, #2A3F23 10%, #46391F 20%, #382416 35%, #27170E 65%, #1B0F08 100%);
-      border-radius: 40px;
-      padding: 90px 48px;
-      margin: 40px auto;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 60px 0 100px !important;
+      background: linear-gradient(
+        180deg,
+        #14462E 0px,
+        #14462E 60px,
+        #2A3F22 150px,
+        #44381C 250px,
+        #352012 340px,
+        #24150D 430px,
+        #1B0F08 530px,
+        #1B0F08 100%
+      );
+      position: relative;
+      z-index: 2;
+      box-sizing: border-box;
       color: #ffffff;
-      box-shadow: 0 35px 80px -20px rgba(27, 15, 8, 0.45);
-      border: 1px solid rgba(217, 119, 6, 0.22);
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+    }
+
+    .warning-content-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 48px;
+      box-sizing: border-box;
     }
 
     .warning-header-dark .chapter-title {
@@ -1748,6 +1797,18 @@
     .ipbes-btn:hover {
       background: rgba(217, 119, 6, 0.45);
       transform: translateY(-2px);
+    }
+
+    .bridge-warning-closing {
+      background: rgba(30, 16, 9, 0.65) !important;
+      border: 1px solid rgba(217, 119, 6, 0.3) !important;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5) !important;
+      margin-top: 50px !important;
+    }
+
+    .bridge-warning-closing .narrative-bridge-text {
+      color: #FEF3C7 !important;
     }
 
     /* ── CHAPTER 06: THE EVIDENCE: WATER MONITORING & WILDLIFE REPORTS ── */
@@ -3250,19 +3311,20 @@
         </aside>
 
       </div>
+    </section>
 
-      <!-- Narrative Bridge -->
-      <div class="narrative-bridge">
-        <p class="narrative-bridge-text">
+    <!-- Full-Width Green Section before Chapter 05 -->
+    <div class="bridge-green-transition">
+      <div class="bridge-green-inner">
+        <p class="bridge-green-text">
           "But these natural homes are changing. And when habitats change, the lives that depend on them change too."
         </p>
       </div>
-    </section>
+    </div>
 
-    <!-- ── CHAPTER 05 – THE WARNING: ENVIRONMENTAL CHALLENGES ── -->
-    <section id="chapter-05" class="story-chapter">
-
-      <div class="warning-dark-atmosphere">
+    <!-- ── CHAPTER 05 – THE WARNING: ENVIRONMENTAL CHALLENGES (EXPANDED FULL-WIDTH SIDEWAYS) ── -->
+    <section id="chapter-05" class="warning-fullwidth-chapter">
+      <div class="warning-content-inner">
         <div class="chapter-header warning-header-dark">
           <div class="chapter-tag"
             style="background: rgba(217, 119, 6, 0.2); border-color: rgba(245, 158, 11, 0.45); color: #fed7aa;">
@@ -3388,14 +3450,14 @@
           </a>
         </div>
 
-      </div>
+        <!-- Narrative Bridge at the bottom of Chapter 05 -->
+        <div class="narrative-bridge bridge-warning-closing">
+          <p class="narrative-bridge-text">
+            "If we cannot see the full extent of these changes, how can we protect the ecosystems around us? The answer
+            begins with observation and evidence."
+          </p>
+        </div>
 
-      <!-- Narrative Bridge -->
-      <div class="narrative-bridge">
-        <p class="narrative-bridge-text">
-          "If we cannot see the full extent of these changes, how can we protect the ecosystems around us? The answer
-          begins with observation and evidence."
-        </p>
       </div>
     </section>
 
