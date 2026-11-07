@@ -1560,30 +1560,43 @@
       line-height: 1.45;
     }
 
-    /* Green section before Chapter 05 */
-    .bridge-green-transition {
-      width: 100%;
+    /* ── CHAPTER 04: THE HOME: GREEN SPACE MAPS (FULL WIDTH GREEN BACKGROUND) ── */
+    .chapter-04-green-section {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 100px 0 70px !important;
       background: #14462E;
-      padding: 70px 24px 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
       position: relative;
       z-index: 2;
+      box-sizing: border-box;
     }
 
-    .bridge-green-inner {
-      max-width: 860px;
+    .chapter-04-green-inner {
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 0 48px;
+      box-sizing: border-box;
     }
 
-    .bridge-green-text {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 22px;
-      font-style: italic;
-      color: #E8F5E9;
-      line-height: 1.6;
+    .chapter-04-header .chapter-title {
+      color: #ffffff;
+    }
+
+    .chapter-04-header .chapter-subtitle {
+      color: rgba(232, 245, 233, 0.88);
+    }
+
+    .bridge-green-narrative {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25) !important;
+      margin-top: 55px !important;
+    }
+
+    .bridge-green-narrative .narrative-bridge-text {
+      color: #E8F5E9 !important;
     }
 
     /* ── CHAPTER 05: FULL-WIDTH SIDEWAYS, GREEN TO BROWN TRANSITION ACROSS TEXT, BROWN TILL END ── */
@@ -2850,6 +2863,16 @@
         padding: 80px 24px;
       }
 
+      .chapter-04-green-section,
+      .warning-fullwidth-chapter {
+        padding: 60px 0 50px !important;
+      }
+
+      .chapter-04-green-inner,
+      .warning-content-inner {
+        padding: 0 20px;
+      }
+
       .species-panels-grid {
         grid-template-columns: 1fr;
       }
@@ -3241,86 +3264,86 @@
       </div>
     </section>
 
-    <!-- ── CHAPTER 04 – THE HOME: GREEN SPACE MAPS ── -->
-    <section id="chapter-04" class="story-chapter">
-      <div class="chapter-header">
-        <div class="chapter-tag">
-          <span class="chapter-tag-dot"></span>
-          <span>Chapter 04 • Pillar 02: Green-Space Maps</span>
+    <!-- ── CHAPTER 04 – THE HOME: GREEN SPACE MAPS (FULL-WIDTH GREEN BACKGROUND) ── -->
+    <section id="chapter-04" class="chapter-04-green-section">
+      <div class="chapter-04-green-inner">
+        <div class="chapter-header chapter-04-header">
+          <div class="chapter-tag" style="background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25); color: #E8F5E9;">
+            <span class="chapter-tag-dot" style="background: #52B788;"></span>
+            <span>Chapter 04 • Pillar 02: Green-Space Maps</span>
+          </div>
+          <h2 class="chapter-title" style="color: #ffffff;">Every habitat tells a different story.</h2>
+          <p class="chapter-subtitle" style="color: rgba(232, 245, 233, 0.88);">
+            A forest, wetland, riverbank or mangrove may look like a separate natural space. In reality, each forms part
+            of a wider ecological network across Kozhikode and the Western Ghats.
+          </p>
         </div>
-        <h2 class="chapter-title">Every habitat tells a different story.</h2>
-        <p class="chapter-subtitle">
-          A forest, wetland, riverbank or mangrove may look like a separate natural space. In reality, each forms part
-          of a wider ecological network across Kozhikode and the Western Ghats.
-        </p>
-      </div>
 
-      <!-- Interactive Leaflet Map Experience -->
-      <div class="map-experience-container">
+        <!-- Interactive Leaflet Map Experience (White Box Containing Map & Information) -->
+        <div class="map-experience-container">
 
-        <div id="leaflet-map" aria-label="Interactive Habitat Map of Kozhikode and Western Ghats"></div>
+          <div id="leaflet-map" aria-label="Interactive Habitat Map of Kozhikode and Western Ghats"></div>
 
-        <aside class="map-sidebar">
-          <h3 class="map-sidebar-title">Local Green Sanctuaries</h3>
+          <aside class="map-sidebar">
+            <h3 class="map-sidebar-title">Local Green Sanctuaries</h3>
 
-          <div class="map-layer-pills">
-            <button class="map-pill-btn active" data-layer="all">All Sanctuaries</button>
-            <button class="map-pill-btn" data-layer="wetlands">Mangroves &amp; Wetlands</button>
-            <button class="map-pill-btn" data-layer="forests">Evergreen Foothills</button>
-          </div>
-
-          <div class="location-cards-list">
-
-            <div class="loc-card-item selected" data-lat="11.1306" data-lng="75.8340" data-idx="0">
-              <div class="loc-name">Kadalundi–Vallikkunnu Community Reserve</div>
-              <div class="loc-type">Mangrove Estuary &amp; Intertidal Mudflats</div>
-              <p class="loc-summary">
-                India's first community reserve. Vital staging flyway for over 100 species of migratory shorebirds, sea
-                eagles, and rare avicennia mangrove groves.
-              </p>
+            <div class="map-layer-pills">
+              <button class="map-pill-btn active" data-layer="all">All Sanctuaries</button>
+              <button class="map-pill-btn" data-layer="wetlands">Mangroves &amp; Wetlands</button>
+              <button class="map-pill-btn" data-layer="forests">Evergreen Foothills</button>
             </div>
 
-            <div class="loc-card-item" data-lat="11.2660" data-lng="75.7952" data-idx="1">
-              <div class="loc-name">Sarovaram Bio Park</div>
-              <div class="loc-type">Urban Wetland &amp; Canal Ecosystem • Kozhikode</div>
-              <p class="loc-summary">
-                A 200-acre protected urban wetland network within Kozhikode city, purifying city runoff and hosting
-                otters, night herons, and freshwater fish.
-              </p>
+            <div class="location-cards-list">
+
+              <div class="loc-card-item selected" data-lat="11.1306" data-lng="75.8340" data-idx="0">
+                <div class="loc-name">Kadalundi–Vallikkunnu Community Reserve</div>
+                <div class="loc-type">Mangrove Estuary &amp; Intertidal Mudflats</div>
+                <p class="loc-summary">
+                  India's first community reserve. Vital staging flyway for over 100 species of migratory shorebirds, sea
+                  eagles, and rare avicennia mangrove groves.
+                </p>
+              </div>
+
+              <div class="loc-card-item" data-lat="11.2660" data-lng="75.7952" data-idx="1">
+                <div class="loc-name">Sarovaram Bio Park</div>
+                <div class="loc-type">Urban Wetland &amp; Canal Ecosystem • Kozhikode</div>
+                <p class="loc-summary">
+                  A 200-acre protected urban wetland network within Kozhikode city, purifying city runoff and hosting
+                  otters, night herons, and freshwater fish.
+                </p>
+              </div>
+
+              <div class="loc-card-item" data-lat="11.5540" data-lng="75.9220" data-idx="2">
+                <div class="loc-name">Kakkayam Forest Reserve</div>
+                <div class="loc-type">Upland Shola Foothills &amp; River Source</div>
+                <p class="loc-summary">
+                  Pristine rainforest habitat sheltering Asian elephants, Malabar hornbills, and endemic torrent frogs,
+                  feeding the perennial Kuttiyadi river basin.
+                </p>
+              </div>
+
+              <div class="loc-card-item" data-lat="11.6420" data-lng="75.8360" data-idx="3">
+                <div class="loc-name">Janakikkadu Eco Reserve</div>
+                <div class="loc-type">Dense Lowland Evergreen Forest • Kozhikode</div>
+                <p class="loc-summary">
+                  131 hectares of rich biodiversity containing over 200 rare medicinal plant species and rich butterflies,
+                  conserved through participatory forestry.
+                </p>
+              </div>
+
             </div>
+          </aside>
 
-            <div class="loc-card-item" data-lat="11.5540" data-lng="75.9220" data-idx="2">
-              <div class="loc-name">Kakkayam Forest Reserve</div>
-              <div class="loc-type">Upland Shola Foothills &amp; River Source</div>
-              <p class="loc-summary">
-                Pristine rainforest habitat sheltering Asian elephants, Malabar hornbills, and endemic torrent frogs,
-                feeding the perennial Kuttiyadi river basin.
-              </p>
-            </div>
+        </div>
 
-            <div class="loc-card-item" data-lat="11.6420" data-lng="75.8360" data-idx="3">
-              <div class="loc-name">Janakikkadu Eco Reserve</div>
-              <div class="loc-type">Dense Lowland Evergreen Forest • Kozhikode</div>
-              <p class="loc-summary">
-                131 hectares of rich biodiversity containing over 200 rare medicinal plant species and rich butterflies,
-                conserved through participatory forestry.
-              </p>
-            </div>
-
-          </div>
-        </aside>
-
+        <!-- Narrative Bridge inside Chapter 04 -->
+        <div class="narrative-bridge bridge-green-narrative">
+          <p class="narrative-bridge-text">
+            "But these natural homes are changing. And when habitats change, the lives that depend on them change too."
+          </p>
+        </div>
       </div>
     </section>
-
-    <!-- Full-Width Green Section before Chapter 05 -->
-    <div class="bridge-green-transition">
-      <div class="bridge-green-inner">
-        <p class="bridge-green-text">
-          "But these natural homes are changing. And when habitats change, the lives that depend on them change too."
-        </p>
-      </div>
-    </div>
 
     <!-- ── CHAPTER 05 – THE WARNING: ENVIRONMENTAL CHALLENGES (EXPANDED FULL-WIDTH SIDEWAYS) ── -->
     <section id="chapter-05" class="warning-fullwidth-chapter">
