@@ -118,6 +118,8 @@ terracode-environ/
 ├── LICENSE                      # MIT Open-Source License
 ├── .gitignore                   # Standard OS & editor exclusions
 ├── assets/
+│   ├── images/
+│   │   └── western-ghats.jpg    # High-resolution Western Ghats landscape
 │   ├── models/
 │   │   ├── tree.glb             # 3D Shola forest tree specimen
 │   │   └── wind-turbine.glb     # 3D offshore wind turbine specimen
