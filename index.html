@@ -2797,39 +2797,155 @@
     }
 
     @media (max-width: 900px) {
-      .hero-layout {
+      .hero-wrapper {
         position: relative;
-        min-height: 100vh;
-        padding: 20px 24px;
-        gap: 28px;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        min-height: 620px;
+        overflow: hidden;
+      }
+
+      /* ── 3D CANVAS MOUNT ON MOBILE: SPANS FULL HERO VIEWPORT PROUDLY ── */
+      #webgl-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: auto;
+        touch-action: pan-y;
+      }
+
+      /* ── OVERLAYS ON MOBILE: ELEGANT INTEGRATED MOBILE FRAME ── */
+      .hero-layout {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 16px 20px 22px;
+        box-sizing: border-box;
+      }
+
+      .hero-layout.layer-back {
+        z-index: 1;
+      }
+
+      .hero-layout.layer-front {
+        z-index: 3;
+      }
+
+      /* Remove desktop geometry balance spacers on mobile */
+      .layer-back .hero-right,
+      .layer-front .hero-left {
+        display: none !important;
       }
 
       .hero-body {
         flex-direction: column;
-        gap: 32px;
-        margin-top: 20px;
+        gap: 0;
+        margin-top: 6px;
+        align-items: center;
       }
 
-      .hero-left,
-      .hero-right {
+      /* Top Content (Headline & Stats) */
+      .hero-left {
         width: 100%;
         max-width: 100%;
         text-align: center;
         align-items: center;
+        display: flex;
+        flex-direction: column;
+        pointer-events: none;
       }
 
-      .cta-group {
-        justify-content: center;
+      .hero-title {
+        font-size: clamp(22px, 5.6vw, 32px);
+        line-height: 1.15;
+        margin-bottom: 6px;
+        letter-spacing: -0.5px;
+      }
+
+      .hero-description {
+        font-size: 12.5px;
+        line-height: 1.45;
+        max-width: 400px;
+        margin: 0 auto 10px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: #3b5043;
       }
 
       .mini-stats {
         justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 2px;
       }
 
-      #webgl-container {
-        height: 65vh;
-        position: relative;
-        order: -1;
+      .stat-item {
+        padding: 4px 10px;
+      }
+
+      .stat-value {
+        font-size: 17px;
+      }
+
+      .stat-label {
+        font-size: 10px;
+      }
+
+      /* Bottom Specimen Control Card */
+      .hero-right {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: auto;
+      }
+
+      .glass-card {
+        padding: 12px 16px;
+        border-radius: 18px;
+        width: 100%;
+        max-width: 380px;
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 10px 25px -5px rgba(23, 75, 56, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.95);
+      }
+
+      .card-header {
+        margin-bottom: 4px;
+      }
+
+      .card-title {
+        font-size: 13.5px;
+        margin-bottom: 0;
+      }
+
+      .card-desc {
+        display: none;
+      }
+
+      .controls-wrapper {
+        gap: 6px;
+        margin-top: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .tool-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+        border-radius: 9999px;
       }
 
       .story-chapter {
@@ -3890,23 +4006,43 @@
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
     const container = document.getElementById('webgl-container');
+    const isMobile = (container.clientWidth || window.innerWidth) <= 900 || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 
-    // ── RENDERER (Clean Alpha Transparency) ──
+    // ── RENDERER (Clean Alpha Transparency, Mobile GPU Optimized) ──
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: !isMobile, // Disable MSAA on mobile for 60fps stability and low VRAM
       alpha: true,
-      powerPreference: 'high-performance'
+      powerPreference: isMobile ? 'default' : 'high-performance'
     });
     renderer.setSize(container.clientWidth || window.innerWidth, container.clientHeight || window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
 
     // Balanced ACES Filmic Tone Mapping for crisp foliage & rich bark
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.08;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = isMobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
+
+    // ── WEBGL CONTEXT LOSS & RESTORATION RESILIENCE ──
+    let isHeroContextLost = false;
+    renderer.domElement.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      isHeroContextLost = true;
+      console.warn('Hero 3D: WebGL context lost on mobile/GPU pressure.');
+    }, false);
+
+    renderer.domElement.addEventListener('webglcontextrestored', () => {
+      console.log('Hero 3D: WebGL context restored.');
+      isHeroContextLost = false;
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+      fitTreeTopToBottom();
+    }, false);
 
     // ── SCENE ──
     const scene = new THREE.Scene();
@@ -3931,7 +4067,8 @@
     const sunLight = new THREE.DirectionalLight(0xfffaed, 1.85);
     sunLight.position.set(6, 14, 7);
     sunLight.castShadow = true;
-    sunLight.shadow.mapSize.set(2048, 2048);
+    const shadowMapDim = isMobile ? 1024 : 2048;
+    sunLight.shadow.mapSize.set(shadowMapDim, shadowMapDim);
     sunLight.shadow.camera.near = 0.5;
     sunLight.shadow.camera.far = 40;
     sunLight.shadow.camera.left = -10;
@@ -3964,7 +4101,7 @@
     let initialTarget = new THREE.Vector3();
     let modelHeight = 0;
 
-    // ── CALIBRATE CAMERA TO FILL SCREEN TOP-TO-BOTTOM (EXACT HERO LOCK) ──
+    // ── CALIBRATE CAMERA TO FILL SCREEN PROUDLY (RESPONSIVE TOP-TO-BOTTOM & WIDTH AWARE) ──
     function fitTreeTopToBottom() {
       if (!treeModel) return;
 
@@ -3974,14 +4111,23 @@
 
       const centerY = box.min.y + size.y * 0.5;
 
-      // Vertical focal shift moves the tree to the ideal sweet spot (0.20 preserved)
-      const yOffset = 0.20;
+      const isMobileScreen = (container.clientWidth || window.innerWidth) <= 900;
+      // On mobile portrait, frame slightly lower so the canopy crowns naturally between title & card
+      const yOffset = isMobileScreen ? -0.10 : 0.20;
       controls.target.set(0, centerY + yOffset, 0);
 
       // Frustum calculation: visible height = 2 * dist * tan(fov / 2)
       const fovRad = (camera.fov * Math.PI) / 180;
       const fillRatio = 1.06;
-      const dist = (size.y / fillRatio) / (2 * Math.tan(fovRad / 2));
+      let dist = (size.y / fillRatio) / (2 * Math.tan(fovRad / 2));
+
+      // On portrait mobile (aspect < 1), calculate horizontal FOV to ensure canopy width is never clipped
+      const aspect = (container.clientWidth || window.innerWidth) / (container.clientHeight || window.innerHeight);
+      if (aspect < 1.0) {
+        const hFovRad = 2 * Math.atan(Math.tan(fovRad / 2) * aspect);
+        const distForWidth = (size.x / 0.96) / (2 * Math.tan(hFovRad / 2));
+        dist = Math.max(dist, distForWidth);
+      }
 
       camera.position.set(0, centerY + yOffset, dist);
       camera.near = 0.1;
@@ -4063,7 +4209,7 @@
         setTimeout(() => loadingEl.remove(), 800);
       },
       (xhr) => {
-        if (xhr.total) {
+        if (xhr.total && xhr.total > 0) {
           const pct = Math.round((xhr.loaded / xhr.total) * 100);
           progressEl.textContent = `${pct}%`;
         } else {
@@ -4071,10 +4217,33 @@
         }
       },
       (err) => {
-        progressEl.textContent = 'Error loading model';
-        console.error(err);
+        progressEl.textContent = 'Retrying model...';
+        console.error('Initial model load error:', err);
+        // Automatic retry for recoverable mobile network drops
+        setTimeout(() => {
+          loader.load('assets/models/tree.glb', (retryGltf) => {
+            treeModel = retryGltf.scene;
+            scene.add(treeModel);
+            fitTreeTopToBottom();
+            loadingEl?.classList.add('hidden');
+            setTimeout(() => loadingEl?.remove(), 800);
+          }, null, () => {
+            loadingEl?.classList.add('hidden');
+            setTimeout(() => loadingEl?.remove(), 800);
+          });
+        }, 1200);
       }
     );
+
+    // Safeguard: On slow/flaky mobile connections, never leave user blocked behind loading curtain indefinitely
+    setTimeout(() => {
+      if (loadingEl && !loadingEl.classList.contains('hidden')) {
+        loadingEl.style.transition = 'opacity 0.8s ease';
+        loadingEl.style.opacity = '0';
+        loadingEl.style.pointerEvents = 'none';
+        setTimeout(() => loadingEl.remove(), 900);
+      }
+    }, 12000);
 
     // ── HERO UI INTERACTION HOOKS (PRESERVED) ──
     const spinBtn = document.getElementById('btn-toggle-spin');
@@ -4175,9 +4344,48 @@
       }
     }, { capture: true, passive: false });
 
-    // ── ANIMATION LOOP ──
+    // ── MOBILE TOUCH GESTURES: NATURAL GLIDE TO CHAPTER 01 ON SWIPE DOWN ──
+    let heroTouchStartY = 0;
+    let heroTouchStartX = 0;
+    renderer.domElement.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        heroTouchStartY = e.touches[0].clientY;
+        heroTouchStartX = e.touches[0].clientX;
+      }
+    }, { passive: true });
+
+    renderer.domElement.addEventListener('touchend', (e) => {
+      if (e.changedTouches.length === 1) {
+        const dy = e.changedTouches[0].clientY - heroTouchStartY;
+        const dx = e.changedTouches[0].clientX - heroTouchStartX;
+        // If swiping downward on the mobile hero, glide smoothly to Chapter 01
+        if (dy < -60 && Math.abs(dy) > Math.abs(dx) * 1.3 && window.scrollY < 120) {
+          document.getElementById('chapter-01')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }, { passive: true });
+
+    // ── VIEWPORT INTERSECTION OBSERVER (MOBILE GPU & BATTERY PRESERVATION) ──
+    let isHeroVisible = true;
+    const heroObserver = new IntersectionObserver((entries) => {
+      isHeroVisible = entries[0].isIntersecting;
+    }, { threshold: 0.05 });
+    heroObserver.observe(container);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isHeroVisible = false;
+      } else {
+        const rect = container.getBoundingClientRect();
+        isHeroVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+      }
+    });
+
+    // ── ANIMATION LOOP (PAUSES SAFELY WHEN OFFSCREEN OR CONTEXT LOST) ──
     function animate() {
       requestAnimationFrame(animate);
+
+      if (!isHeroVisible || isHeroContextLost) return;
 
       if (targetCamPos && targetControlsLookAt) {
         camera.position.lerp(targetCamPos, 0.06);
@@ -4657,6 +4865,7 @@
   <script type="module">
     import * as THREE from 'three';
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     import { initOrbitalImageWheel } from './js/orbital-image-wheel.js';
@@ -4667,6 +4876,7 @@
     const progressFill = document.getElementById('energy-progress-fill');
 
     if (canvas && container) {
+      const isTurbineMobile = window.innerWidth <= 900 || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
       const scene = new THREE.Scene();
 
       const camera = new THREE.PerspectiveCamera(36, container.clientWidth / container.clientHeight, 0.1, 150);
@@ -4674,17 +4884,31 @@
       const renderer = new THREE.WebGLRenderer({
         canvas,
         alpha: true,
-        antialias: true,
-        powerPreference: 'high-performance'
+        antialias: !isTurbineMobile,
+        powerPreference: isTurbineMobile ? 'default' : 'high-performance'
       });
       renderer.setClearColor(0x000000, 0); // Pure transparent, no frame or window
       renderer.setSize(container.clientWidth, container.clientHeight, false);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(isTurbineMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.05;
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.shadowMap.type = isTurbineMobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
+
+      // ── TURBINE WEBGL CONTEXT RESILIENCE ──
+      let isTurbineContextLost = false;
+      canvas.addEventListener('webglcontextlost', (e) => {
+        e.preventDefault();
+        isTurbineContextLost = true;
+        console.warn('Turbine 3D: WebGL context lost.');
+      }, false);
+
+      canvas.addEventListener('webglcontextrestored', () => {
+        console.log('Turbine 3D: WebGL context restored.');
+        isTurbineContextLost = false;
+        onResize();
+      }, false);
 
       // Balanced environment reflections using RoomEnvironment
       const pmrem = new THREE.PMREMGenerator(renderer);
@@ -4705,7 +4929,8 @@
       const sunLight = new THREE.DirectionalLight(0xfff8ee, 2.2);
       sunLight.position.set(5.5, 11, 6.5);
       sunLight.castShadow = true;
-      sunLight.shadow.mapSize.set(2048, 2048);
+      const turbineShadowMapSize = isTurbineMobile ? 1024 : 2048;
+      sunLight.shadow.mapSize.set(turbineShadowMapSize, turbineShadowMapSize);
       sunLight.shadow.camera.near = 0.5;
       sunLight.shadow.camera.far = 25;
       sunLight.shadow.bias = -0.00015;
@@ -4739,8 +4964,12 @@
 
       const clock = new THREE.Clock();
 
-      // Load wind-turbine.glb
+      // Load wind-turbine.glb with DRACOLoader support
       const loader = new GLTFLoader();
+      const draco = new DRACOLoader();
+      draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/libs/draco/');
+      loader.setDRACOLoader(draco);
+
       loader.load(
         'assets/models/wind-turbine.glb',
         (gltf) => {
@@ -4806,6 +5035,13 @@
           const maxDim = Math.max(size.x, size.y, size.z);
           const fov = camera.fov * (Math.PI / 180);
           let dist = Math.abs(maxDim / (2 * Math.tan(fov / 2))) * 1.35;
+
+          // Portrait mobile aspect ratio awareness so blades are never clipped
+          if (camera.aspect < 1.0) {
+            const hFov = 2 * Math.atan(Math.tan(fov / 2) * camera.aspect);
+            const distW = Math.abs(maxDim / (2 * Math.tan(hFov / 2))) * 1.15;
+            dist = Math.max(dist, distW);
+          }
           dist = Math.max(dist, 4.2);
 
           camera.position.set(dist * 0.72, dist * 0.38, dist * 1.05);
@@ -4857,9 +5093,28 @@
       const resizeObserver = new ResizeObserver(() => onResize());
       resizeObserver.observe(container);
 
+      // ── VIEWPORT INTERSECTION OBSERVER FOR WIND TURBINE ──
+      let isTurbineVisible = true;
+      const turbineObserver = new IntersectionObserver((entries) => {
+        isTurbineVisible = entries[0].isIntersecting;
+      }, { threshold: 0.05 });
+      turbineObserver.observe(container);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          isTurbineVisible = false;
+        } else {
+          const rect = container.getBoundingClientRect();
+          isTurbineVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+        }
+      });
+
       // Animation loop: Fan rotating & subtle floating island levitation
       function animate() {
         requestAnimationFrame(animate);
+
+        if (!isTurbineVisible || isTurbineContextLost) return;
+
         const delta = clock.getDelta();
         const elapsed = clock.getElapsedTime();
 
@@ -4974,6 +5229,7 @@
     const container = document.getElementById('earth-3d-slot');
 
     if (canvas && container) {
+      const isEarthMobile = window.innerWidth <= 900 || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
       camera.position.set(0, 0, 2.72);
@@ -4982,14 +5238,28 @@
       const renderer = new THREE.WebGLRenderer({
         canvas,
         alpha: true,
-        antialias: true,
-        powerPreference: 'high-performance'
+        antialias: !isEarthMobile,
+        powerPreference: isEarthMobile ? 'default' : 'high-performance'
       });
       renderer.setClearColor(0x000000, 0); // Fully transparent background
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(isEarthMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.20;
+
+      // ── EARTH WEBGL CONTEXT RESILIENCE ──
+      let isEarthContextLost = false;
+      canvas.addEventListener('webglcontextlost', (e) => {
+        e.preventDefault();
+        isEarthContextLost = true;
+        console.warn('Earth 3D: WebGL context lost.');
+      }, false);
+
+      canvas.addEventListener('webglcontextrestored', () => {
+        console.log('Earth 3D: WebGL context restored.');
+        isEarthContextLost = false;
+        updateSize();
+      }, false);
 
       function updateSize() {
         if (!container) return;
@@ -5085,9 +5355,26 @@
       window.addEventListener('pointerup', () => { isDragging = false; });
       window.addEventListener('pointercancel', () => { isDragging = false; });
 
+      // ── VIEWPORT INTERSECTION OBSERVER FOR EARTH VIEWER ──
+      let isEarthVisible = true;
+      const earthObserver = new IntersectionObserver((entries) => {
+        isEarthVisible = entries[0].isIntersecting;
+      }, { threshold: 0.05 });
+      earthObserver.observe(container);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          isEarthVisible = false;
+        } else {
+          const rect = container.getBoundingClientRect();
+          isEarthVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+        }
+      });
+
       // Continuous animation loop: rotates strictly along vertical Y axis in place
       function animate() {
         requestAnimationFrame(animate);
+        if (!isEarthVisible || isEarthContextLost) return;
         if (!isDragging) {
           velX *= 0.94;
           earthSpin.rotation.y += 0.003 + velX;
