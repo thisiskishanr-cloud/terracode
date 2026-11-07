@@ -1625,27 +1625,25 @@
       max-width: 100% !important;
       margin: 0 !important;
       padding: 60px 0 70px !important;
-      background: linear-gradient(
-        180deg,
-        #14462E 0px,
-        #14462E 60px,
-        #2A3F22 150px,
-        #44381C 260px,
-        #503521 380px,
-        #4A2E1C 520px,
-        #4A2E1C calc(100% - 780px),
-        #4E311F calc(100% - 715px),
-        #593924 calc(100% - 635px),
-        #6A442C calc(100% - 545px),
-        #825537 calc(100% - 450px),
-        #9F6F4D calc(100% - 350px),
-        #BE8E6B calc(100% - 250px),
-        #D7AE8D calc(100% - 160px),
-        #E9CCB2 calc(100% - 90px),
-        #F3E2D3 calc(100% - 45px),
-        #F7EFE6 calc(100% - 15px),
-        #F7F8F3 100%
-      );
+      background: linear-gradient(180deg,
+          #14462E 0px,
+          #14462E 60px,
+          #2A3F22 150px,
+          #44381C 260px,
+          #503521 380px,
+          #4A2E1C 520px,
+          #4A2E1C calc(100% - 780px),
+          #4E311F calc(100% - 715px),
+          #593924 calc(100% - 635px),
+          #6A442C calc(100% - 545px),
+          #825537 calc(100% - 450px),
+          #9F6F4D calc(100% - 350px),
+          #BE8E6B calc(100% - 250px),
+          #D7AE8D calc(100% - 160px),
+          #E9CCB2 calc(100% - 90px),
+          #F3E2D3 calc(100% - 45px),
+          #F7EFE6 calc(100% - 15px),
+          #F7F8F3 100%);
       position: relative;
       z-index: 2;
       box-sizing: border-box;
@@ -1716,7 +1714,12 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: saturate(0.85) contrast(1.1);
+      object-position: center;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .challenge-card:hover .challenge-img {
+      transform: scale(1.05);
     }
 
     .challenge-tag-pill {
@@ -2722,6 +2725,7 @@
         grid-template-columns: 1fr;
         gap: 36px;
       }
+
       .documentary-footer {
         padding: 60px 24px 35px;
       }
@@ -3278,7 +3282,8 @@
               <span class="card-chip">Interactive</span>
             </div>
             <div class="card-title">Western Ghats Shola Canopy</div>
-            <p class="card-desc">Inspect native high-altitude rainforest flora in real-time 3D, switch camera angles, or drag to explore foliage structure.</p>
+            <p class="card-desc">Inspect native high-altitude rainforest flora in real-time 3D, switch camera angles, or
+              drag to explore foliage structure.</p>
 
             <div class="controls-wrapper">
               <button class="tool-btn" id="view-crown">🌿 Canopy Top</button>
@@ -3336,8 +3341,10 @@
         </div>
         <h2 class="chapter-title">Older than the Himalayas. An ancient sanctuary of life.</h2>
         <p class="chapter-subtitle">
-          Rising along the southwestern coast of India, the Western Ghats are one of the world's eight "hottest hotspots"
-          of biological diversity. To build a sustainable future, we must first discover the irreplaceable living wonders
+          Rising along the southwestern coast of India, the Western Ghats are one of the world's eight "hottest
+          hotspots"
+          of biological diversity. To build a sustainable future, we must first discover the irreplaceable living
+          wonders
           that shelter here.
         </p>
       </div>
@@ -3346,13 +3353,15 @@
       <div class="forest-hero-card">
         <img src="./assets/images/western-ghats.jpg?v=2"
           onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=85&w=1920&auto=format&fit=crop';"
-          alt="Ancient misty mountain ridges, cascading waterfall and lush tropical canopy of the Western Ghats, Kerala" class="forest-hero-img" loading="eager" />
+          alt="Ancient misty mountain ridges, cascading waterfall and lush tropical canopy of the Western Ghats, Kerala"
+          class="forest-hero-img" loading="eager" />
         <div class="forest-hero-overlay"></div>
         <div class="forest-hero-content">
           <span class="forest-hero-badge">UNESCO World Heritage • Global Biodiversity Hotspot</span>
           <h3 class="forest-hero-title">The Western Ghats of Kerala</h3>
           <p class="forest-hero-desc">
-            Older than the Himalayas, these mist-shrouded forested ridges capture the Arabian Sea monsoon, giving birth to
+            Older than the Himalayas, these mist-shrouded forested ridges capture the Arabian Sea monsoon, giving birth
+            to
             44 perennial rivers and sheltering over 5,000 vascular plant species, 139 mammal species, and 508
             avian species — with over a third found nowhere else on planet Earth.
           </p>
@@ -3381,8 +3390,8 @@
 
       <!-- Species of the Month Editorial Feature -->
       <div class="species-spotlight-card">
-        <img src="./assets/images/species/purple-frog.jpg"
-          alt="Purple Frog Spotlight" class="spotlight-img" loading="lazy" />
+        <img src="./assets/images/species/purple-frog.jpg" alt="Purple Frog Spotlight" class="spotlight-img"
+          loading="lazy" />
         <div>
           <span class="spotlight-badge">Species Spotlight &bull; Western Ghats Living Fossil</span>
           <h3 class="spotlight-title">Nasikabatrachus sahyadrensis</h3>
@@ -3399,7 +3408,8 @@
       <!-- Narrative Bridge -->
       <div class="narrative-bridge">
         <p class="narrative-bridge-text">
-          "Every species depends on a specific natural sanctuary. To safeguard them, we must learn to recognize and protect their forest homes."
+          "Every species depends on a specific natural sanctuary. To safeguard them, we must learn to recognize and
+          protect their forest homes."
         </p>
       </div>
     </section>
@@ -3413,7 +3423,8 @@
           </div>
           <h2 class="chapter-title" style="color: #ffffff;">Every sanctuary anchors a critical ecological corridor.</h2>
           <p class="chapter-subtitle" style="color: rgba(232, 245, 233, 0.88);">
-            A rainforest ridge, freshwater wetland, or mangrove estuary may look like a separate natural space. In reality, each forms a crucial link in the unbroken ecological corridor of Kerala and the Western Ghats.
+            A rainforest ridge, freshwater wetland, or mangrove estuary may look like a separate natural space. In
+            reality, each forms a crucial link in the unbroken ecological corridor of Kerala and the Western Ghats.
           </p>
         </div>
 
@@ -3431,7 +3442,8 @@
                 <div class="loc-name">Kadalundi–Vallikkunnu Community Reserve</div>
                 <div class="loc-type">Mangrove Estuary &amp; Intertidal Mudflats</div>
                 <p class="loc-summary">
-                  India's premier community reserve. Crucial coastal flyway for over 100 species of migratory shorebirds, otters, and rare Avicennia mangrove groves connecting river to sea.
+                  India's premier community reserve. Crucial coastal flyway for over 100 species of migratory
+                  shorebirds, otters, and rare Avicennia mangrove groves connecting river to sea.
                 </p>
               </div>
 
@@ -3439,7 +3451,8 @@
                 <div class="loc-name">Sarovaram Bio Park</div>
                 <div class="loc-type">Urban Wetland &amp; Freshwater Canal Reserve</div>
                 <p class="loc-summary">
-                  A 200-acre protected urban wetland network within Kozhikode, purifying regional storm runoff while providing shelter to otters, night herons, and endemic freshwater fish.
+                  A 200-acre protected urban wetland network within Kozhikode, purifying regional storm runoff while
+                  providing shelter to otters, night herons, and endemic freshwater fish.
                 </p>
               </div>
 
@@ -3447,7 +3460,8 @@
                 <div class="loc-name">Kakkayam Forest Reserve</div>
                 <div class="loc-type">Upland Shola Foothills &amp; Perennial River Source</div>
                 <p class="loc-summary">
-                  High-rainfall wet evergreen rainforest sanctuary protecting wild Asian elephants, endangered hornbills, and the pristine headwaters of the Kuttiyadi river.
+                  High-rainfall wet evergreen rainforest sanctuary protecting wild Asian elephants, endangered
+                  hornbills, and the pristine headwaters of the Kuttiyadi river.
                 </p>
               </div>
 
@@ -3455,7 +3469,8 @@
                 <div class="loc-name">Janakikkadu Eco Reserve</div>
                 <div class="loc-type">Dense Lowland Evergreen Forest • Kozhikode</div>
                 <p class="loc-summary">
-                  131 hectares of rich Western Ghats biodiversity containing over 200 rare medicinal plant species, flying squirrels, and endemic butterflies.
+                  131 hectares of rich Western Ghats biodiversity containing over 200 rare medicinal plant species,
+                  flying squirrels, and endemic butterflies.
                 </p>
               </div>
 
@@ -3467,7 +3482,8 @@
         <!-- Narrative Bridge inside Chapter 04 -->
         <div class="narrative-bridge bridge-green-narrative">
           <p class="narrative-bridge-text">
-            "Yet across this mountain spine, these ancient habitats face mounting human pressures. When ecosystems are severed, the web of life begins to fray."
+            "Yet across this mountain spine, these ancient habitats face mounting human pressures. When ecosystems are
+            severed, the web of life begins to fray."
           </p>
         </div>
       </div>
@@ -3492,14 +3508,15 @@
 
           <div class="challenge-card spotlight-card">
             <div class="challenge-img-container">
-              <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=900&auto=format&fit=crop"
-                alt="Highway slicing through forest canopy" class="challenge-img" loading="lazy" />
+              <img src="assets/images/challenges/linear-habitat-fragmentation.jpg"
+                alt="Linear Habitat Fragmentation through Western Ghats forest" class="challenge-img" loading="lazy" />
             </div>
             <div class="challenge-body">
               <h3 class="challenge-title">1. Linear Habitat Fragmentation</h3>
               <p class="challenge-desc">
                 Highways, steep hillside cutting, and transmission corridors slice through ancient elephant
-                migration pathways and disconnect arboreal canopies, preventing endangered mammals like the Nilgiri Langur
+                migration pathways and disconnect arboreal canopies, preventing endangered mammals like the Nilgiri
+                Langur
                 and Lion-tailed Macaque from crossing safely.
               </p>
             </div>
@@ -3507,13 +3524,14 @@
 
           <div class="challenge-card spotlight-card">
             <div class="challenge-img-container">
-              <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?q=80&w=900&auto=format&fit=crop"
-                alt="Degraded wetland and waste" class="challenge-img" loading="lazy" />
+              <img src="assets/images/challenges/shola-wetland-encroachment.jpg"
+                alt="Shola Wetland Encroachment and montane land-use disruption" class="challenge-img" loading="lazy" />
             </div>
             <div class="challenge-body">
               <h3 class="challenge-title">2. Shola &amp; Wetland Encroachment</h3>
               <p class="challenge-desc">
-                Encroachment, unscientific landfilling, and exotic monoculture plantations destroy the natural water-sponge basins
+                Encroachment, unscientific landfilling, and exotic monoculture plantations destroy the natural
+                water-sponge basins
                 of the Ghats, triggering devastating summer droughts and severe monsoon mudslides.
               </p>
             </div>
@@ -3521,8 +3539,8 @@
 
           <div class="challenge-card spotlight-card">
             <div class="challenge-img-container">
-              <img src="https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?q=80&w=900&auto=format&fit=crop"
-                alt="Polluted waterway with plastic debris" class="challenge-img" loading="lazy" />
+              <img src="assets/images/challenges/watershed-stream-degradation.jpg"
+                alt="Watershed Stream Degradation in forest catchments" class="challenge-img" loading="lazy" />
             </div>
             <div class="challenge-body">
               <h3 class="challenge-title">3. Watershed &amp; Stream Degradation</h3>
@@ -3535,13 +3553,14 @@
 
           <div class="challenge-card spotlight-card">
             <div class="challenge-img-container">
-              <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=900&auto=format&fit=crop"
-                alt="Elephant near human settlement boundary" class="challenge-img" loading="lazy" />
+              <img src="assets/images/challenges/human-wildlife-conflict.jpg"
+                alt="Human-Wildlife Fringe Conflict along forest boundaries" class="challenge-img" loading="lazy" />
             </div>
             <div class="challenge-body">
               <h3 class="challenge-title">4. Human-Wildlife Fringe Conflict</h3>
               <p class="challenge-desc">
-                Depletion of native bamboo and natural fodder inside forest boundaries forces wild elephants and leopards into
+                Depletion of native bamboo and natural fodder inside forest boundaries forces wild elephants and
+                leopards into
                 fringe agricultural homesteads, demanding compassionate bio-fencing and protected corridors.
               </p>
             </div>
@@ -3556,13 +3575,15 @@
             <div class="cascade-step-item spotlight-card">
               <span class="step-num">Cascade 01</span>
               <h4 class="step-head">Soil &amp; Sponge Loss</h4>
-              <p class="step-desc">Natural soil sponge effect is erased; monsoon storm runoff tears through fragile slopes,
+              <p class="step-desc">Natural soil sponge effect is erased; monsoon storm runoff tears through fragile
+                slopes,
                 causing violent flash floods within minutes.</p>
             </div>
             <div class="cascade-step-item spotlight-card">
               <span class="step-num">Cascade 02</span>
               <h4 class="step-head">Breeding Streams Crash</h4>
-              <p class="step-desc">Endemic torrent frogs, crabs, and rheophilic fish lose sheltered gravel beds, collapsing
+              <p class="step-desc">Endemic torrent frogs, crabs, and rheophilic fish lose sheltered gravel beds,
+                collapsing
                 local populations.</p>
             </div>
             <div class="cascade-step-item spotlight-card">
@@ -3574,7 +3595,8 @@
             <div class="cascade-step-item spotlight-card">
               <span class="step-num">Cascade 04</span>
               <h4 class="step-head">Regional Aquifer Depletion</h4>
-              <p class="step-desc">Mountain aquifers dry up; surrounding agricultural valleys and community drinking-water
+              <p class="step-desc">Mountain aquifers dry up; surrounding agricultural valleys and community
+                drinking-water
                 wells face severe summer water crises.</p>
             </div>
           </div>
@@ -3600,7 +3622,8 @@
         <h2 class="chapter-title">Reading the vital signs of Western Ghats ecosystems.</h2>
         <p class="chapter-subtitle">
           Building a sustainable future requires sound ecological science. By monitoring forest stream chemistry,
-          microclimate temperatures, and indicator species, communities gather the data needed to safeguard vulnerable habitats.
+          microclimate temperatures, and indicator species, communities gather the data needed to safeguard vulnerable
+          habitats.
         </p>
       </div>
 
@@ -3610,12 +3633,14 @@
         <div class="water-dashboard-card" id="water-watch">
           <div class="water-header-row">
             <div>
-              <span class="chapter-tag" style="margin-bottom: 8px;">Pillar 03 / Watershed &amp; Stream Health Station</span>
+              <span class="chapter-tag" style="margin-bottom: 8px;">Pillar 03 / Watershed &amp; Stream Health
+                Station</span>
               <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: var(--forest-deep);">
                 Living waters are the lifeblood of the Ghats.
               </h3>
               <p style="font-size: 14.5px; color: var(--botanical-grey); margin-top: 4px;">
-                Western Ghats headwaters sustain 44 rivers and thousands of endemic species. Monitoring physical and chemical
+                Western Ghats headwaters sustain 44 rivers and thousands of endemic species. Monitoring physical and
+                chemical
                 stream markers reveals the ecological health of forest catchments.
               </p>
             </div>
@@ -3645,7 +3670,8 @@
                 <span class="ind-value" id="val-ph">7.4</span>
                 <span class="ind-unit">pH</span>
               </div>
-              <p class="ind-meaning">Amphibian Bio-Indicator: Neutral stream pH is essential for skin respiration and egg development in endemic torrent frogs.</p>
+              <p class="ind-meaning">Amphibian Bio-Indicator: Neutral stream pH is essential for skin respiration and
+                egg development in endemic torrent frogs.</p>
             </div>
 
             <div class="indicator-card">
@@ -3657,7 +3683,8 @@
                 <span class="ind-value" id="val-do">6.8</span>
                 <span class="ind-unit">mg/L</span>
               </div>
-              <p class="ind-meaning">Stream Fauna Respiration: High oxygen saturation sustains rheophilic stream fish, freshwater crabs, and aquatic insect larvae.</p>
+              <p class="ind-meaning">Stream Fauna Respiration: High oxygen saturation sustains rheophilic stream fish,
+                freshwater crabs, and aquatic insect larvae.</p>
             </div>
 
             <div class="indicator-card">
@@ -3669,7 +3696,8 @@
                 <span class="ind-value" id="val-tur">4.2</span>
                 <span class="ind-unit">NTU</span>
               </div>
-              <p class="ind-meaning">Canopy Siltation Marker: Low turbidity ensures sunlight reaches aquatic riverbed moss where hornbills and kingfishers hunt.</p>
+              <p class="ind-meaning">Canopy Siltation Marker: Low turbidity ensures sunlight reaches aquatic riverbed
+                moss where hornbills and kingfishers hunt.</p>
             </div>
 
             <div class="indicator-card">
@@ -3681,7 +3709,8 @@
                 <span class="ind-value" id="val-temp">26.8</span>
                 <span class="ind-unit">°C</span>
               </div>
-              <p class="ind-meaning">Microclimate Equilibrium: Regulates dissolved gas levels and metabolic rates of temperature-sensitive montane aquatic species.</p>
+              <p class="ind-meaning">Microclimate Equilibrium: Regulates dissolved gas levels and metabolic rates of
+                temperature-sensitive montane aquatic species.</p>
             </div>
 
             <div class="indicator-card">
@@ -3693,7 +3722,8 @@
                 <span class="ind-value" id="val-ec">420</span>
                 <span class="ind-unit">µS/cm</span>
               </div>
-              <p class="ind-meaning">Dissolved Mineral Baseline: Gauges baseline dissolved minerals; sharp spikes reveal soil erosion or agricultural leaching.</p>
+              <p class="ind-meaning">Dissolved Mineral Baseline: Gauges baseline dissolved minerals; sharp spikes reveal
+                soil erosion or agricultural leaching.</p>
             </div>
 
             <div class="indicator-card">
@@ -3705,13 +3735,19 @@
                 <span class="ind-value" id="val-nit">0.8</span>
                 <span class="ind-unit">mg/L</span>
               </div>
-              <p class="ind-meaning">Nutrient Balance: Pristine forest springs maintain minimal nitrates, preventing weed choking of native forest pools.</p>
+              <p class="ind-meaning">Nutrient Balance: Pristine forest springs maintain minimal nitrates, preventing
+                weed choking of native forest pools.</p>
             </div>
 
           </div>
 
           <div class="water-data-disclaimer">
-            * Benchmark Sample Data: Curated from Western Ghats watershed research and Kerala State Pollution Control Board baseline survey standards. Habitat biometric tracking provides conservationists with empirical benchmarks to protect endangered stream ecosystems.
+            * Ecological baseline indicators curated from Western Ghats watershed research and Kerala environmental
+            survey data. Habitat biometric tracking provides conservationists with empirical benchmarks to protect
+            endangered stream ecosystems.
+            * Benchmark Sample Data: Curated from Western Ghats watershed research and Kerala State Pollution Control
+            Board baseline survey standards. Habitat biometric tracking provides conservationists with empirical
+            benchmarks to protect endangered stream ecosystems.
           </div>
         </div>
 
@@ -3720,7 +3756,8 @@
       <!-- Narrative Bridge -->
       <div class="narrative-bridge">
         <p class="narrative-bridge-text">
-          "When ecological science joins hands with community stewardship, observation turns into conservation. Together, we can build a sustainable future."
+          "When ecological science joins hands with community stewardship, observation turns into conservation.
+          Together, we can build a sustainable future."
         </p>
       </div>
     </section>
@@ -3733,7 +3770,8 @@
         </div>
         <h2 class="chapter-title">Conservation is not just something we watch. It is something we do.</h2>
         <p class="chapter-subtitle">
-          Building a sustainable future for the Western Ghats requires local stewardship and clean, low-impact innovation.
+          Building a sustainable future for the Western Ghats requires local stewardship and clean, low-impact
+          innovation.
           From indigenous sapling rewilding to eco-sensitive clean energy, communities lead the way.
         </p>
       </div>
@@ -3745,7 +3783,8 @@
           <span class="pillar-num">01 / DISCOVERY</span>
           <h3 class="pillar-title">OBSERVE</h3>
           <p class="pillar-desc">
-            Document sightings of endemic flora, butterflies, and rare birds in your region to enrich open-access Western Ghats biodiversity maps.
+            Document sightings of endemic flora, butterflies, and rare birds in your region to enrich open-access
+            Western Ghats biodiversity maps.
           </p>
           <a href="#chapter-03" class="pillar-cta-link">Explore Species Guide &rarr;</a>
         </div>
@@ -3754,7 +3793,8 @@
           <span class="pillar-num">02 / SCIENCE</span>
           <h3 class="pillar-title">MEASURE</h3>
           <p class="pillar-desc">
-            Monitor local forest stream health, seasonal rainfall, and microclimates to detect ecological stress before habitats decline.
+            Monitor local forest stream health, seasonal rainfall, and microclimates to detect ecological stress before
+            habitats decline.
           </p>
           <a href="#water-watch" class="pillar-cta-link">View Habitat Health Station &rarr;</a>
         </div>
@@ -3763,7 +3803,8 @@
           <span class="pillar-num">03 / CORRIDORS</span>
           <h3 class="pillar-title">PROTECT</h3>
           <p class="pillar-desc">
-            Safeguard wildlife migration routes by advocating for animal underpasses and preserving sacred groves that link fragmented forests.
+            Safeguard wildlife migration routes by advocating for animal underpasses and preserving sacred groves that
+            link fragmented forests.
           </p>
           <a href="#action-banner" class="pillar-cta-link">Get Involved &rarr;</a>
         </div>
@@ -3792,7 +3833,8 @@
               </span>
               <h3 class="energy-wheel-title">Decentralized Clean Energy</h3>
               <p class="energy-wheel-subtitle">
-                Low-impact renewable technologies designed to power forest-fringe communities without damming rivers or fragmenting wildlife corridors.
+                Low-impact renewable technologies designed to power forest-fringe communities without damming rivers or
+                fragmenting wildlife corridors.
               </p>
             </div>
             <div id="orbital-image-wheel-root"></div>
@@ -3827,7 +3869,8 @@
         <div class="citizen-wall-header">
           <div>
             <h3 class="citizen-wall-title">Green Citizen Wall</h3>
-            <p class="citizen-wall-sub">Honoring grassroots conservation contributions from students, researchers, and local stewards across Kerala and the Western Ghats.</p>
+            <p class="citizen-wall-sub">Honoring grassroots conservation contributions from students, researchers, and
+              local stewards across Kerala and the Western Ghats.</p>
           </div>
           <span class="chapter-tag citizen-wall-tag">
             <span>Verified Field Community</span>
@@ -3851,7 +3894,8 @@
               <span class="contrib-author">Western Ghats River Protectors</span>
               <span class="contrib-role-tag">Community Action</span>
             </div>
-            <p class="contrib-action">Restored native riparian buffer vegetation along 6 stretches of the river basin and
+            <p class="contrib-action">Restored native riparian buffer vegetation along 6 stretches of the river basin
+              and
               planted 400 mangrove saplings.</p>
             <span class="contrib-date">Kallai Estuary • Verified Nov 2026</span>
           </div>
@@ -3933,7 +3977,8 @@
               <div class="footer-brand-title">GREEN TOMORROW</div>
             </div>
             <p class="footer-brand-desc">
-              Dedicated to documenting, preserving, and restoring the irreplaceable biodiversity of the Western Ghats for a resilient and sustainable future.
+              Dedicated to documenting, preserving, and restoring the irreplaceable biodiversity of the Western Ghats
+              for a resilient and sustainable future.
             </p>
           </div>
 
@@ -3955,11 +4000,16 @@
 
           <div class="footer-links-col">
             <span class="footer-links-head">Verified Data Sources</span>
-            <a href="https://www.iucnredlist.org" target="_blank" rel="noopener noreferrer" class="footer-link-a">IUCN Red List</a>
-            <a href="https://ipbes.net/global-assessment" target="_blank" rel="noopener noreferrer" class="footer-link-a">IPBES Assessment</a>
-            <a href="https://bsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Botanical Survey of India</a>
-            <a href="https://zsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Zoological Survey of India</a>
-            <a href="https://keralapcb.nic.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Kerala Pollution Control Board</a>
+            <a href="https://www.iucnredlist.org" target="_blank" rel="noopener noreferrer" class="footer-link-a">IUCN
+              Red List</a>
+            <a href="https://ipbes.net/global-assessment" target="_blank" rel="noopener noreferrer"
+              class="footer-link-a">IPBES Assessment</a>
+            <a href="https://bsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Botanical
+              Survey of India</a>
+            <a href="https://zsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Zoological
+              Survey of India</a>
+            <a href="https://keralapcb.nic.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Kerala
+              Pollution Control Board</a>
           </div>
 
         </div>
