@@ -1,0 +1,5164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Tomorrow — Building the Sustainable Future | Kerala Biodiversity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=Syne:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <!-- Leaflet CSS for Chapter 04 Green Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <!-- GSAP for 3D Animations & Accordion Gallery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Orbital Image Wheel CSS -->
+  <link rel="stylesheet" href="./css/orbital-image-wheel.css">
+  <!-- Accordion Gallery CSS -->
+  <link rel="stylesheet" href="./css/accordion-gallery.css">
+
+  <style>
+    :root {
+      --primary: #047857;
+      --primary-light: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.28);
+      --emerald-accent: #059669;
+      --forest-green: #174B38;
+      --forest-deep: #0D2E22;
+      --sage-green: #A9C4A8;
+      --mist-green: #DCE7D9;
+      --ivory-white: #F7F8F3;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-light: #64748b;
+      --botanical-grey: #5A6A60;
+      --glass-bg: rgba(255, 255, 255, 0.68);
+      --glass-border: rgba(255, 255, 255, 0.9);
+      --glass-shadow: 0 20px 45px -15px rgba(6, 78, 59, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.95);
+      --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      background-color: #ffffff;
+    }
+
+    /* ── AMBIENT GLASSY / MARBLE BACKGROUND WITH PURE WHITE CENTER SPOTLIGHT (HERO PRESERVED) ── */
+    .ambient-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    /* Edge & Corner Green Gradients */
+    .ambient-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle 650px at 0% 0%, rgba(5, 150, 105, 0.28) 0%, rgba(16, 185, 129, 0.14) 40%, transparent 75%),
+        radial-gradient(circle 700px at 100% 0%, rgba(4, 120, 87, 0.24) 0%, rgba(52, 211, 153, 0.14) 45%, transparent 75%),
+        radial-gradient(circle 750px at 0% 100%, rgba(16, 185, 129, 0.26) 0%, rgba(110, 231, 183, 0.15) 42%, transparent 75%),
+        radial-gradient(circle 800px at 100% 100%, rgba(5, 150, 105, 0.28) 0%, rgba(52, 211, 153, 0.15) 45%, transparent 80%),
+        radial-gradient(ellipse 48% 75% at -6% 50%, rgba(16, 185, 129, 0.20) 0%, transparent 70%),
+        radial-gradient(ellipse 48% 75% at 106% 50%, rgba(16, 185, 129, 0.20) 0%, transparent 70%),
+        radial-gradient(ellipse 65% 35% at 50% -8%, rgba(16, 185, 129, 0.18) 0%, transparent 75%),
+        radial-gradient(ellipse 65% 35% at 50% 108%, rgba(5, 150, 105, 0.20) 0%, transparent 75%);
+      filter: blur(28px);
+    }
+
+    /* Floating Liquid Marble Edge Orbs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(95px);
+      opacity: 0.6;
+      mix-blend-mode: multiply;
+      animation: floatOrganic 24s ease-in-out infinite alternate;
+    }
+
+    .blob-1 {
+      top: -14%;
+      left: -8%;
+      width: 580px;
+      height: 580px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.45) 0%, rgba(52, 211, 153, 0.15) 65%, transparent 100%);
+    }
+
+    .blob-2 {
+      bottom: -16%;
+      right: -10%;
+      width: 680px;
+      height: 680px;
+      background: radial-gradient(circle, rgba(5, 150, 105, 0.42) 0%, rgba(167, 243, 208, 0.2) 65%, transparent 100%);
+      animation-duration: 28s;
+      animation-delay: -6s;
+    }
+
+    .blob-3 {
+      top: -12%;
+      right: -8%;
+      width: 540px;
+      height: 540px;
+      background: radial-gradient(circle, rgba(52, 211, 153, 0.38) 0%, rgba(110, 231, 183, 0.15) 65%, transparent 100%);
+      animation-duration: 22s;
+      animation-delay: -12s;
+    }
+
+    .blob-4 {
+      bottom: -14%;
+      left: -8%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(4, 120, 87, 0.35) 0%, rgba(16, 185, 129, 0.18) 60%, transparent 100%);
+      animation-duration: 26s;
+      animation-delay: -18s;
+    }
+
+    @keyframes floatOrganic {
+      0% {
+        transform: translate(0px, 0px) scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: translate(40px, 35px) scale(1.08) rotate(35deg);
+      }
+
+      100% {
+        transform: translate(-30px, 45px) scale(0.95) rotate(-25deg);
+      }
+    }
+
+    /* PURE WHITE CENTER SPOTLIGHT MASK — Keeps the centerpiece pure white */
+    .spotlight-center {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 70% at 50% 50%, #ffffff 0%, #ffffff 54%, rgba(255, 255, 255, 0.94) 70%, rgba(255, 255, 255, 0) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Subtle Glass / Marble Polish Sheen */
+    .marble-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 0),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%, rgba(255, 255, 255, 0.2) 100%);
+      background-size: 32px 32px, 100% 100%;
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ── HERO VIEWPORT WRAPPER (HERO PRESERVED) ── */
+    .hero-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+
+    /* ── 3D CANVAS LAYER (HERO PRESERVED) ── */
+    #webgl-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      outline: none;
+      cursor: grab;
+    }
+
+    #webgl-container:active {
+      cursor: grabbing;
+    }
+
+    /* ── HERO OVERLAY UI (HERO PRESERVED) ── */
+    .hero-layout {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 48px;
+    }
+
+    .hero-layout.layer-back {
+      z-index: 1;
+    }
+
+    .hero-layout.layer-front {
+      z-index: 3;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1540px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 21px;
+      box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .brand-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #0f172a;
+    }
+
+    .brand-text span {
+      color: var(--primary-light);
+      font-weight: 800;
+    }
+
+    .nav-cta {
+      pointer-events: auto;
+      padding: 11px 24px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px -8px rgba(4, 120, 87, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: var(--transition-smooth);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -6px rgba(4, 120, 87, 0.55);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+
+    /* Main Hero Split Columns */
+    .hero-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 1540px;
+      margin: auto;
+      position: relative;
+    }
+
+    /* Left Column: Headline & Action */
+    .hero-left {
+      width: 37%;
+      max-width: 520px;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeInSlideLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(40px, 4.4vw, 62px);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -1.8px;
+      color: #0f172a;
+    }
+
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #047857 0%, #10b981 70%, #059669 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .hero-description {
+      font-size: 16.5px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .btn-primary {
+      padding: 14px 30px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 16px 32px -10px rgba(4, 120, 87, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 20px 38px -8px rgba(4, 120, 87, 0.55);
+    }
+
+    .btn-secondary {
+      padding: 14px 26px;
+      border-radius: 14px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: var(--glass-shadow);
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: var(--primary);
+    }
+
+    /* Left Stats Mini Strip */
+    .mini-stats {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(16, 185, 129, 0.15);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+
+    .stat-label {
+      font-size: 12.5px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    /* Right Column: Floating Glassmorphic Cards & Controls */
+    .hero-right {
+      width: 32%;
+      max-width: 420px;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeInSlideRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(26px) saturate(190%);
+      -webkit-backdrop-filter: blur(26px) saturate(190%);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: var(--glass-shadow);
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), transparent);
+      opacity: 0.8;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 25px 50px -15px rgba(4, 120, 87, 0.15), 0 0 0 1px rgba(255, 255, 255, 1);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-tag {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-icon {
+      font-size: 14px;
+    }
+
+    .card-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--primary);
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Interactive Viewport Tools inside Card */
+    .controls-wrapper {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tool-btn {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 10px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-smooth);
+    }
+
+    .tool-btn:hover {
+      background: #ffffff;
+      color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    }
+
+    .tool-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Secondary Metric card */
+    .metric-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .metric-gauge {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .gauge-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: conic-gradient(#10b981 0% 86%, rgba(16, 185, 129, 0.15) 86% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .gauge-circle::after {
+      content: '';
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .gauge-circle span {
+      position: relative;
+      z-index: 1;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* ── LOADER SCREEN ── */
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      z-index: 100;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 36px 48px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 25px 60px -20px rgba(4, 120, 87, 0.2);
+    }
+
+    .loader-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(16, 185, 129, 0.15);
+      border-top-color: #10b981;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loader-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #0f172a;
+    }
+
+    #progress {
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Entrance animations */
+    @keyframes fadeInSlideLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-35px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInSlideRight {
+      from {
+        opacity: 0;
+        transform: translateX(35px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       NEW DOCUMENTARY STORYTELLING EXPERIENCE (CHAPTERS 01 TO 08)
+       Sophisticated Green-and-White Marble Visual Identity
+       Ivory: #F7F8F3 | Forest: #174B38 | Sage: #A9C4A8 | Mist: #DCE7D9
+       Editorial Typography: Playfair Display + Plus Jakarta / Inter
+       ══════════════════════════════════════════════════════════════════ */
+
+    /* Persistent Slim Chapter Progress Rail */
+    .chapter-nav-rail {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 12px 8px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 9999px;
+      box-shadow: 0 15px 35px -10px rgba(23, 75, 56, 0.12);
+      transition: var(--transition-smooth);
+    }
+
+    .chapter-indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(23, 75, 56, 0.25);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .chapter-indicator-dot.active {
+      height: 24px;
+      border-radius: 12px;
+      background: var(--forest-green);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+    }
+
+    .chapter-tooltip {
+      position: absolute;
+      right: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--forest-green);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .chapter-indicator-dot:hover .chapter-tooltip {
+      opacity: 1;
+      transform: translateY(-50%) translateX(-4px);
+    }
+
+    /* Continuous Storytelling Main Container */
+    .documentary-wrapper {
+      position: relative;
+      z-index: 10;
+      background: #F7F8F3;
+      overflow: hidden;
+    }
+
+    /* Marble Texture Ambient Overlay for lower sections */
+    .marble-texture-subtle {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 20%, rgba(169, 196, 168, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 85% 75%, rgba(220, 231, 217, 0.25) 0%, transparent 55%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(247, 248, 243, 0.8) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── PLATFORM OVERVIEW SECTION (GREEN TOMORROW MISSION & 4 CORE PILLARS) ── */
+    .overview-section {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 100px 48px 60px;
+      max-width: 1480px;
+      margin: 0 auto;
+    }
+
+    .overview-container {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 36px;
+      padding: 64px 56px;
+      box-shadow: 0 30px 70px -20px rgba(23, 75, 56, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .overview-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #10b981, #047857, transparent);
+      opacity: 0.8;
+    }
+
+    .overview-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .overview-theme-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .overview-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(38px, 4.2vw, 56px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--forest-deep);
+      letter-spacing: -1px;
+    }
+
+    .overview-title .gradient-highlight {
+      background: linear-gradient(135deg, #047857 0%, #10b981 70%, #059669 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .overview-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 17.5px;
+      line-height: 1.7;
+      color: var(--botanical-grey);
+      font-weight: 400;
+    }
+
+    /* 4 Core Pillars Grid */
+    .overview-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .pillar-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 32px 26px;
+      border: 1px solid rgba(23, 75, 56, 0.1);
+      box-shadow: 0 12px 28px -8px rgba(23, 75, 56, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: var(--transition-smooth);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 24px 48px -12px rgba(4, 120, 87, 0.16);
+    }
+
+    .pillar-icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--mist-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      transition: var(--transition-smooth);
+    }
+
+    .pillar-card:hover .pillar-icon-box {
+      background: var(--primary);
+      color: #ffffff;
+      transform: scale(1.08);
+    }
+
+    .pillar-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+    }
+
+    .pillar-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--forest-deep);
+      line-height: 1.25;
+    }
+
+    .pillar-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--botanical-grey);
+    }
+
+    .pillar-action-link {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid rgba(23, 75, 56, 0.08);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-smooth);
+    }
+
+    .pillar-card:hover .pillar-action-link {
+      color: var(--forest-deep);
+      transform: translateX(4px);
+    }
+
+    /* Common Story Chapter Containers */
+    .story-chapter {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 120px 48px;
+      max-width: 1480px;
+      margin: 0 auto;
+    }
+
+    .chapter-header {
+      max-width: 920px;
+      margin: 0 auto 60px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .chapter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      background: rgba(23, 75, 56, 0.08);
+      border: 1px solid rgba(23, 75, 56, 0.18);
+      color: var(--forest-green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .chapter-tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary-light);
+    }
+
+    .chapter-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(38px, 4.4vw, 58px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--forest-deep);
+      letter-spacing: -1px;
+    }
+
+    .chapter-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(16px, 1.3vw, 19px);
+      line-height: 1.68;
+      color: var(--botanical-grey);
+      font-weight: 400;
+      max-width: 780px;
+    }
+
+    /* Continuous Narrative Bridge Transition Between Chapters */
+    .narrative-bridge {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 40px auto 0;
+      padding: 32px 36px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px -10px rgba(23, 75, 56, 0.06);
+    }
+
+    .narrative-bridge-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 21px;
+      font-style: italic;
+      color: var(--forest-green);
+      line-height: 1.55;
+    }
+
+    /* ── CHAPTER 01: THE BEGINNING: A LIVING WORLD ── */
+    .forest-hero-card {
+      position: relative;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 35px 70px -20px rgba(13, 46, 34, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      height: 620px;
+      display: flex;
+      align-items: flex-end;
+      background: #0D2E22;
+    }
+
+    .forest-hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: brightness(0.88) contrast(1.05);
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .forest-hero-card:hover .forest-hero-img {
+      transform: scale(1.03);
+    }
+
+    .forest-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(13, 46, 34, 0.15) 0%, rgba(13, 46, 34, 0.4) 50%, rgba(13, 46, 34, 0.92) 100%);
+    }
+
+    .forest-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 56px 64px;
+      color: #ffffff;
+      max-width: 920px;
+    }
+
+    .forest-hero-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .forest-hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(32px, 3.8vw, 50px);
+      line-height: 1.18;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+
+    .forest-hero-desc {
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.88);
+      font-weight: 300;
+    }
+
+    /* ── CHAPTER 02: THE CONNECTION: UNDERSTANDING BIODIVERSITY ── */
+    .ecosystem-diagram-container {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 32px;
+      padding: 56px 48px;
+      box-shadow: 0 30px 60px -20px rgba(23, 75, 56, 0.08);
+      position: relative;
+    }
+
+    .ecosystem-nodes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eco-node-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 28px 24px;
+      border: 1px solid rgba(23, 75, 56, 0.1);
+      box-shadow: 0 10px 25px -5px rgba(23, 75, 56, 0.04);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .eco-node-card:hover,
+    .eco-node-card.active {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px -10px rgba(4, 120, 87, 0.18);
+    }
+
+    .eco-node-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: var(--mist-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      transition: var(--transition-smooth);
+    }
+
+    .eco-node-card:hover .eco-node-icon,
+    .eco-node-card.active .eco-node-icon {
+      background: var(--primary);
+      color: #ffffff;
+      transform: scale(1.08);
+    }
+
+    .eco-node-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--forest-deep);
+    }
+
+    .eco-node-role {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--botanical-grey);
+    }
+
+    .eco-connection-badge {
+      margin-top: auto;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ecosystem-insight-banner {
+      margin-top: 40px;
+      padding: 24px 32px;
+      background: rgba(220, 231, 217, 0.55);
+      border: 1px solid rgba(169, 196, 168, 0.6);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .insight-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .insight-text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--forest-deep);
+    }
+
+    /* ── CHAPTER 03: THE LIFE: LOCAL SPECIES GUIDE ── */
+    .species-controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .species-filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-btn {
+      padding: 9px 20px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(23, 75, 56, 0.15);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--botanical-grey);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--forest-green);
+      color: #ffffff;
+      border-color: var(--forest-green);
+      box-shadow: 0 8px 18px -4px rgba(23, 75, 56, 0.3);
+    }
+
+    .species-search-box {
+      position: relative;
+      width: 280px;
+    }
+
+    .species-search-input {
+      width: 100%;
+      padding: 10px 18px 10px 40px;
+      border-radius: 9999px;
+      border: 1px solid rgba(23, 75, 56, 0.2);
+      background: rgba(255, 255, 255, 0.85);
+      font-size: 13.5px;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .species-search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      color: var(--text-light);
+    }
+
+    /* Species Editorial Panels (Large immersive photographic cards) */
+    .species-panels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .species-panel-card {
+      background: #ffffff;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 45px -15px rgba(23, 75, 56, 0.08);
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .species-panel-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px -15px rgba(23, 75, 56, 0.15);
+    }
+
+    .species-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background: #174B38;
+    }
+
+    .species-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .species-panel-card:hover .species-img {
+      transform: scale(1.08);
+    }
+
+    .species-status-pill {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .status-endangered {
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+    }
+
+    .status-vulnerable {
+      color: #d97706;
+      border: 1px solid #fcd34d;
+    }
+
+    .status-threatened {
+      color: #ea580c;
+      border: 1px solid #fdba74;
+    }
+
+    .status-least-concern {
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+
+    .species-panel-body {
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 12px;
+    }
+
+    .species-tags-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      background: var(--mist-green);
+      color: var(--forest-green);
+    }
+
+    .species-common-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--forest-deep);
+      line-height: 1.25;
+    }
+
+    .species-scientific-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      font-style: italic;
+      color: var(--botanical-grey);
+    }
+
+    .species-info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding-top: 8px;
+      border-top: 1px solid rgba(23, 75, 56, 0.08);
+    }
+
+    .species-expand-btn {
+      margin-top: auto;
+      padding-top: 14px;
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: var(--transition-smooth);
+    }
+
+    .species-expand-btn:hover {
+      color: var(--forest-green);
+      transform: translateX(3px);
+    }
+
+    /* Species of the month spotlight banner */
+    .species-spotlight-card {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(23, 75, 56, 0.94) 0%, rgba(13, 46, 34, 0.98) 100%);
+      border-radius: 32px;
+      padding: 48px;
+      color: #ffffff;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 40px;
+      align-items: center;
+      box-shadow: 0 30px 60px -15px rgba(13, 46, 34, 0.25);
+    }
+
+    .spotlight-img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .spotlight-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.25);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #a7f3d0;
+      margin-bottom: 12px;
+    }
+
+    .spotlight-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .spotlight-sub {
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 16px;
+    }
+
+    .spotlight-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* ── CHAPTER 04: THE HOME: GREEN SPACE MAPS ── */
+    .map-experience-container {
+      background: #ffffff;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 30px 70px -20px rgba(23, 75, 56, 0.12);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      min-height: 580px;
+    }
+
+    #leaflet-map {
+      width: 100%;
+      height: 100%;
+      min-height: 580px;
+      z-index: 1;
+    }
+
+    .map-sidebar {
+      padding: 36px 32px;
+      background: #F7F8F3;
+      border-left: 1px solid rgba(23, 75, 56, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+      max-height: 600px;
+    }
+
+    .map-sidebar-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--forest-deep);
+    }
+
+    .map-layer-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .map-pill-btn {
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: #ffffff;
+      border: 1px solid rgba(23, 75, 56, 0.15);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--forest-green);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .map-pill-btn:hover,
+    .map-pill-btn.active {
+      background: var(--forest-green);
+      color: #ffffff;
+    }
+
+    .location-cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .loc-card-item {
+      padding: 16px 18px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid rgba(23, 75, 56, 0.1);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .loc-card-item:hover,
+    .loc-card-item.selected {
+      border-color: var(--primary);
+      box-shadow: 0 10px 20px -5px rgba(23, 75, 56, 0.12);
+      transform: translateX(4px);
+    }
+
+    .loc-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--forest-deep);
+    }
+
+    .loc-type {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .loc-summary {
+      font-size: 12.5px;
+      color: var(--botanical-grey);
+      line-height: 1.45;
+    }
+
+    /* ── CHAPTER 05: THE WARNING: ENVIRONMENTAL CHALLENGES ── */
+    .warning-dark-atmosphere {
+      background: linear-gradient(180deg, #F7F8F3 0%, #152920 18%, #0F2018 100%);
+      border-radius: 40px;
+      padding: 90px 48px;
+      margin: 40px auto;
+      color: #ffffff;
+    }
+
+    .warning-header-dark .chapter-title {
+      color: #ffffff;
+    }
+
+    .warning-header-dark .chapter-subtitle {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .warning-challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin: 50px 0;
+    }
+
+    .challenge-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-smooth);
+    }
+
+    .challenge-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.4);
+    }
+
+    .challenge-img-container {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+    }
+
+    .challenge-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.85) contrast(1.1);
+    }
+
+    .challenge-tag-pill {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(13, 46, 34, 0.85);
+      backdrop-filter: blur(8px);
+      color: #fca5a5;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .challenge-body {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .challenge-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .challenge-desc {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    /* Educational Interactive Scene: What Happens When a Wetland Disappears */
+    .wetland-disappearance-scene {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 28px;
+      padding: 40px 44px;
+      margin-top: 40px;
+    }
+
+    .scene-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #6ee7b7;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cascade-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .cascade-step-item {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      color: #10b981;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .step-head {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    /* IPBES Scientific Citation Banner */
+    .ipbes-citation-card {
+      margin-top: 36px;
+      padding: 26px 32px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .ipbes-content {
+      max-width: 820px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .ipbes-content strong {
+      color: #fca5a5;
+    }
+
+    .ipbes-btn {
+      padding: 10px 20px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: var(--transition-smooth);
+    }
+
+    .ipbes-btn:hover {
+      background: #ffffff;
+      color: #0f2018;
+    }
+
+    /* ── CHAPTER 06: THE EVIDENCE: WATER MONITORING & WILDLIFE REPORTS ── */
+    .evidence-dual-container {
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    /* Part A: Water Watch Dashboard */
+    .water-dashboard-card {
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 44px;
+      border: 1px solid rgba(23, 75, 56, 0.12);
+      box-shadow: 0 30px 60px -15px rgba(23, 75, 56, 0.08);
+    }
+
+    .water-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .water-location-select {
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(23, 75, 56, 0.2);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--forest-green);
+      background: #F7F8F3;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .indicators-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .indicator-card {
+      background: #F7F8F3;
+      border-radius: 18px;
+      padding: 22px;
+      border: 1px solid rgba(23, 75, 56, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: var(--transition-smooth);
+    }
+
+    .indicator-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px -8px rgba(23, 75, 56, 0.1);
+      border-color: var(--primary);
+    }
+
+    .ind-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ind-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--botanical-grey);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .ind-status-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--primary);
+    }
+
+    .ind-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--forest-deep);
+    }
+
+    .ind-unit {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-light);
+      margin-left: 4px;
+    }
+
+    .ind-meaning {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .water-data-disclaimer {
+      font-size: 12px;
+      color: var(--text-light);
+      font-style: italic;
+      padding-top: 14px;
+      border-top: 1px solid rgba(23, 75, 56, 0.08);
+    }
+
+    /* Part B: Wildlife Watch Submission Interface */
+    .wildlife-report-container {
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 44px;
+      border: 1px solid rgba(23, 75, 56, 0.12);
+      box-shadow: 0 30px 60px -15px rgba(23, 75, 56, 0.08);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 48px;
+    }
+
+    .report-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--forest-deep);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 11px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(23, 75, 56, 0.2);
+      font-family: inherit;
+      font-size: 14px;
+      background: #F7F8F3;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+
+    .form-row-dual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-submit-btn {
+      padding: 14px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #047857 0%, #174B38 100%);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 10px 20px -5px rgba(4, 120, 87, 0.4);
+    }
+
+    .form-submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -6px rgba(4, 120, 87, 0.55);
+    }
+
+    .privacy-notice-box {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--botanical-grey);
+      background: var(--mist-green);
+      padding: 12px 16px;
+      border-radius: 10px;
+    }
+
+    /* Live Feed Feed Side */
+    .report-feed-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feed-header-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--forest-deep);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .feed-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+      max-height: 480px;
+    }
+
+    .feed-item-card {
+      padding: 16px;
+      background: #F7F8F3;
+      border-radius: 16px;
+      border: 1px solid rgba(23, 75, 56, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feed-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .feed-species {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--forest-deep);
+    }
+
+    .feed-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+
+    .badge-verified {
+      background: #d1fae5;
+      color: #047857;
+    }
+
+    .badge-pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .feed-meta {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .feed-note {
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    /* ── CHAPTER 07: THE ACTION: COMMUNITY CONSERVATION ── */
+    .action-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 56px;
+    }
+
+    .action-pillar-card {
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 32px 26px;
+      border: 1px solid rgba(23, 75, 56, 0.1);
+      box-shadow: 0 15px 35px -10px rgba(23, 75, 56, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: var(--transition-smooth);
+    }
+
+    .action-pillar-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -15px rgba(23, 75, 56, 0.15);
+      border-color: var(--primary);
+    }
+
+    .pillar-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary-light);
+      letter-spacing: 1px;
+    }
+
+    .pillar-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--forest-deep);
+    }
+
+    .pillar-desc {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--botanical-grey);
+    }
+
+    .pillar-cta-link {
+      margin-top: auto;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── CHAPTER 07: ENERGY CONSERVATION (FRAMELESS FLOATING 3D & VERTICAL CAROUSEL) ── */
+    .energy-conservation-section {
+      position: relative;
+      z-index: 10;
+      margin: 110px 0 120px 0;
+      padding: 24px 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .energy-conservation-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      align-items: center;
+      position: relative;
+      min-height: 580px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 960px) {
+      .energy-conservation-layout {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+
+    /* Left Column: Orbital Image Wheel */
+    .energy-methods-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Right Column: Floating Windmill popping out of the website */
+    .energy-turbine-stage {
+      position: relative;
+      height: 100%;
+    }
+
+    .energy-turbine-sticky-wrap {
+      position: sticky;
+      top: 100px;
+      width: 100%;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      transform: translateX(50px);
+    }
+
+    @media (max-width: 960px) {
+      .energy-turbine-sticky-wrap {
+        position: relative;
+        top: 0;
+        height: 480px;
+        transform: translateX(0);
+      }
+    }
+
+    #energy-turbine-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+      background: transparent;
+      pointer-events: auto;
+    }
+
+    #energy-turbine-canvas:active {
+      cursor: grabbing;
+    }
+
+    .floating-shadow-blur {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 70px;
+      background: radial-gradient(ellipse at center, rgba(15, 30, 22, 0.26) 0%, rgba(20, 50, 35, 0.12) 50%, transparent 75%);
+      filter: blur(24px);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      animation: shadow-breathe 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes shadow-breathe {
+      0% {
+        transform: translateX(-50%) scale(0.92);
+        opacity: 0.65;
+      }
+
+      100% {
+        transform: translateX(-50%) scale(1.08);
+        opacity: 0.95;
+      }
+    }
+
+    .energy-loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      z-index: 20;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .energy-loading-overlay.hidden {
+      opacity: 0;
+    }
+
+    .energy-spinner {
+      width: 38px;
+      height: 38px;
+      border: 3px solid rgba(16, 185, 129, 0.2);
+      border-top-color: #10b981;
+      border-radius: 50%;
+      animation: spin-energy 0.8s linear infinite;
+    }
+
+    @keyframes spin-energy {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .energy-loading-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--forest-deep);
+      background: rgba(255, 255, 255, 0.85);
+      padding: 4px 12px;
+      border-radius: 9999px;
+    }
+
+    .energy-progress-bar {
+      width: 140px;
+      height: 4px;
+      background: rgba(23, 75, 56, 0.1);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .energy-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #10b981;
+      transition: width 0.2s ease;
+    }
+
+    /* Green Citizen Wall */
+    .citizen-wall-container {
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 44px;
+      border: 1px solid rgba(23, 75, 56, 0.12);
+      box-shadow: 0 25px 55px -15px rgba(23, 75, 56, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .citizen-wall-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .citizen-wall-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .citizen-contribution-card {
+      padding: 20px 22px;
+      background: #F7F8F3;
+      border-radius: 18px;
+      border: 1px solid rgba(23, 75, 56, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contrib-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .contrib-author {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--forest-deep);
+    }
+
+    .contrib-role-tag {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: var(--mist-green);
+      color: var(--forest-green);
+    }
+
+    .contrib-action {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .contrib-date {
+      font-size: 11.5px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .action-cta-banner {
+      background: linear-gradient(135deg, var(--forest-green) 0%, var(--forest-deep) 100%);
+      border-radius: 28px;
+      padding: 50px 48px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .action-cta-text {
+      max-width: 650px;
+    }
+
+    .action-cta-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .action-cta-sub {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .action-cta-btn {
+      padding: 16px 36px;
+      border-radius: 9999px;
+      background: #10b981;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.5);
+    }
+
+    .action-cta-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.7);
+    }
+
+    /* ── CHAPTER 08: THE FUTURE: GLOBAL EARTH & MODERN TYPOGRAPHY ── */
+    .closing-experience-container {
+      position: relative;
+      border-radius: 48px;
+      overflow: hidden;
+      min-height: 740px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 48px;
+      background: radial-gradient(circle at 50% 38%, #FFFFFF 0%, #FAFAFA 55%, #F4F6F4 100%);
+      box-shadow: 0 30px 80px -20px rgba(6, 78, 59, 0.08), 0 0 0 1px rgba(6, 78, 59, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .world-bg-mesh {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px),
+        radial-gradient(rgba(6, 78, 59, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: 0 0, 20px 20px;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .world-glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      opacity: 0.2;
+      animation: floatGlowOrb 10s ease-in-out infinite alternate;
+    }
+
+    .world-glow-left {
+      top: 10%;
+      left: 8%;
+      width: 340px;
+      height: 340px;
+      background: #A7F3D0;
+    }
+
+    .world-glow-right {
+      bottom: 10%;
+      right: 8%;
+      width: 380px;
+      height: 380px;
+      background: #D1FAE5;
+      animation-delay: -5s;
+    }
+
+    @keyframes floatGlowOrb {
+      0% {
+        transform: translateY(0) scale(0.95);
+      }
+
+      100% {
+        transform: translateY(30px) scale(1.1);
+      }
+    }
+
+    .closing-content-box.modern-world-box {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      width: 100%;
+      color: #064E3B;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+    }
+
+    /* ── BIG MODERN TYPOGRAPHY STAGE ── */
+    .world-typography-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 8px 0;
+      width: 100%;
+    }
+
+    .world-lead-eyebrow {
+      font-family: 'Space Grotesk', 'Outfit', sans-serif;
+      font-size: clamp(20px, 3.2vw, 40px);
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #0D3322 0%, #1A593A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .world-interactive-word {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', 'Space Grotesk', -apple-system, sans-serif;
+      font-size: clamp(80px, 15.5vw, 215px);
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.015em;
+      text-transform: uppercase;
+      user-select: none;
+      text-align: center;
+      position: relative;
+    }
+
+    .world-letter {
+      display: inline-block;
+      background: linear-gradient(180deg, #0D3322 0%, #14462E 50%, #1B5E3E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 15px rgba(13, 51, 34, 0.12));
+    }
+
+    /* ── 3D EARTH SLOT IN PLACE OF 'O' ── */
+    .earth-3d-slot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 0.86em;
+      height: 0.86em;
+      margin: 0 0.04em;
+      vertical-align: middle;
+      cursor: grab;
+      flex-shrink: 0;
+      touch-action: none;
+    }
+
+    .earth-3d-slot:active {
+      cursor: grabbing;
+    }
+
+    .earth-3d-slot canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+
+    .earth-halo-glow {
+      position: absolute;
+      inset: -12%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(20, 70, 46, 0.2) 0%, rgba(27, 94, 62, 0.08) 50%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      animation: pulseEarthAura 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseEarthAura {
+      0% {
+        transform: scale(0.96);
+        opacity: 0.65;
+      }
+
+      100% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    .modern-world-subtext {
+      max-width: 820px;
+      font-size: clamp(17px, 1.35vw, 21px);
+      line-height: 1.8;
+      color: #1F2937;
+      font-weight: 450;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+    }
+
+    .world-closing-manifesto {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(12px, 1.1vw, 15px);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #174B34;
+      margin-top: 6px;
+    }
+
+    /* Minimal Documentary Footer */
+    .documentary-footer {
+      background: #091e16;
+      color: #ffffff;
+      padding: 70px 48px 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-content-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .footer-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .footer-brand-col {
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .footer-brand-desc {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .footer-links-group {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links-head {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6ee7b7;
+      margin-bottom: 4px;
+    }
+
+    .footer-link-a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-link-a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom-bar {
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .footer-citation-note {
+      font-size: 11.5px;
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    /* Modal for Detailed Scientific Species View */
+    .species-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 46, 34, 0.75);
+      backdrop-filter: blur(16px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .species-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .species-modal-card {
+      background: #ffffff;
+      border-radius: 28px;
+      max-width: 680px;
+      width: 100%;
+      padding: 36px 40px;
+      position: relative;
+      box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.4);
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #F7F8F3;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--text-main);
+    }
+
+    /* ── RESPONSIVE SCALING FOR STORY SECTIONS ── */
+    @media (max-width: 1200px) {
+      .hero-layout {
+        padding: 24px 32px;
+      }
+
+      .hero-left {
+        width: 40%;
+      }
+
+      .hero-right {
+        width: 36%;
+      }
+
+      .hero-title {
+        font-size: 38px;
+      }
+
+      .species-panels-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .action-pillars-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .citizen-wall-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .indicators-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ecosystem-nodes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cascade-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-layout {
+        position: relative;
+        min-height: 100vh;
+        padding: 20px 24px;
+        gap: 28px;
+      }
+
+      .hero-body {
+        flex-direction: column;
+        gap: 32px;
+        margin-top: 20px;
+      }
+
+      .hero-left,
+      .hero-right {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+      }
+
+      .cta-group {
+        justify-content: center;
+      }
+
+      .mini-stats {
+        justify-content: center;
+      }
+
+      #webgl-container {
+        height: 65vh;
+        position: relative;
+        order: -1;
+      }
+
+      .story-chapter {
+        padding: 80px 24px;
+      }
+
+      .species-panels-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .map-experience-container {
+        grid-template-columns: 1fr;
+      }
+
+      #leaflet-map {
+        min-height: 380px;
+      }
+
+      .warning-challenges-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .wildlife-report-container {
+        grid-template-columns: 1fr;
+      }
+
+      .species-spotlight-card {
+        grid-template-columns: 1fr;
+      }
+
+      .action-pillars-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .citizen-wall-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chapter-nav-rail {
+        display: none;
+      }
+
+      .ecosystem-nodes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cascade-steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .indicators-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .closing-experience-container {
+        padding: 56px 20px;
+        min-height: 560px;
+        border-radius: 32px;
+      }
+
+      .modern-world-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .modern-action-pill {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Glassy / Marble Background with Pure White Center Spotlight (HERO PRESERVED) -->
+  <div class="ambient-canvas">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+    <div class="spotlight-center"></div>
+    <div class="marble-overlay"></div>
+  </div>
+
+  <!-- Loading Screen (HERO PRESERVED) -->
+  <div id="loading">
+    <div class="loader-box">
+      <div class="loader-spinner"></div>
+      <div class="loader-title">Synthesizing 3D Ecosystem</div>
+      <div id="progress">0%</div>
+    </div>
+  </div>
+
+  <!-- Hero Fullscreen Viewport Wrapper (HERO SECTION COMPLETELY UNTOUCHED & PRESERVED) -->
+  <div class="hero-wrapper" id="hero-wrapper">
+
+    <!-- Layer 1: Left Text Layer (Behind 3D Tree, z-index: 1) -->
+    <div class="hero-layout layer-back">
+      <div style="height: 44px; visibility: hidden; pointer-events: none;"></div>
+
+      <main class="hero-body">
+        <!-- Left Column: Positioned behind the 3D tree so leaves and branches overlay it -->
+        <section class="hero-left">
+          <h1 class="hero-title">
+            Where Nature Meets <span class="gradient-text">Computational Grace.</span>
+          </h1>
+
+          <p class="hero-description">
+            An interactive, physically-based 3D botanical specimen. Sculpted with hyper-accurate bark tessellation,
+            cellular light scattering, and dynamic real-time wind foliage shaders.
+          </p>
+
+          <div class="cta-group">
+            <a href="#interact" class="btn-primary" id="btn-focus-tree">
+              <span>Inspect Specimen</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </a>
+            <a href="#rotate" class="btn-secondary" id="btn-toggle-spin">
+              <span id="spin-text">Pause Rotation</span>
+            </a>
+          </div>
+
+          <div class="mini-stats">
+            <div class="stat-item">
+              <span class="stat-value">56 MB</span>
+              <span class="stat-label">Texture Geometry</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">4K PBR</span>
+              <span class="stat-label">True Foliage Color</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">60 FPS</span>
+              <span class="stat-label">WebGL Runtime</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Geometry balance spacer (exact dimensions of hero-right, invisible) -->
+        <div class="hero-right" style="visibility: hidden; pointer-events: none; animation: none;">
+          <div class="glass-card" style="padding: 22px 24px;">
+            <div style="height: 120px;"></div>
+          </div>
+          <div class="glass-card" style="padding: 22px 24px;">
+            <div style="height: 60px;"></div>
+          </div>
+        </div>
+      </main>
+
+      <div style="height: 10px;"></div>
+    </div>
+
+    <!-- Layer 2: 3D Canvas Mount (z-index: 2, overlays the left text) -->
+    <div id="webgl-container"></div>
+
+    <!-- Layer 3: Top Navigation & Right Cards (In Front of 3D Tree, z-index: 3) -->
+    <div class="hero-layout layer-front">
+      <header class="navbar">
+        <a href="#" class="brand">
+          <div class="brand-icon">🌱</div>
+          <div class="brand-text">TERRA<span>CODE</span></div>
+        </a>
+
+        <a href="#chapter-01" class="nav-cta" id="hero-nav-cta">
+          <span>Explore Documentary</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </header>
+
+      <main class="hero-body">
+        <!-- Geometry balance spacer (exact dimensions of hero-left, invisible) -->
+        <div class="hero-left" style="visibility: hidden; pointer-events: none; animation: none;">
+          <h1 class="hero-title">
+            Where Nature Meets <span class="gradient-text">Computational Grace.</span>
+          </h1>
+          <p class="hero-description">
+            An interactive, physically-based 3D botanical specimen. Sculpted with hyper-accurate bark tessellation,
+            cellular light scattering, and dynamic real-time wind foliage shaders.
+          </p>
+          <div class="cta-group" style="height: 48px;"></div>
+          <div class="mini-stats" style="height: 60px;"></div>
+        </div>
+
+        <!-- Right Column: Glassmorphic Specs & Camera Perspectives -->
+        <section class="hero-right">
+
+          <!-- Spec Card 1: Interactive Viewports -->
+          <div class="glass-card">
+            <div class="card-header">
+              <span class="card-tag">
+                <span class="card-icon">👁️</span> Camera Presets
+              </span>
+              <span class="card-chip">Realtime</span>
+            </div>
+            <div class="card-title">Interactive Perspectives</div>
+            <p class="card-desc">Switch viewpoints instantly or drag anywhere across the center to inspect branches and
+              leaves.</p>
+
+            <div class="controls-wrapper">
+              <button class="tool-btn" id="view-crown">🌿 Canopy Top</button>
+              <button class="tool-btn" id="view-trunk">🪵 Bark Detail</button>
+              <button class="tool-btn active" id="view-reset">🔄 Reset Center</button>
+            </div>
+          </div>
+
+          <!-- Spec Card 2: Botanical Fidelity -->
+          <div class="glass-card">
+            <div class="metric-row">
+              <div>
+                <div class="card-tag" style="margin-bottom: 6px;">
+                  <span class="card-icon">⚡</span> Ecological Fidelity
+                </div>
+                <div class="card-title" style="margin-bottom: 2px;">Alpha-Cut Foliage</div>
+                <div class="card-desc">Subsurface dual-sided illumination</div>
+              </div>
+              <div class="metric-gauge">
+                <div class="gauge-circle">
+                  <span>99%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+      </main>
+
+      <div style="height: 10px;"></div>
+    </div>
+  </div> <!-- /hero-wrapper (HERO FULLY PRESERVED) -->
+
+  <!-- Persistent Slim Chapter Progress Rail -->
+  <nav class="chapter-nav-rail" aria-label="Documentary Chapters">
+    <div class="chapter-indicator-dot active" data-target="hero-wrapper" title="Hero: 3D Specimen">
+      <span class="chapter-tooltip">Hero • 3D Tree</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="platform-overview" title="Green Tomorrow: Platform Overview">
+      <span class="chapter-tooltip">Overview • 4 Pillars</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="chapter-01" title="Chapter 01: The Beginning">
+      <span class="chapter-tooltip">01 • The Beginning</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="chapter-02" title="Chapter 02: The Connection">
+      <span class="chapter-tooltip">02 • Connection</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="chapter-03" title="Chapter 03: Species Guide">
+      <span class="chapter-tooltip">03 • Species Guide</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="chapter-04" title="Chapter 04: Green Maps">
+      <span class="chapter-tooltip">04 • Green Maps</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="chapter-05" title="Chapter 05: The Warning">
+      <span class="chapter-tooltip">05 • Challenges</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="chapter-06" title="Chapter 06: Water & Wildlife">
+      <span class="chapter-tooltip">06 • Water &amp; Wildlife</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="chapter-07" title="Chapter 07: The Action">
+      <span class="chapter-tooltip">07 • Conservation</span>
+    </div>
+    <div class="chapter-indicator-dot" data-target="chapter-08" title="Chapter 08: The Future">
+      <span class="chapter-tooltip">08 • The Future</span>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       CONTINUOUS DOCUMENTARY STORYTELLING EXPERIENCE (CHAPTERS 01 - 08)
+       ══════════════════════════════════════════════════════════════════ -->
+  <div class="documentary-wrapper">
+    <div class="marble-texture-subtle"></div>
+
+    <!-- ── PLATFORM MISSION & OVERVIEW: GREEN TOMORROW ── -->
+    <section id="platform-overview" class="overview-section">
+      <div class="overview-container">
+
+        <div class="overview-header">
+          <div class="overview-theme-badge">
+            <span>🌱 Green Tomorrow • Theme: Biodiversity &amp; Local Nature</span>
+          </div>
+
+          <h2 class="overview-title">
+            Green Tomorrow – <span class="gradient-highlight">Building a Sustainable Future</span>
+          </h2>
+
+          <p class="overview-desc">
+            An interactive, community-oriented platform dedicated to discovering local biodiversity, exploring green
+            sanctuaries, monitoring river and wetland quality, and reporting citizen wildlife observations across
+            Kerala, Kozhikode, and the Western Ghats.
+          </p>
+        </div>
+
+        <!-- 4 Core Pillars of the Platform -->
+        <div class="overview-pillars-grid">
+
+          <!-- Pillar 1: Local Species Guides -->
+          <a href="#chapter-03" class="pillar-card">
+            <div class="pillar-icon-box">🌿</div>
+            <span class="pillar-tag">Pillar 01 • Discovery</span>
+            <h3 class="pillar-heading">Local Species Guides</h3>
+            <p class="pillar-text">
+              Comprehensive taxonomic profiles of endemic Western Ghats flora and fauna, from the endangered Purple Frog
+              to the canopy-dwelling Malabar Grey Hornbill.
+            </p>
+            <div class="pillar-action-link">
+              <span>Explore Species Guide</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- Pillar 2: Green-Space Maps -->
+          <a href="#chapter-04" class="pillar-card">
+            <div class="pillar-icon-box">🗺️</div>
+            <span class="pillar-tag">Pillar 02 • Spatial Cartography</span>
+            <h3 class="pillar-heading">Green-Space Maps</h3>
+            <p class="pillar-text">
+              Interactive spatial habitat mapping of Kozhikode's vital mangrove estuaries (Kadalundi), protected urban
+              wetlands (Sarovaram), and rainforest reserves (Kakkayam).
+            </p>
+            <div class="pillar-action-link">
+              <span>View Habitat Maps</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- Pillar 3: Water Monitoring -->
+          <a href="#water-watch" class="pillar-card">
+            <div class="pillar-icon-box">💧</div>
+            <span class="pillar-tag">Pillar 03 • Scientific Evidence</span>
+            <h3 class="pillar-heading">Water Monitoring</h3>
+            <p class="pillar-text">
+              Continuous empirical tracking of chemical and biological parameters (pH, DO, Turbidity, Temp, Nitrates)
+              across estuarine and riverine watersheds.
+            </p>
+            <div class="pillar-action-link">
+              <span>Open Water Watch</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+
+          <!-- Pillar 4: Citizen Science & Community Action -->
+          <a href="#action-banner" class="pillar-card">
+            <div class="pillar-icon-box">🤝</div>
+            <span class="pillar-tag">Pillar 04 • Citizen Science</span>
+            <h3 class="pillar-heading">Community Action</h3>
+            <p class="pillar-text">
+              Participatory grassroots initiatives for habitat restoration, mangrove sapling drives, and community-led conservation stewardship.
+            </p>
+            <div class="pillar-action-link">
+              <span>Join Action Initiatives</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── CHAPTER 01 – THE BEGINNING: A LIVING WORLD ── -->
+    <section id="chapter-01" class="story-chapter">
+      <div class="chapter-header">
+        <div class="chapter-tag">
+          <span class="chapter-tag-dot"></span>
+          <span>Chapter 01 • The Beginning</span>
+        </div>
+        <h2 class="chapter-title">A world full of life. A future worth protecting.</h2>
+        <p class="chapter-subtitle">
+          Every forest, river, wetland and living species is part of a natural system that sustains our planet. But how
+          much do we really know about the nature around us?
+        </p>
+      </div>
+
+      <!-- Cinematic Western Ghats Forest Scene -->
+      <div class="forest-hero-card">
+        <img src="https://images.unsplash.com/photo-1511497584788-87676104235f?q=80&w=1800&auto=format&fit=crop"
+          alt="Canopy and mist in the Western Ghats of Kerala, India" class="forest-hero-img" loading="lazy" />
+        <div class="forest-hero-overlay"></div>
+        <div class="forest-hero-content">
+          <span class="forest-hero-badge">UNESCO World Heritage Biodiversity Hotspot</span>
+          <h3 class="forest-hero-title">The Western Ghats of Kerala</h3>
+          <p class="forest-hero-desc">
+            Older than the Himalayas, these ancient forested ridges intercept the Arabian Sea monsoon, giving birth to
+            44 rivers that quench Kerala and sheltering over 5,000 vascular plant species, 139 mammal species, and 508
+            avian species.
+          </p>
+        </div>
+      </div>
+
+      <!-- Narrative Bridge -->
+      <div class="narrative-bridge">
+        <p class="narrative-bridge-text">
+          "But a forest is not just a collection of trees. It is a world where every living thing has a purpose."
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CHAPTER 02 – THE CONNECTION: UNDERSTANDING BIODIVERSITY ── -->
+    <section id="chapter-02" class="story-chapter">
+      <div class="chapter-header">
+        <div class="chapter-tag">
+          <span class="chapter-tag-dot"></span>
+          <span>Chapter 02 • The Connection</span>
+        </div>
+        <h2 class="chapter-title">Nature works as one connected system.</h2>
+        <p class="chapter-subtitle">
+          Biodiversity is the variety of life on Earth — including plants, animals, microorganisms and the ecosystems
+          they form. Every organism contributes to the balance of nature.
+        </p>
+      </div>
+
+      <!-- Interactive Ecosystem Interdependence Illustration -->
+      <div class="ecosystem-diagram-container">
+        <div class="ecosystem-nodes-grid">
+
+          <div class="eco-node-card active" data-node="trees">
+            <div class="eco-node-icon">🌳</div>
+            <h4 class="eco-node-title">Canopy Trees</h4>
+            <p class="eco-node-role">
+              Trees provide shelter, food, temperature regulation, and complex vertical habitats from soil roots to
+              emergent crowns.
+            </p>
+            <div class="eco-connection-badge">
+              <span>Anchor of forest architecture</span>
+            </div>
+          </div>
+
+          <div class="eco-node-card" data-node="birds">
+            <div class="eco-node-icon">🦜</div>
+            <h4 class="eco-node-title">Birds &amp; Frugivores</h4>
+            <p class="eco-node-role">
+              Birds disperse seeds across deep forest valleys, driving natural forest regeneration and genetic
+              diversity.
+            </p>
+            <div class="eco-connection-badge">
+              <span>Primary long-range seed dispersal</span>
+            </div>
+          </div>
+
+          <div class="eco-node-card" data-node="insects">
+            <div class="eco-node-icon">🐝</div>
+            <h4 class="eco-node-title">Insects &amp; Pollinators</h4>
+            <p class="eco-node-role">
+              Insects support pollination, nutrient cycling, and form the base of food webs sustaining amphibians,
+              birds, and reptiles.
+            </p>
+            <div class="eco-connection-badge">
+              <span>Catalysts of plant reproduction</span>
+            </div>
+          </div>
+
+          <div class="eco-node-card" data-node="water">
+            <div class="eco-node-icon">💧</div>
+            <h4 class="eco-node-title">Water &amp; Streams</h4>
+            <p class="eco-node-role">
+              Perennial streams and marshlands sustain terrestrial and aquatic life, feeding riparian corridors across
+              Kozhikode to the sea.
+            </p>
+            <div class="eco-connection-badge">
+              <span>Lifeline of terrestrial biology</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ecosystem-insight-banner">
+          <div class="insight-icon">💡</div>
+          <div class="insight-text">
+            <strong>Ecological Principle:</strong> If one species disappears, the effects can cascade unpredictably
+            through the food web. The removal of a single primary seed disperser like the Malabar Grey Hornbill
+            diminishes the regeneration of over 80 indigenous hardwood tree species.
+          </div>
+        </div>
+      </div>
+
+      <!-- Narrative Bridge -->
+      <div class="narrative-bridge">
+        <p class="narrative-bridge-text">
+          "Now that we understand how nature is connected, let's discover the living species that make our local
+          ecosystems unique."
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CHAPTER 03 – THE LIFE: LOCAL SPECIES GUIDE ── -->
+    <section id="chapter-03" class="story-chapter">
+      <div class="chapter-header">
+        <div class="chapter-tag">
+          <span class="chapter-tag-dot"></span>
+          <span>Chapter 03 • Pillar 01: Local Species Guides</span>
+        </div>
+        <h2 class="chapter-title">Meet the lives that make our forests extraordinary.</h2>
+      </div>
+
+      <!-- Species Accordion Gallery (React Bits) -->
+      <div id="species-accordion-gallery"></div>
+
+      <!-- Species of the Month Editorial Feature -->
+      <div class="species-spotlight-card">
+        <img src="https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?q=80&w=900&auto=format&fit=crop"
+          alt="Purple Frog Spotlight" class="spotlight-img" loading="lazy" />
+        <div>
+          <span class="spotlight-badge">⭐ Species of the Month • Western Ghats</span>
+          <h3 class="spotlight-title">Nasikabatrachus sahyadrensis</h3>
+          <p class="spotlight-sub">The Purple Frog — Living Dinosaur of Kerala's Soil</p>
+          <p class="spotlight-desc">
+            Discovered in 2003 in Idukki, this extraordinary amphibian is an evolutionary relic that coexisted with
+            dinosaurs over 65 million years ago. It spends virtually its entire life underground, emerging for only a
+            single week during the pre-monsoon rains to lay eggs in torrential forest streams. Its presence is the
+            ultimate benchmark of undisturbed moist soil and subterranean hydrology.
+          </p>
+        </div>
+      </div>
+
+      <!-- Narrative Bridge -->
+      <div class="narrative-bridge">
+        <p class="narrative-bridge-text">
+          "Every species needs a home. And those homes are the natural spaces that we must learn to recognise and
+          protect."
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CHAPTER 04 – THE HOME: GREEN SPACE MAPS ── -->
+    <section id="chapter-04" class="story-chapter">
+      <div class="chapter-header">
+        <div class="chapter-tag">
+          <span class="chapter-tag-dot"></span>
+          <span>Chapter 04 • Pillar 02: Green-Space Maps</span>
+        </div>
+        <h2 class="chapter-title">Every habitat tells a different story.</h2>
+        <p class="chapter-subtitle">
+          A forest, wetland, riverbank or mangrove may look like a separate natural space. In reality, each forms part
+          of a wider ecological network across Kozhikode and the Western Ghats.
+        </p>
+      </div>
+
+      <!-- Interactive Leaflet Map Experience -->
+      <div class="map-experience-container">
+
+        <div id="leaflet-map" aria-label="Interactive Habitat Map of Kozhikode and Western Ghats"></div>
+
+        <aside class="map-sidebar">
+          <h3 class="map-sidebar-title">Local Green Sanctuaries</h3>
+
+          <div class="map-layer-pills">
+            <button class="map-pill-btn active" data-layer="all">All Sanctuaries</button>
+            <button class="map-pill-btn" data-layer="wetlands">Mangroves &amp; Wetlands</button>
+            <button class="map-pill-btn" data-layer="forests">Evergreen Foothills</button>
+          </div>
+
+          <div class="location-cards-list">
+
+            <div class="loc-card-item selected" data-lat="11.1306" data-lng="75.8340" data-idx="0">
+              <div class="loc-name">Kadalundi–Vallikkunnu Community Reserve</div>
+              <div class="loc-type">Mangrove Estuary &amp; Intertidal Mudflats</div>
+              <p class="loc-summary">
+                India's first community reserve. Vital staging flyway for over 100 species of migratory shorebirds, sea
+                eagles, and rare avicennia mangrove groves.
+              </p>
+            </div>
+
+            <div class="loc-card-item" data-lat="11.2660" data-lng="75.7952" data-idx="1">
+              <div class="loc-name">Sarovaram Bio Park</div>
+              <div class="loc-type">Urban Wetland &amp; Canal Ecosystem • Kozhikode</div>
+              <p class="loc-summary">
+                A 200-acre protected urban wetland network within Kozhikode city, purifying city runoff and hosting
+                otters, night herons, and freshwater fish.
+              </p>
+            </div>
+
+            <div class="loc-card-item" data-lat="11.5540" data-lng="75.9220" data-idx="2">
+              <div class="loc-name">Kakkayam Forest Reserve</div>
+              <div class="loc-type">Upland Shola Foothills &amp; River Source</div>
+              <p class="loc-summary">
+                Pristine rainforest habitat sheltering Asian elephants, Malabar hornbills, and endemic torrent frogs,
+                feeding the perennial Kuttiyadi river basin.
+              </p>
+            </div>
+
+            <div class="loc-card-item" data-lat="11.6420" data-lng="75.8360" data-idx="3">
+              <div class="loc-name">Janakikkadu Eco Reserve</div>
+              <div class="loc-type">Dense Lowland Evergreen Forest • Kozhikode</div>
+              <p class="loc-summary">
+                131 hectares of rich biodiversity containing over 200 rare medicinal plant species and rich butterflies,
+                conserved through participatory forestry.
+              </p>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- Narrative Bridge -->
+      <div class="narrative-bridge">
+        <p class="narrative-bridge-text">
+          "But these natural homes are changing. And when habitats change, the lives that depend on them change too."
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CHAPTER 05 – THE WARNING: ENVIRONMENTAL CHALLENGES ── -->
+    <section id="chapter-05" class="story-chapter">
+
+      <div class="warning-dark-atmosphere">
+        <div class="chapter-header warning-header-dark">
+          <div class="chapter-tag"
+            style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #fca5a5;">
+            <span class="chapter-tag-dot" style="background: #ef4444;"></span>
+            <span>Chapter 05 • The Warning</span>
+          </div>
+          <h2 class="chapter-title">The natural balance is under pressure.</h2>
+          <p class="chapter-subtitle">
+            As human activities expand, the spaces that support biodiversity face increasing pressure. Habitat
+            fragmentation, wetland degradation, water pollution and human-wildlife conflict are changing the
+            relationship between people and nature.
+          </p>
+        </div>
+
+        <!-- 4 Core Regional Challenges Grid -->
+        <div class="warning-challenges-grid">
+
+          <div class="challenge-card">
+            <div class="challenge-img-container">
+              <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=900&auto=format&fit=crop"
+                alt="Highway slicing through forest canopy" class="challenge-img" loading="lazy" />
+              <span class="challenge-tag-pill">Fragmentation</span>
+            </div>
+            <div class="challenge-body">
+              <h3 class="challenge-title">1. Linear Habitat Fragmentation</h3>
+              <p class="challenge-desc">
+                Highways, unscientific hillside cutting, and transmission corridors slice through ancient elephant
+                migration pathways and disconnect arboreal canopies, preventing arboreal mammals like the Nilgiri Langur
+                from crossing.
+              </p>
+            </div>
+          </div>
+
+          <div class="challenge-card">
+            <div class="challenge-img-container">
+              <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?q=80&w=900&auto=format&fit=crop"
+                alt="Degraded wetland and waste" class="challenge-img" loading="lazy" />
+              <span class="challenge-tag-pill">Wetland Loss</span>
+            </div>
+            <div class="challenge-body">
+              <h3 class="challenge-title">2. Wetland &amp; Mangrove Encroachment</h3>
+              <p class="challenge-desc">
+                Encroachment, plastic deposition, and unregulated landfilling destroy natural sponge basins,
+                exacerbating catastrophic coastal flooding in Kozhikode and eradicating nursery habitats for native
+                estuarine fish.
+              </p>
+            </div>
+          </div>
+
+          <div class="challenge-card">
+            <div class="challenge-img-container">
+              <img src="https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?q=80&w=900&auto=format&fit=crop"
+                alt="Polluted waterway with plastic debris" class="challenge-img" loading="lazy" />
+              <span class="challenge-tag-pill">Water Contamination</span>
+            </div>
+            <div class="challenge-body">
+              <h3 class="challenge-title">3. Riparian &amp; River Pollution</h3>
+              <p class="challenge-desc">
+                Untreated industrial effluents, agricultural nitrate leaching, and urban microplastics in rivers like
+                the Chaliyar and Kallai deplete dissolved oxygen levels, causing seasonal fish kills and algal blooms.
+              </p>
+            </div>
+          </div>
+
+          <div class="challenge-card">
+            <div class="challenge-img-container">
+              <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=900&auto=format&fit=crop"
+                alt="Elephant near human settlement boundary" class="challenge-img" loading="lazy" />
+              <span class="challenge-tag-pill">Fringe Friction</span>
+            </div>
+            <div class="challenge-body">
+              <h3 class="challenge-title">4. Human-Wildlife Conflict</h3>
+              <p class="challenge-desc">
+                Depletion of natural bamboo fodder in forest borders drives wild elephants and wild boars into farming
+                homesteads in Wayanad and rural Kozhikode, requiring compassionate bio-fencing and ecological corridors.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Interactive Educational Scene: What Happens When a Wetland Disappears -->
+        <div class="wetland-disappearance-scene">
+          <h3 class="scene-title">🌊 What happens when a wetland disappears?</h3>
+          <div class="cascade-steps-grid">
+            <div class="cascade-step-item">
+              <span class="step-num">Cascade 01</span>
+              <h4 class="step-head">Flood Buffer Loss</h4>
+              <p class="step-desc">Natural sponge effect is erased; monsoon storm runoff overflows directly into streets
+                within minutes.</p>
+            </div>
+            <div class="cascade-step-item">
+              <span class="step-num">Cascade 02</span>
+              <h4 class="step-head">Aquatic Nursery Collapses</h4>
+              <p class="step-desc">Fish, freshwater crabs, and amphibians lose spawning shallows, collapsing local fish
+                stocks.</p>
+            </div>
+            <div class="cascade-step-item">
+              <span class="step-num">Cascade 03</span>
+              <h4 class="step-head">Avian Staging Erased</h4>
+              <p class="step-desc">Migratory plovers and terns traveling thousands of miles find no feeding mudflats to
+                rest.</p>
+            </div>
+            <div class="cascade-step-item">
+              <span class="step-num">Cascade 04</span>
+              <h4 class="step-head">Aquifer Depletion</h4>
+              <p class="step-desc">Groundwater recharge dries up; surrounding community drinking-water wells face summer
+                saline intrusion.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Global IPBES 2019 Assessment Citation -->
+        <div class="ipbes-citation-card">
+          <div class="ipbes-content">
+            <strong>Global Scientific Finding:</strong> The Landmark 2019 Assessment by the Intergovernmental
+            Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) concluded that <strong>around 1
+              million animal and plant species</strong> are now threatened with extinction worldwide, many within
+            decades, unless transformative conservation action is taken.
+          </div>
+          <a href="https://ipbes.net/global-assessment" target="_blank" rel="noopener noreferrer" class="ipbes-btn">
+            Read IPBES Assessment &rarr;
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Narrative Bridge -->
+      <div class="narrative-bridge">
+        <p class="narrative-bridge-text">
+          "If we cannot see the full extent of these changes, how can we protect the ecosystems around us? The answer
+          begins with observation and evidence."
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CHAPTER 06 – THE EVIDENCE: WATER MONITORING AND WILDLIFE REPORTS ── -->
+    <section id="chapter-06" class="story-chapter">
+      <div class="chapter-header">
+        <div class="chapter-tag">
+          <span class="chapter-tag-dot"></span>
+          <span>Chapter 06 • The Evidence</span>
+        </div>
+        <h2 class="chapter-title">Observation, Science, and Local Evidence.</h2>
+        <p class="chapter-subtitle">
+          Conservation cannot rely on assumptions. By measuring chemical water health and documenting wildlife
+          sightings, communities create the empirical foundation needed to demand environmental protection.
+        </p>
+      </div>
+
+      <div class="evidence-dual-container">
+
+        <!-- PART A: WATER WATCH DASHBOARD -->
+        <div class="water-dashboard-card" id="water-watch">
+          <div class="water-header-row">
+            <div>
+              <span class="chapter-tag" style="margin-bottom: 8px;">Pillar 03 • Water Monitoring Station</span>
+              <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: var(--forest-deep);">
+                Water carries the story of an ecosystem.
+              </h3>
+              <p style="font-size: 14.5px; color: var(--botanical-grey); margin-top: 4px;">
+                Water quality cannot be judged by clarity alone. Physical, chemical, and biological markers reveal the
+                hidden health of our rivers and wetlands.
+              </p>
+            </div>
+
+            <div>
+              <label for="water-site-select"
+                style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--forest-green); display: block; margin-bottom: 6px;">Monitoring
+                Station</label>
+              <select id="water-site-select" class="water-location-select">
+                <option value="kadalundi">Kadalundi Estuary • Mangrove Station</option>
+                <option value="chaliyar">Chaliyar River • Feroke Riparian Base</option>
+                <option value="kallai">Kallai River • Urban Canal Stretch</option>
+                <option value="kakkayam">Kakkayam Reservoir • Upland Source</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Indicators Grid -->
+          <div class="indicators-grid" id="indicators-container">
+
+            <div class="indicator-card">
+              <div class="ind-top">
+                <span class="ind-name">pH Level</span>
+                <span class="ind-status-pill" id="val-ph-status">Optimal</span>
+              </div>
+              <div>
+                <span class="ind-value" id="val-ph">7.4</span>
+                <span class="ind-unit">pH</span>
+              </div>
+              <p class="ind-meaning">Measures acidity or alkalinity. Neutral 6.5–8.5 is essential for native fish gill
+                and egg development.</p>
+            </div>
+
+            <div class="indicator-card">
+              <div class="ind-top">
+                <span class="ind-name">Dissolved Oxygen</span>
+                <span class="ind-status-pill" id="val-do-status">Healthy</span>
+              </div>
+              <div>
+                <span class="ind-value" id="val-do">6.8</span>
+                <span class="ind-unit">mg/L</span>
+              </div>
+              <p class="ind-meaning">Crucial for aquatic organisms. Values below 4.0 mg/L induce acute asphyxiation in
+                native river fish.</p>
+            </div>
+
+            <div class="indicator-card">
+              <div class="ind-top">
+                <span class="ind-name">Turbidity</span>
+                <span class="ind-status-pill" id="val-tur-status">Clear</span>
+              </div>
+              <div>
+                <span class="ind-value" id="val-tur">4.2</span>
+                <span class="ind-unit">NTU</span>
+              </div>
+              <p class="ind-meaning">Measures suspended sediments. High turbidity prevents sunlight penetration for
+                aquatic macrophyte photosynthesis.</p>
+            </div>
+
+            <div class="indicator-card">
+              <div class="ind-top">
+                <span class="ind-name">Water Temp</span>
+                <span class="ind-status-pill" id="val-temp-status">Normal</span>
+              </div>
+              <div>
+                <span class="ind-value" id="val-temp">26.8</span>
+                <span class="ind-unit">°C</span>
+              </div>
+              <p class="ind-meaning">Regulates dissolved oxygen capacity and metabolic rates of cold-blooded aquatic
+                invertebrates.</p>
+            </div>
+
+            <div class="indicator-card">
+              <div class="ind-top">
+                <span class="ind-name">Conductivity</span>
+                <span class="ind-status-pill" id="val-ec-status">Normal</span>
+              </div>
+              <div>
+                <span class="ind-value" id="val-ec">420</span>
+                <span class="ind-unit">µS/cm</span>
+              </div>
+              <p class="ind-meaning">Measures dissolved ionic minerals. Spikes indicate urban runoff, sewage seepage, or
+                industrial effluent discharge.</p>
+            </div>
+
+            <div class="indicator-card">
+              <div class="ind-top">
+                <span class="ind-name">Nitrates</span>
+                <span class="ind-status-pill" id="val-nit-status">Low</span>
+              </div>
+              <div>
+                <span class="ind-value" id="val-nit">0.8</span>
+                <span class="ind-unit">mg/L</span>
+              </div>
+              <p class="ind-meaning">Agricultural fertilizer runoff marker. Elevated nitrates trigger rapid
+                eutrophication and algal suffocations.</p>
+            </div>
+
+          </div>
+
+          <div class="water-data-disclaimer">
+            * Demonstrated data curated from Kerala State Pollution Control Board (KSPCB) public seasonal baseline
+            models. Verified sample records logged November 2026. Basic indicators do not certify potable drinking water
+            without complete microbiological pathology testing.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Narrative Bridge -->
+      <div class="narrative-bridge">
+        <p class="narrative-bridge-text">
+          "When individual observations come together, they become something much more powerful: a shared understanding
+          of our environment."
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CHAPTER 07 – THE ACTION: COMMUNITY CONSERVATION ── -->
+    <section id="chapter-07" class="story-chapter">
+      <div class="chapter-header">
+        <div class="chapter-tag">
+          <span class="chapter-tag-dot"></span>
+          <span>Chapter 07 • The Action</span>
+        </div>
+        <h2 class="chapter-title">Conservation is not just something we watch. It is something we do.</h2>
+        <p class="chapter-subtitle">
+          Real sustainability requires collaborative participation. From school environmental clubs to community
+          mangrove nurseries, local stewardship is the true guardian of biodiversity.
+        </p>
+      </div>
+
+      <!-- Four Interactive Action Pillars -->
+      <div class="action-pillars-grid">
+
+        <div class="action-pillar-card">
+          <span class="pillar-num">01 / DISCOVERY</span>
+          <h3 class="pillar-title">OBSERVE</h3>
+          <p class="pillar-desc">
+            Document native flora and avian visitors in your neighborhood, backyard, and local groves using mobile
+            photography.
+          </p>
+          <a href="#chapter-03" class="pillar-cta-link">Explore Species Guide &rarr;</a>
+        </div>
+
+        <div class="action-pillar-card">
+          <span class="pillar-num">02 / SCIENCE</span>
+          <h3 class="pillar-title">MEASURE</h3>
+          <p class="pillar-desc">
+            Participate in school water testing drives along community ponds and rivers using low-cost pH and turbidity
+            test kits.
+          </p>
+          <a href="#water-watch" class="pillar-cta-link">View Monitoring Benchmarks &rarr;</a>
+        </div>
+
+        <div class="action-pillar-card">
+          <span class="pillar-num">03 / EVIDENCE</span>
+          <h3 class="pillar-title">OBSERVE</h3>
+          <p class="pillar-desc">
+            Document local species, track seasonal migrations, and take part in regional watershed biodiversity counts.
+          </p>
+          <a href="#action-banner" class="pillar-cta-link">Get Involved &rarr;</a>
+        </div>
+
+        <div class="action-pillar-card">
+          <span class="pillar-num">04 / STEWARDSHIP</span>
+          <h3 class="pillar-title">RESTORE</h3>
+          <p class="pillar-desc">
+            Volunteer in community mangrove sapling planting along the Kadalundi estuary and native Shola sapling
+            rewilding drives.
+          </p>
+          <a href="#action-banner" class="pillar-cta-link">Join Local Initiative &rarr;</a>
+        </div>
+
+      </div>
+
+      <!-- ── ENERGY CONSERVATION: FLOATING 3D WIND TURBINE & VERTICAL GALLERY ── -->
+      <div class="energy-conservation-section" id="energy-conservation">
+        <div class="energy-conservation-layout">
+
+          <!-- Left Side: Orbital Image Wheel (Curving around the 3D Windmill) -->
+          <div class="energy-methods-col">
+            <div id="orbital-image-wheel-root"></div>
+          </div>
+
+          <!-- Right Side: Floating Windmill (No frame/window, popping out of website, fan rotating) -->
+          <div class="energy-turbine-stage">
+            <div class="energy-turbine-sticky-wrap">
+
+              <!-- Soft Floating Ambient Glow beneath the island -->
+              <div class="floating-shadow-blur"></div>
+
+              <div id="energy-loading-overlay" class="energy-loading-overlay">
+                <div class="energy-spinner"></div>
+                <p class="energy-loading-text">Loading 3D Turbine Model...</p>
+                <div class="energy-progress-bar">
+                  <div id="energy-progress-fill" class="energy-progress-fill"></div>
+                </div>
+              </div>
+
+              <!-- The 3D canvas: transparent, frameless, popping out of website background -->
+              <canvas id="energy-turbine-canvas"></canvas>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Green Citizen Wall of Contributions -->
+      <div class="citizen-wall-container">
+        <div class="citizen-wall-header">
+          <div>
+            <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 26px; color: var(--forest-deep);">
+              Green Citizen Wall</h3>
+            <p style="font-size: 14px; color: var(--botanical-grey); margin-top: 4px;">Honoring grassroot contributions
+              from students, researchers, and local residents across Kozhikode.</p>
+          </div>
+          <span class="chapter-tag" style="background: rgba(16, 185, 129, 0.15); color: var(--primary);">Verified Field
+            Community</span>
+        </div>
+
+        <div class="citizen-wall-grid">
+
+          <div class="citizen-contribution-card">
+            <div class="contrib-top">
+              <span class="contrib-author">Calicut University Eco Club</span>
+              <span class="contrib-role-tag">Student Researchers</span>
+            </div>
+            <p class="contrib-action">Documented 34 species of estuarine crabs and 52 migratory waders during annual
+              Kadalundi wetland bird census.</p>
+            <span class="contrib-date">Kozhikode District • Verified Oct 2026</span>
+          </div>
+
+          <div class="citizen-contribution-card">
+            <div class="contrib-top">
+              <span class="contrib-author">Kozhikode River Protectors</span>
+              <span class="contrib-role-tag">Community Action</span>
+            </div>
+            <p class="contrib-action">Organized community water quality monitoring along 6 stretches of Kallai river and
+              planted 400 mangrove saplings.</p>
+            <span class="contrib-date">Kallai Estuary • Verified Nov 2026</span>
+          </div>
+
+          <div class="citizen-contribution-card">
+            <div class="contrib-top">
+              <span class="contrib-author">Wayanad Shola Alliance</span>
+              <span class="contrib-role-tag">Indigenous Stewards</span>
+            </div>
+            <p class="contrib-action">Maintained community seed banks for 42 native Western Ghats high-altitude
+              medicinal flora species.</p>
+            <span class="contrib-date">Western Ghats Ridge • Verified Nov 2026</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action Call To Action Banner -->
+      <div class="action-cta-banner" id="action-banner">
+        <div class="action-cta-text">
+          <h3 class="action-cta-title">Your observation matters.</h3>
+          <p class="action-cta-sub">
+            Whether you document a bird on your balcony, test your school well water, or report a wetland threat, you
+            become an active defender of Kerala's living heritage.
+          </p>
+        </div>
+        <a href="#action-banner" class="action-cta-btn">
+          Become a Nature Observer &rarr;
+        </a>
+      </div>
+
+      <!-- Narrative Bridge -->
+      <div class="narrative-bridge">
+        <p class="narrative-bridge-text">
+          "Every small action becomes meaningful when thousands of people choose to protect the same future."
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CHAPTER 08 – THE FUTURE: GLOBAL EARTH & MODERN TYPOGRAPHY ── -->
+    <section id="chapter-08" class="story-chapter">
+
+      <div class="closing-experience-container modern-world-closing">
+        <!-- Modern cosmic/botanical subtle backdrop gradient & animated ambient glows -->
+        <div class="world-bg-mesh"></div>
+        <div class="world-glow-orb world-glow-left"></div>
+        <div class="world-glow-orb world-glow-right"></div>
+
+        <div class="closing-content-box modern-world-box">
+
+          <!-- Big Modern Typography Tagline with 3D Earth Replacing 'O' in WORLD -->
+          <div class="world-typography-stage">
+            <div class="world-lead-eyebrow">PROTECT OUR</div>
+            <div class="world-interactive-word" aria-label="WORLD">
+              <span class="world-letter">W</span>
+
+              <!-- 3D Earth Specimen Slot (replaces O) -->
+              <div class="earth-3d-slot" id="earth-3d-slot" title="Drag to rotate Earth specimen">
+                <canvas id="earth-canvas"></canvas>
+                <div class="earth-halo-glow"></div>
+              </div>
+
+              <span class="world-letter">R</span>
+              <span class="world-letter">L</span>
+              <span class="world-letter">D</span>
+            </div>
+          </div>
+
+          <!-- Modern Concise Statement -->
+          <p class="modern-world-subtext">
+            A sustainable future begins with local action. Every species documented in Kerala, every preserved wetland,
+            and every monitored stream safeguards the global web of life.
+          </p>
+
+          <div class="world-closing-manifesto">
+            DISCOVER • OBSERVE • UNDERSTAND • PROTECT
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Minimal Editorial Documentary Footer -->
+    <footer class="documentary-footer">
+      <div class="footer-content-inner">
+
+        <div class="footer-top-row">
+
+          <div class="footer-brand-col">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 24px;">🌱</span>
+              <span class="footer-brand-title">GREEN TOMORROW</span>
+            </div>
+            <p class="footer-brand-desc">
+              Building the Sustainable Future. An interactive, community-oriented initiative dedicated to local
+              biodiversity discovery, green space mapping, river monitoring, and grassroots conservation across Kerala
+              and the Western Ghats.
+            </p>
+          </div>
+
+          <div class="footer-links-group">
+            <div class="footer-links-col">
+              <span class="footer-links-head">Navigation</span>
+              <a href="#hero-wrapper" class="footer-link-a">Home / 3D Specimen</a>
+              <a href="#chapter-01" class="footer-link-a">The Beginning</a>
+              <a href="#chapter-02" class="footer-link-a">Biodiversity System</a>
+              <a href="#chapter-03" class="footer-link-a">Local Species Guide</a>
+            </div>
+
+            <div class="footer-links-col">
+              <span class="footer-links-head">Citizen Science</span>
+              <a href="#chapter-04" class="footer-link-a">Green Space Maps</a>
+              <a href="#chapter-05" class="footer-link-a">Environmental Challenges</a>
+              <a href="#water-watch" class="footer-link-a">Water Watch Station</a>
+              <a href="#action-banner" class="footer-link-a">Community Action</a>
+            </div>
+
+            <div class="footer-links-col">
+              <span class="footer-links-head">Verified Data Sources</span>
+              <a href="https://www.iucnredlist.org" target="_blank" rel="noopener noreferrer" class="footer-link-a">IUCN
+                Red List</a>
+              <a href="https://ipbes.net/global-assessment" target="_blank" rel="noopener noreferrer"
+                class="footer-link-a">IPBES 2019 Assessment</a>
+              <a href="https://bsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Botanical
+                Survey of India (BSI)</a>
+              <a href="https://zsi.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Zoological
+                Survey of India (ZSI)</a>
+              <a href="https://keralapcb.nic.in" target="_blank" rel="noopener noreferrer" class="footer-link-a">Kerala
+                State Pollution Control Board</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom-bar">
+          <div>
+            &copy; 2026 Green Tomorrow — Competition Category: Biodiversity &amp; Local Nature. All rights reserved.
+          </div>
+          <div class="footer-citation-note">
+            Geographical Focus: Kozhikode &amp; the Western Ghats Biodiversity Hotspot, Kerala, India.
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+  </div> <!-- /documentary-wrapper -->
+
+  <!-- Scientific Species Detail Modal -->
+  <div class="species-modal-backdrop" id="species-modal" aria-hidden="true" role="dialog">
+    <div class="species-modal-card">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+      <div id="modal-content-target">
+        <!-- Dynamically populated from JS scientific dictionary -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS for Chapter 04 -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Three.js + Extensions (HERO 3D SPECIMEN PRESERVED) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+    const container = document.getElementById('webgl-container');
+
+    // ── RENDERER (Clean Alpha Transparency) ──
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setSize(container.clientWidth || window.innerWidth, container.clientHeight || window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Balanced ACES Filmic Tone Mapping for crisp foliage & rich bark
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.08;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    // ── SCENE ──
+    const scene = new THREE.Scene();
+    scene.background = null;
+
+    // Studio Environment Lighting via PMREM
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+    scene.environment = pmremGenerator.fromScene(new RoomEnvironment()).texture;
+    pmremGenerator.dispose();
+
+    // ── CAMERA (38° FOV for cinematic botanical perspective) ──
+    const camera = new THREE.PerspectiveCamera(38, (container.clientWidth || window.innerWidth) / (container.clientHeight || window.innerHeight), 0.05, 500);
+
+    // ── LIGHTING ──
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xd1fae5, 0.9);
+    scene.add(hemiLight);
+
+    const sunLight = new THREE.DirectionalLight(0xfffaed, 1.85);
+    sunLight.position.set(6, 14, 7);
+    sunLight.castShadow = true;
+    sunLight.shadow.mapSize.set(2048, 2048);
+    sunLight.shadow.camera.near = 0.5;
+    sunLight.shadow.camera.far = 40;
+    sunLight.shadow.camera.left = -10;
+    sunLight.shadow.camera.right = 10;
+    sunLight.shadow.camera.top = 10;
+    sunLight.shadow.camera.bottom = -10;
+    sunLight.shadow.bias = -0.0001;
+    scene.add(sunLight);
+
+    const fillLight = new THREE.DirectionalLight(0xa7f3d0, 0.75);
+    fillLight.position.set(-7, 8, -6);
+    scene.add(fillLight);
+
+    const frontFill = new THREE.DirectionalLight(0xffffff, 0.45);
+    frontFill.position.set(0, 3, 9);
+    scene.add(frontFill);
+
+    // ── CONTROLS ──
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.045;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.85;
+    controls.minDistance = 2.0;
+    controls.maxDistance = 24.0;
+    controls.maxPolarAngle = Math.PI / 2 - 0.02;
+
+    let treeModel = null;
+    let initialCameraPos = new THREE.Vector3();
+    let initialTarget = new THREE.Vector3();
+    let modelHeight = 0;
+
+    // ── CALIBRATE CAMERA TO FILL SCREEN TOP-TO-BOTTOM (EXACT HERO LOCK) ──
+    function fitTreeTopToBottom() {
+      if (!treeModel) return;
+
+      const box = new THREE.Box3().setFromObject(treeModel);
+      const size = box.getSize(new THREE.Vector3());
+      modelHeight = size.y;
+
+      const centerY = box.min.y + size.y * 0.5;
+
+      // Vertical focal shift moves the tree to the ideal sweet spot (0.20 preserved)
+      const yOffset = 0.20;
+      controls.target.set(0, centerY + yOffset, 0);
+
+      // Frustum calculation: visible height = 2 * dist * tan(fov / 2)
+      const fovRad = (camera.fov * Math.PI) / 180;
+      const fillRatio = 1.06;
+      const dist = (size.y / fillRatio) / (2 * Math.tan(fovRad / 2));
+
+      camera.position.set(0, centerY + yOffset, dist);
+      camera.near = 0.1;
+      camera.far = 100;
+      camera.updateProjectionMatrix();
+
+      initialTarget.copy(controls.target);
+      initialCameraPos.copy(camera.position);
+      controls.update();
+    }
+
+    // ── LOADER ──
+    const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/libs/draco/');
+    loader.setDRACOLoader(dracoLoader);
+
+    const progressEl = document.getElementById('progress');
+    const loadingEl = document.getElementById('loading');
+
+    loader.load(
+      'assets/models/tree.glb',
+      (gltf) => {
+        treeModel = gltf.scene;
+
+        treeModel.traverse((node) => {
+          if (!node.isMesh) return;
+          node.castShadow = true;
+          node.receiveShadow = true;
+
+          const mats = Array.isArray(node.material) ? node.material : [node.material];
+          mats.forEach((mat) => {
+            if (mat.map) mat.map.colorSpace = THREE.SRGBColorSpace;
+            if (mat.emissiveMap) mat.emissiveMap.colorSpace = THREE.SRGBColorSpace;
+
+            if (mat.transparent || mat.alphaTest > 0 || node.name.includes('leaves')) {
+              mat.alphaTest = 0.45;
+              mat.depthWrite = true;
+              mat.transparent = false;
+              mat.side = THREE.DoubleSide;
+            }
+            mat.needsUpdate = true;
+          });
+        });
+
+        // ── Auto-Scale and Anchor Base ──
+        const rawBox = new THREE.Box3().setFromObject(treeModel);
+        const rawSize = rawBox.getSize(new THREE.Vector3());
+        const maxDimension = Math.max(rawSize.x, rawSize.y, rawSize.z);
+
+        const targetHeight = 9.0;
+        const scale = targetHeight / maxDimension;
+        treeModel.scale.setScalar(scale);
+
+        // Center on X and Z, and place base of trunk precisely at ground y = 0
+        const scaledBox = new THREE.Box3().setFromObject(treeModel);
+        const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
+        treeModel.position.x -= scaledCenter.x;
+        treeModel.position.z -= scaledCenter.z;
+        treeModel.position.y -= scaledBox.min.y;
+
+        scene.add(treeModel);
+
+        fitTreeTopToBottom();
+
+        // ── Soft Glassy Ground Contact Shadow ──
+        const groundGeo = new THREE.PlaneGeometry(60, 60);
+        const groundMat = new THREE.ShadowMaterial({
+          opacity: 0.10,
+          color: 0x064e3b
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = 0;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        loadingEl.classList.add('hidden');
+        setTimeout(() => loadingEl.remove(), 800);
+      },
+      (xhr) => {
+        if (xhr.total) {
+          const pct = Math.round((xhr.loaded / xhr.total) * 100);
+          progressEl.textContent = `${pct}%`;
+        } else {
+          progressEl.textContent = `${(xhr.loaded / 1048576).toFixed(1)} MB`;
+        }
+      },
+      (err) => {
+        progressEl.textContent = 'Error loading model';
+        console.error(err);
+      }
+    );
+
+    // ── HERO UI INTERACTION HOOKS (PRESERVED) ──
+    const spinBtn = document.getElementById('btn-toggle-spin');
+    const spinText = document.getElementById('spin-text');
+    let isAutoRotating = true;
+
+    spinBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      isAutoRotating = !isAutoRotating;
+      controls.autoRotate = isAutoRotating;
+      spinText.textContent = isAutoRotating ? 'Pause Rotation' : 'Resume Rotation';
+    });
+
+    const focusBtn = document.getElementById('btn-focus-tree');
+    focusBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      smoothMoveCamera(new THREE.Vector3(0, modelHeight * 0.5, initialCameraPos.z * 0.85), new THREE.Vector3(0, modelHeight * 0.5, 0));
+    });
+
+    // Forward click and hover through the WebGL canvas to buttons in layer-back
+    let pointerStartX = 0, pointerStartY = 0;
+    renderer.domElement.addEventListener('pointerdown', (e) => {
+      pointerStartX = e.clientX;
+      pointerStartY = e.clientY;
+    });
+
+    renderer.domElement.addEventListener('click', (e) => {
+      if (Math.hypot(e.clientX - pointerStartX, e.clientY - pointerStartY) < 6) {
+        const hits = document.elementsFromPoint(e.clientX, e.clientY);
+        for (const el of hits) {
+          const clickable = el.closest && el.closest('.layer-back a, .layer-back button');
+          if (clickable) {
+            clickable.click();
+            break;
+          }
+        }
+      }
+    });
+
+    renderer.domElement.addEventListener('pointermove', (e) => {
+      const hits = document.elementsFromPoint(e.clientX, e.clientY);
+      const isOverClickable = hits.some(el => el.closest && el.closest('.layer-back a, .layer-back button'));
+      if (isOverClickable) {
+        renderer.domElement.style.cursor = 'pointer';
+      } else {
+        renderer.domElement.style.cursor = 'grab';
+      }
+    });
+
+    // Camera preset buttons
+    const crownBtn = document.getElementById('view-crown');
+    const trunkBtn = document.getElementById('view-trunk');
+    const resetBtn = document.getElementById('view-reset');
+
+    function setActiveTool(activeBtn) {
+      [crownBtn, trunkBtn, resetBtn].forEach(b => b?.classList.remove('active'));
+      activeBtn?.classList.add('active');
+    }
+
+    crownBtn?.addEventListener('click', () => {
+      setActiveTool(crownBtn);
+      smoothMoveCamera(new THREE.Vector3(0, modelHeight * 0.88, initialCameraPos.z * 0.65), new THREE.Vector3(0, modelHeight * 0.75, 0));
+    });
+
+    trunkBtn?.addEventListener('click', () => {
+      setActiveTool(trunkBtn);
+      smoothMoveCamera(new THREE.Vector3(0, modelHeight * 0.25, initialCameraPos.z * 0.55), new THREE.Vector3(0, modelHeight * 0.22, 0));
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      setActiveTool(resetBtn);
+      smoothMoveCamera(initialCameraPos, initialTarget);
+    });
+
+    // Smooth camera transition interpolation
+    let targetCamPos = null;
+    let targetControlsLookAt = null;
+
+    function smoothMoveCamera(newPos, newLookAt) {
+      targetCamPos = newPos.clone();
+      targetControlsLookAt = newLookAt.clone();
+    }
+
+    // ── PINCH TO ZOOM VS WHEEL SCROLL DOWN (LOCK PRESERVED) ──
+    renderer.domElement.addEventListener('wheel', (e) => {
+      if (e.ctrlKey) {
+        // Trackpad pinch-to-zoom: allow OrbitControls zoom
+        return;
+      }
+
+      // Block OrbitControls from zooming out the tree model
+      e.stopImmediatePropagation();
+
+      // If scrolling downwards in hero section, smoothly glide to Chapter 01
+      if (e.deltaY > 10 && window.scrollY < window.innerHeight * 0.4) {
+        e.preventDefault();
+        document.getElementById('chapter-01')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, { capture: true, passive: false });
+
+    // ── ANIMATION LOOP ──
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (targetCamPos && targetControlsLookAt) {
+        camera.position.lerp(targetCamPos, 0.06);
+        controls.target.lerp(targetControlsLookAt, 0.06);
+        if (camera.position.distanceTo(targetCamPos) < 0.04) {
+          targetCamPos = null;
+          targetControlsLookAt = null;
+        }
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // ── RESPONSIVE RESIZE ──
+    window.addEventListener('resize', () => {
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+      fitTreeTopToBottom();
+    });
+  </script>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       DOCUMENTARY JAVASCRIPT: CHAPTERS 01 TO 08 FUNCTIONALITY
+       ══════════════════════════════════════════════════════════════════ -->
+  <script type="module">
+    import { initAccordionGallery } from './js/accordion-gallery.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ── 1. CHAPTER PROGRESS RAIL INTERSECTION OBSERVER ──
+      const dots = document.querySelectorAll('.chapter-indicator-dot');
+      const sectionIds = ['hero-wrapper', 'platform-overview', 'chapter-01', 'chapter-02', 'chapter-03', 'chapter-04', 'chapter-05', 'chapter-06', 'chapter-07', 'chapter-08'];
+      const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const currentId = entry.target.id;
+            dots.forEach(dot => {
+              dot.classList.toggle('active', dot.dataset.target === currentId);
+            });
+          }
+        });
+      }, { root: null, rootMargin: '-20% 0px -40% 0px', threshold: 0.1 });
+
+      sections.forEach(sec => observer.observe(sec));
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const target = document.getElementById(dot.dataset.target);
+          target?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      // ── 2. CHAPTER 02: ECOSYSTEM INTERACTIVE NODES ──
+      const ecoCards = document.querySelectorAll('.eco-node-card');
+      ecoCards.forEach(card => {
+        card.addEventListener('click', () => {
+          ecoCards.forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+        });
+      });
+
+      // ── 3. CHAPTER 03: SPECIES ACCORDION GALLERY (REACT BITS) ──
+      const galleryContainer = document.getElementById('species-accordion-gallery');
+
+      const speciesItems = [
+        {
+          speciesId: 'squirrel',
+          image: 'https://images.unsplash.com/photo-1504006833117-8886a355efbf?q=80&w=900&auto=format&fit=crop',
+          label: 'Malabar Giant Squirrel',
+          subtitle: 'Ratufa indica',
+          category: 'Canopy Mammal',
+          highlight: 'IUCN: Least Concern • Keystone canopy seed disperser across Kerala.',
+          alt: 'Malabar Giant Squirrel in forest canopy'
+        },
+        {
+          speciesId: 'hornbill',
+          image: 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?q=80&w=900&auto=format&fit=crop',
+          label: 'Malabar Grey Hornbill',
+          subtitle: 'Ocyceros griseus',
+          category: 'Avian Frugivore',
+          highlight: 'IUCN: Vulnerable • Revered as "Farmer of the Forest" for dispersing canopy seeds.',
+          alt: 'Malabar Grey Hornbill perched on branch'
+        },
+        {
+          speciesId: 'purplefrog',
+          image: 'https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?q=80&w=900&auto=format&fit=crop',
+          label: 'Purple Frog (Mahabali)',
+          subtitle: 'Nasikabatrachus sahyadrensis',
+          category: 'Endemic Living Fossil',
+          highlight: 'IUCN: Endangered • Subterranean living fossil of the Western Ghats.',
+          alt: 'Purple Frog in moist forest habitat'
+        },
+        {
+          speciesId: 'langur',
+          image: 'https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=900&auto=format&fit=crop',
+          label: 'Nilgiri Langur',
+          subtitle: 'Semnopithecus johnii',
+          category: 'Shola Primate',
+          highlight: 'IUCN: Vulnerable • Threatened by illegal poaching and canopy fragmentation.',
+          alt: 'Nilgiri Langur in evergreen forest'
+        },
+        {
+          speciesId: 'glidingfrog',
+          image: 'https://images.unsplash.com/photo-1535083783855-76ae62b2914e?q=80&w=900&auto=format&fit=crop',
+          label: 'Malabar Gliding Frog',
+          subtitle: 'Rhacophorus malabaricus',
+          category: 'Canopy Glider',
+          highlight: 'IUCN: Least Concern • Bio-indicator of pristine rainforest canopies.',
+          alt: 'Malabar Gliding Frog on lush leaf'
+        },
+        {
+          speciesId: 'neelakurinji',
+          image: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=900&auto=format&fit=crop',
+          label: 'Neelakurinji',
+          subtitle: 'Strobilanthes kunthiana',
+          category: 'Shola Montane Flora',
+          highlight: 'Endemic Shola Flora • Mass synchronous 12-year bloom sustaining native pollinators.',
+          alt: 'Neelakurinji violet flowers blooming on hill slopes'
+        }
+      ];
+
+      function openSpeciesModal(key) {
+        const data = speciesData[key];
+        const modal = document.getElementById('species-modal');
+        const modalTarget = document.getElementById('modal-content-target');
+        if (!data || !modal || !modalTarget) return;
+
+        modalTarget.innerHTML = `
+          <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--primary); letter-spacing: 1px;">Scientific Biodiversity Dossier</div>
+          <h3 style="font-family: 'Playfair Display', serif; font-size: 28px; color: var(--forest-deep); margin: 6px 0 2px;">${data.common}</h3>
+          <p style="font-size: 14px; font-style: italic; color: var(--botanical-grey); margin-bottom: 18px;">${data.scientific} • ${data.group}</p>
+          
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; line-height: 1.6; color: var(--text-main);">
+            <div><strong>Distribution:</strong> ${data.distribution}</div>
+            <div><strong>Natural Habitat:</strong> ${data.habitat}</div>
+            <div><strong>Ecological Function:</strong> ${data.role}</div>
+            <div style="padding: 10px 14px; background: var(--mist-green); border-radius: 10px; color: var(--forest-green); font-weight: 600;">
+              ${data.status}
+            </div>
+            <div style="font-size: 11.5px; color: var(--text-light); border-top: 1px solid rgba(0,0,0,0.08); padding-top: 8px;">
+              Verified Authority: ${data.source}
+            </div>
+          </div>
+        `;
+
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+
+      let speciesGallery = null;
+      if (galleryContainer) {
+        speciesGallery = initAccordionGallery(galleryContainer, {
+          items: speciesItems,
+          defaultIndex: 3,
+          expandRatio: 0.52,
+          trigger: 'hover',
+          height: 480,
+          gap: 12,
+          radius: 20,
+          tilt: 8,
+          parallax: 0.5,
+          duration: 0.6,
+          ease: 'power3.out',
+          stagger: 0.06,
+          accentColor: '#10b981',
+          overlayColor: '#021a12',
+          textColor: '#ffffff',
+          grayscale: true,
+          showLabels: true,
+          onDossier: (item) => {
+            if (item && item.speciesId) {
+              openSpeciesModal(item.speciesId);
+            }
+          }
+        });
+      }
+
+      // Scientific species modal dossiers
+      const speciesData = {
+        squirrel: {
+          common: "Malabar Giant Squirrel (Shekru)",
+          scientific: "Ratufa indica",
+          group: "Mammalia (Rodentia)",
+          distribution: "Moist deciduous and semi-evergreen forests of Kerala, Western Ghats.",
+          habitat: "Dense high-canopy evergreen rainforests; strictly arboreal.",
+          role: "Major frugivore and keystone seed predator/disperser. Caches large rainforest seeds in canopy platforms.",
+          status: "IUCN: Least Concern • Protected under Wildlife Protection Act, 1972 (Schedule II).",
+          source: "Zoological Survey of India (ZSI) & Kerala State Biodiversity Board (KSBB)"
+        },
+        hornbill: {
+          common: "Malabar Grey Hornbill",
+          scientific: "Ocyceros griseus",
+          group: "Aves (Bucerotiformes)",
+          distribution: "Western Ghats endemic, found from southern Gujarat to Kerala tip.",
+          habitat: "Dense primary rainforests, cardamom plantations, and Shola valleys.",
+          role: "Revered as 'The Farmer of the Forest'. Disperses large rainforest drupes over long flight paths.",
+          status: "IUCN: Vulnerable • Decreasing population due to loss of large nesting hollow trees.",
+          source: "IUCN Red List of Threatened Species & BirdLife International"
+        },
+        purplefrog: {
+          common: "Purple Frog (Mahabali Frog)",
+          scientific: "Nasikabatrachus sahyadrensis",
+          group: "Amphibia (Anura: Sooglossidae)",
+          distribution: "Narrow mountain range of Western Ghats (Idukki, Palakkad, Wayanad).",
+          habitat: "Deep subterranean loam soil tunnels along torrential monsoon streams.",
+          role: "Biological living fossil (65+ million years lineage). Preys heavily on subterranean termites.",
+          status: "IUCN: Endangered • Highly threatened by check dams, road cuts, and streambed siltation.",
+          source: "Evolutionary Distinct & Globally Endangered (EDGE of Existence) & ZSI"
+        },
+        langur: {
+          common: "Nilgiri Langur (Black Leaf Monkey)",
+          scientific: "Semnopithecus johnii",
+          group: "Mammalia (Primates: Cercopithecidae)",
+          distribution: "Western Ghats endemic (Nilgiris, Anamalai, Periyar, Cardamom Hills).",
+          habitat: "Evergreen rainforests and temperate montane Shola groves (900–2000m).",
+          role: "Upper-canopy folivore; consumes tough fibrous leaves and disperses native seeds.",
+          status: "IUCN: Vulnerable • Threatened by illegal poaching and canopy fragmentation.",
+          source: "Primate Specialist Group (IUCN/SSC)"
+        },
+        glidingfrog: {
+          common: "Malabar Gliding Frog",
+          scientific: "Rhacophorus malabaricus",
+          group: "Amphibia (Rhacophoridae)",
+          distribution: "Endemic to the Western Ghats rainforest corridor of Kerala & Karnataka.",
+          habitat: "Rainforest canopy overhanging stagnant forest pools and slow streams.",
+          role: "Can glide up to 10–12 meters between canopy branches using expansive webbed feet.",
+          status: "IUCN: Least Concern • Strict bio-indicator of clean canopy air and pristine wetland pools.",
+          source: "Amphibian Specialist Group & Kerala Forest Research Institute (KFRI)"
+        },
+        neelakurinji: {
+          common: "Neelakurinji",
+          scientific: "Strobilanthes kunthiana",
+          group: "Plantae (Lamiales: Acanthaceae)",
+          distribution: "Endemic to the Shola grassland slopes of Western Ghats (Munnar, Nilgiris).",
+          habitat: "Montane open grasslands between 1300m and 2400m altitude.",
+          role: "Undergoes periodic synchronous mass flowering once every 12 years, sustaining massive pollinator spikes.",
+          status: "Vulnerable habitat • Highly restricted to fragile montane Shola ecosystems.",
+          source: "Botanical Survey of India (BSI) & Kerala Forest Department"
+        }
+      };
+
+      const modal = document.getElementById('species-modal');
+      const modalTarget = document.getElementById('modal-content-target');
+      const modalClose = document.getElementById('modal-close-btn');
+
+      document.querySelectorAll('.species-expand-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openSpeciesModal(btn.dataset.species);
+        });
+      });
+
+      modalClose?.addEventListener('click', () => {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+      });
+
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('open');
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      // ── 4. CHAPTER 04: LEAFLET MAP OF KOZHIKODE & WESTERN GHATS ──
+      const mapLocations = [
+        {
+          name: "Kadalundi–Vallikkunnu Community Reserve",
+          coords: [11.1306, 75.8340],
+          type: "Mangrove Estuary & Shorebird Mudflats",
+          category: "wetlands",
+          desc: "India's pioneer community reserve. Crucial intertidal flyway for over 100 species of migratory waders, fiddler crabs, and pristine mangrove forest."
+        },
+        {
+          name: "Sarovaram Bio Park",
+          coords: [11.2660, 75.7952],
+          type: "Urban Wetland & Mangrove Canal Ecosystem",
+          category: "wetlands",
+          desc: "200-acre urban natural sponge wetland in the heart of Kozhikode. Purifies urban runoff and harbors smooth-coated otters and 30+ bird species."
+        },
+        {
+          name: "Kakkayam Forest Reserve",
+          coords: [11.5540, 75.9220],
+          type: "Upland Shola Foothills & Perennial River Source",
+          category: "forests",
+          desc: "High-rainfall evergreen rainforest sanctuary protecting wild Asian elephants, endangered hornbills, and headwaters of the Kuttiyadi river."
+        },
+        {
+          name: "Janakikkadu Eco-Tourism Reserve",
+          coords: [11.6420, 75.8360],
+          type: "Lowland Evergreen Rainforest",
+          category: "forests",
+          desc: "131 hectares of pristine lowland evergreen forest sheltering endemic butterflies, giant squirrels, and indigenous medicinal flora."
+        }
+      ];
+
+      let mapInstance = null;
+      let markers = [];
+
+      function initMap() {
+        const mapContainer = document.getElementById('leaflet-map');
+        if (!mapContainer || mapInstance) return;
+
+        // Center on Kozhikode Region
+        mapInstance = L.map('leaflet-map', {
+          scrollWheelZoom: false
+        }).setView([11.35, 75.86], 10);
+
+        // OpenStreetMap CartoDB Positron / OSM Tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          maxZoom: 18
+        }).addTo(mapInstance);
+
+        // Custom Green Pin Icon
+        const greenIcon = L.divIcon({
+          className: 'custom-map-pin',
+          html: `<div style="width: 22px; height: 22px; border-radius: 50%; background: #047857; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.35);"></div>`,
+          iconSize: [22, 22],
+          iconAnchor: [11, 11]
+        });
+
+        mapLocations.forEach((loc, index) => {
+          const marker = L.marker(loc.coords, { icon: greenIcon }).addTo(mapInstance);
+          marker.bindPopup(`
+            <div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 4px;">
+              <strong style="color: #047857; font-size: 14px;">${loc.name}</strong><br/>
+              <span style="font-size: 12px; color: #475569;">${loc.type}</span><br/>
+              <p style="font-size: 12px; line-height: 1.4; margin-top: 6px;">${loc.desc}</p>
+            </div>
+          `);
+
+          marker.on('click', () => {
+            selectLocationCard(index);
+          });
+
+          markers.push({ marker, category: loc.category });
+        });
+      }
+
+      function selectLocationCard(index) {
+        document.querySelectorAll('.loc-card-item').forEach((card, idx) => {
+          card.classList.toggle('selected', idx === index);
+        });
+        const loc = mapLocations[index];
+        if (loc && mapInstance) {
+          mapInstance.flyTo(loc.coords, 12, { duration: 1.2 });
+          markers[index].marker.openPopup();
+        }
+      }
+
+      document.querySelectorAll('.loc-card-item').forEach((card, idx) => {
+        card.addEventListener('click', () => {
+          selectLocationCard(idx);
+        });
+      });
+
+      document.querySelectorAll('.map-pill-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.map-pill-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const layer = btn.dataset.layer;
+
+          markers.forEach(({ marker, category }) => {
+            if (layer === 'all' || category === layer) {
+              mapInstance.addLayer(marker);
+            } else {
+              mapInstance.removeLayer(marker);
+            }
+          });
+        });
+      });
+
+      // Initialize map on scroll visibility
+      const mapEl = document.getElementById('leaflet-map');
+      if (mapEl) {
+        const mapObserver = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            initMap();
+            mapObserver.disconnect();
+          }
+        }, { threshold: 0.1 });
+        mapObserver.observe(mapEl);
+      }
+
+      // ── 5. CHAPTER 06: PART A - WATER WATCH DATA SWITCHER ──
+      const waterSitesData = {
+        kadalundi: {
+          ph: 7.4, phStatus: "Optimal",
+          do: 6.8, doStatus: "Healthy",
+          tur: 4.2, turStatus: "Clear",
+          temp: 26.8, tempStatus: "Normal",
+          ec: 420, ecStatus: "Normal",
+          nit: 0.8, nitStatus: "Low"
+        },
+        chaliyar: {
+          ph: 7.1, phStatus: "Optimal",
+          do: 6.2, doStatus: "Good",
+          tur: 6.8, turStatus: "Moderate",
+          temp: 27.4, tempStatus: "Normal",
+          ec: 480, ecStatus: "Normal",
+          nit: 1.2, nitStatus: "Moderate"
+        },
+        kallai: {
+          ph: 6.8, phStatus: "Acceptable",
+          do: 4.6, doStatus: "Caution",
+          tur: 11.5, turStatus: "High Turbidity",
+          temp: 28.5, tempStatus: "Elevated",
+          ec: 780, ecStatus: "High Ions",
+          nit: 2.8, nitStatus: "Elevated"
+        },
+        kakkayam: {
+          ph: 7.6, phStatus: "Pristine",
+          do: 8.2, doStatus: "Optimal",
+          tur: 1.8, turStatus: "Crystal Clear",
+          temp: 23.2, tempStatus: "Cool Forest",
+          ec: 140, ecStatus: "Pure",
+          nit: 0.2, nitStatus: "Ultra Low"
+        }
+      };
+
+      const siteSelect = document.getElementById('water-site-select');
+      siteSelect?.addEventListener('change', (e) => {
+        const d = waterSitesData[e.target.value];
+        if (!d) return;
+
+        document.getElementById('val-ph').textContent = d.ph;
+        document.getElementById('val-ph-status').textContent = d.phStatus;
+        document.getElementById('val-do').textContent = d.do;
+        document.getElementById('val-do-status').textContent = d.doStatus;
+        document.getElementById('val-tur').textContent = d.tur;
+        document.getElementById('val-tur-status').textContent = d.turStatus;
+        document.getElementById('val-temp').textContent = d.temp;
+        document.getElementById('val-temp-status').textContent = d.tempStatus;
+        document.getElementById('val-ec').textContent = d.ec;
+        document.getElementById('val-ec-status').textContent = d.ecStatus;
+        document.getElementById('val-nit').textContent = d.nit;
+        document.getElementById('val-nit-status').textContent = d.nitStatus;
+      });
+
+    });
+  </script>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       CHAPTER 07: 3D ENERGY CONSERVATION TURBINE SPECIMEN
+       PBR GlTF Loader with accurate color space, studio lighting & animated blades
+       ══════════════════════════════════════════════════════════════════ -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+    import { initOrbitalImageWheel } from './js/orbital-image-wheel.js';
+
+    const canvas = document.getElementById('energy-turbine-canvas');
+    const container = document.querySelector('.energy-turbine-sticky-wrap');
+    const loadingOverlay = document.getElementById('energy-loading-overlay');
+    const progressFill = document.getElementById('energy-progress-fill');
+
+    if (canvas && container) {
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(36, container.clientWidth / container.clientHeight, 0.1, 150);
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+      renderer.setClearColor(0x000000, 0); // Pure transparent, no frame or window
+      renderer.setSize(container.clientWidth, container.clientHeight, false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.05;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      // Balanced environment reflections using RoomEnvironment
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      pmrem.compileEquirectangularShader();
+      scene.environment = pmrem.fromScene(new RoomEnvironment()).texture;
+      pmrem.dispose();
+
+      // ── NATURAL OUTDOOR LIGHTING: Warm Sun, Sky Ambience & Deep Foliage Bounce ──
+      // Soft ambient base (prevents pitch-black shadows without washing out form)
+      const ambientLight = new THREE.AmbientLight(0xf1f5f9, 0.45);
+      scene.add(ambientLight);
+
+      // Natural Hemisphere Light: cool sky blue from above, rich botanical ground bounce from below
+      const hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x143826, 0.65);
+      scene.add(hemiLight);
+
+      // Key Sunlight: warm, crisp directional sun from top-right casting authentic contact shadows
+      const sunLight = new THREE.DirectionalLight(0xfff8ee, 2.2);
+      sunLight.position.set(5.5, 11, 6.5);
+      sunLight.castShadow = true;
+      sunLight.shadow.mapSize.set(2048, 2048);
+      sunLight.shadow.camera.near = 0.5;
+      sunLight.shadow.camera.far = 25;
+      sunLight.shadow.bias = -0.00015;
+      sunLight.shadow.normalBias = 0.02;
+      scene.add(sunLight);
+
+      // Rim Light: subtle cool daylight grazing the turbine blades and tower silhouette from behind
+      const rimLight = new THREE.DirectionalLight(0xcfd8dc, 0.85);
+      rimLight.position.set(-5, 7, -6);
+      scene.add(rimLight);
+
+      // Soft Fill: gentle frontal illumination to softly fill shadowed side without flattening depth
+      const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+      fillLight.position.set(-4, 3, 5);
+      scene.add(fillLight);
+
+      // Controls (Free manual orbit inspection, but model does NOT auto-rotate by itself)
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.autoRotate = false; // Model itself does not rotate by itself!
+      controls.enableZoom = false; // Disable scroll zoom on 3D model!
+      controls.minDistance = 1.8;
+      controls.maxDistance = 12.0;
+      controls.maxPolarAngle = Math.PI / 2 + 0.1;
+
+      let mixer = null;
+      let modelGroup = null;
+      let rootPivot = null;
+      let baseCenterY = 0;
+
+      const clock = new THREE.Clock();
+
+      // Load wind-turbine.glb
+      const loader = new GLTFLoader();
+      loader.load(
+        'assets/models/wind-turbine.glb',
+        (gltf) => {
+          modelGroup = gltf.scene;
+
+          // Refine materials for organic natural colors and realistic PBR responses
+          modelGroup.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              if (child.material) {
+                child.material.side = THREE.DoubleSide;
+
+                // Grass layer (Mesh: defaultMaterial / Material: phong2SG)
+                if (child.name === 'defaultMaterial' || (child.material.name && child.material.name.includes('phong2SG'))) {
+                  child.material.roughness = 0.82;
+                  child.material.metalness = 0.02;
+                  child.material.envMapIntensity = 0.45;
+                  // Botanical meadow green tint transforms sickly pale lime into lush living grass
+                  child.material.color.set('#3ea45e');
+                }
+                // Rock island base (Mesh: defaultMaterial.001 / Material: phong1SG)
+                else if (child.name === 'defaultMaterial.001' || (child.material.name && child.material.name.includes('phong1SG'))) {
+                  child.material.roughness = 0.92;
+                  child.material.metalness = 0.04;
+                  child.material.envMapIntensity = 0.4;
+                  // Earthy slate stone tone with warm mineral undertones
+                  child.material.color.set('#959086');
+                }
+                // Wind turbine main body, tower, and rotating blades
+                else {
+                  child.material.roughness = 0.38; // Aerodynamic semi-gloss finish
+                  child.material.metalness = 0.10; // Clean industrial coating
+                  child.material.envMapIntensity = 0.75;
+                  child.material.color.set('#f4f6f8'); // Crisp, natural industrial turbine off-white
+                }
+
+                child.material.needsUpdate = true;
+              }
+            }
+          });
+
+          // Calculate bounding box and center model
+          const box = new THREE.Box3().setFromObject(modelGroup);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3());
+
+          baseCenterY = center.y;
+
+          // Center the model so it pivots naturally
+          modelGroup.position.x = -center.x;
+          modelGroup.position.y = -center.y;
+          modelGroup.position.z = -center.z;
+
+          rootPivot = new THREE.Group();
+          rootPivot.add(modelGroup);
+
+          // Angle turbine rotated slightly rightwards as default orientation
+          rootPivot.rotation.y = 0.08;
+          scene.add(rootPivot);
+
+          // Position camera based on model dimensions for cinematic framing
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const fov = camera.fov * (Math.PI / 180);
+          let dist = Math.abs(maxDim / (2 * Math.tan(fov / 2))) * 1.35;
+          dist = Math.max(dist, 4.2);
+
+          camera.position.set(dist * 0.72, dist * 0.38, dist * 1.05);
+          camera.lookAt(0, 0, 0);
+          controls.target.set(0, 0, 0);
+          controls.update();
+
+          // Setup Animations (Blades/fan rotating continuously)
+          if (gltf.animations && gltf.animations.length > 0) {
+            mixer = new THREE.AnimationMixer(modelGroup);
+            gltf.animations.forEach((clip) => {
+              const action = mixer.clipAction(clip);
+              action.play();
+            });
+          }
+
+          // Smoothly remove loading overlay
+          if (loadingOverlay) {
+            loadingOverlay.classList.add('hidden');
+            setTimeout(() => {
+              loadingOverlay.style.display = 'none';
+            }, 500);
+          }
+        },
+        (xhr) => {
+          if (xhr.lengthComputable && progressFill) {
+            const percent = (xhr.loaded / xhr.total) * 100;
+            progressFill.style.width = `${percent}%`;
+          }
+        },
+        (err) => {
+          console.error('Error loading wind turbine model:', err);
+          if (loadingOverlay) {
+            const text = loadingOverlay.querySelector('.energy-loading-text');
+            if (text) text.textContent = 'Error loading 3D model';
+          }
+        }
+      );
+
+      // Responsive Resize
+      function onResize() {
+        if (!container) return;
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height, false);
+      }
+      const resizeObserver = new ResizeObserver(() => onResize());
+      resizeObserver.observe(container);
+
+      // Animation loop: Fan rotating & subtle floating island levitation
+      function animate() {
+        requestAnimationFrame(animate);
+        const delta = clock.getDelta();
+        const elapsed = clock.getElapsedTime();
+
+        // 1. Fan rotating
+        if (mixer) mixer.update(delta);
+
+        // 2. Subtle floating levitation (gives popping-out floating island feel)
+        if (rootPivot) {
+          rootPivot.position.y = Math.sin(elapsed * 1.6) * 0.08;
+        }
+
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    // ORBITAL IMAGE WHEEL INITIALIZATION (orbital-image-wheel.tsx)
+    // Curving around the 3D Floating Wind Turbine on the right
+    // ══════════════════════════════════════════════════════════════════
+    const wheelContainer = document.getElementById('orbital-image-wheel-root');
+    if (wheelContainer) {
+      const energyCards = [
+        {
+          src: 'https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?q=80&w=900&auto=format&fit=crop',
+          label: 'Offshore Wind Turbines',
+          subtitle: '01 • KINETIC WIND • 2.4 MW',
+          desc: 'Buoyant aerodynamic turbines moored along coastal currents delivering high-density clean power.',
+          metric: '2.4 MW Peak'
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=900&auto=format&fit=crop',
+          label: 'Floating Island Microgrids',
+          subtitle: '02 • FLOATING MICROGRIDS',
+          desc: 'Decentralized marine wind-solar islands powering isolated coastal fishing outposts autonomously.',
+          metric: 'Bio-Moored'
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=900&auto=format&fit=crop',
+          label: 'Agri-Photovoltaics',
+          subtitle: '03 • SOLAR CO-LOCATION',
+          desc: 'Bifacial solar canopies over crops and canals, preserving water while generating clean electricity.',
+          metric: '+42% Yield'
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=900&auto=format&fit=crop',
+          label: 'Tidal Kinetic Rotors',
+          subtitle: '04 • ESTUARINE POWER',
+          desc: 'Low-RPM helical turbines capturing diurnal tidal currents with zero damming and full fish safety.',
+          metric: 'Fish-Safe'
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=900&auto=format&fit=crop',
+          label: 'Community Bio-Grids',
+          subtitle: '05 • CIRCULAR BIOMASS',
+          desc: 'Community anaerobic digestors transforming farm biomass and weeds into green distributed power.',
+          metric: 'Zero Waste'
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=900&auto=format&fit=crop',
+          label: 'Vernacular Cooling',
+          subtitle: '06 • PASSIVE EFFICIENCY',
+          desc: 'Traditional courtyard thermal chimneys, terracotta louvers, and vegetative green envelopes.',
+          metric: '0% Emissions'
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=900&auto=format&fit=crop',
+          label: 'Helical Hydro-Kinetic',
+          subtitle: '07 • STREAM CATCHMENT',
+          desc: 'Micro-hydro units in Western Ghats forest streams generating continuous power without dams.',
+          metric: 'No Reservoir'
+        },
+        {
+          src: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=900&auto=format&fit=crop',
+          label: 'Zero-Loss Flow Storage',
+          subtitle: '08 • SAFE ENERGY STORAGE',
+          desc: 'Non-flammable iron-redox flow storage buffering renewable nodes for year-round grid stability.',
+          metric: '30-Yr Lifespan'
+        }
+      ];
+
+      const orbitalWheel = initOrbitalImageWheel(wheelContainer, {
+        items: energyCards,
+        defaultSelected: 0,
+        radius: 350,
+        cardWidth: 420,
+        cardHeight: 195,
+        scaleEffect: 0.08,
+        smoothing: 35
+      });
+
+      // Synchronize scroll on the 3D turbine model so hovering the model also scrolls cards 1-8
+      const turbineWrap = document.querySelector('.energy-turbine-sticky-wrap');
+      if (turbineWrap && orbitalWheel) {
+        turbineWrap.addEventListener('wheel', (e) => {
+          orbitalWheel.handleWheel(e);
+        }, { passive: false });
+      }
+    }
+  </script>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       CHAPTER 08: 3D EARTH VIEWER (FITS INTO 'O' OF 'WORLD')
+       Smooth 96x96 SphereGeometry with transparent clear color & vertical-axis spin
+       ══════════════════════════════════════════════════════════════════ -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    const canvas = document.getElementById('earth-canvas');
+    const container = document.getElementById('earth-3d-slot');
+
+    if (canvas && container) {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.set(0, 0, 2.72);
+
+      // WebGLRenderer with explicit transparent clear color to remove square bounding box
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance'
+      });
+      renderer.setClearColor(0x000000, 0); // Fully transparent background
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.20;
+
+      function updateSize() {
+        if (!container) return;
+        const rect = container.getBoundingClientRect();
+        const size = Math.max(rect.width, 60);
+        renderer.setSize(size, size, false);
+        camera.aspect = 1;
+        camera.updateProjectionMatrix();
+      }
+
+      const ro = new ResizeObserver(() => updateSize());
+      ro.observe(container);
+      updateSize();
+
+      // ── LIGHTING: Bright, Crisp & Atmospheric on White Background ──
+      // Ambient Light: high intensity so the non-sunlit hemisphere is bright and clear
+      const ambientLight = new THREE.AmbientLight(0xffffff, 2.2);
+      scene.add(ambientLight);
+
+      // Key Directional Light: crisp sunlight from top-right
+      const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
+      keyLight.position.set(4.0, 2.5, 4.0);
+      scene.add(keyLight);
+
+      // Soft Directional Rim Light with subtle mint/emerald tint (#D1FAE5) from the side
+      const rimLight = new THREE.DirectionalLight(0xD1FAE5, 2.6);
+      rimLight.position.set(-4.0, 1.5, -2.0);
+      scene.add(rimLight);
+
+      // Gentle fill light from below for volumetric roundness and light lift
+      const fillLight = new THREE.DirectionalLight(0xF0FDF4, 1.2);
+      fillLight.position.set(0, -3.0, 2.0);
+      scene.add(fillLight);
+
+      // Earth Spin Group: Locked at (0, 0, 0), rotates purely along the vertical Y-axis
+      const earthSpin = new THREE.Group();
+      scene.add(earthSpin);
+
+      // High-segment SphereGeometry (96x96) produces a continuous, perfectly smooth curve
+      function createSmoothEarth(texture) {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.flipY = false; // Fix inverted orientation: sets North Pole up and South Pole down
+        texture.needsUpdate = true;
+        texture.generateMipmaps = true;
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+
+        const sphereGeo = new THREE.SphereGeometry(1.0, 96, 96);
+        const sphereMat = new THREE.MeshStandardMaterial({
+          map: texture,
+          roughness: 0.52,
+          metalness: 0.04,
+          color: 0xffffff
+        });
+
+        const earthMesh = new THREE.Mesh(sphereGeo, sphereMat);
+        earthSpin.add(earthMesh);
+      }
+
+      // Load the photorealistic Earth texture
+      const textureLoader = new THREE.TextureLoader();
+      textureLoader.load(
+        'assets/textures/earth-texture.jpg',
+        (tex) => {
+          createSmoothEarth(tex);
+          console.log('HQ Smooth 96x96 Sphere Earth loaded successfully.');
+        },
+        undefined,
+        (err) => {
+          console.error('Error loading earth texture:', err);
+        }
+      );
+
+      // Drag-to-rotate interaction: only along the upright vertical axis (no tilt/wobble)
+      let isDragging = false;
+      let prevX = 0;
+      let velX = 0;
+
+      container.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        prevX = e.clientX;
+        velX = 0;
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - prevX;
+        prevX = e.clientX;
+        velX = deltaX * 0.007;
+        earthSpin.rotation.y += velX;
+      });
+
+      window.addEventListener('pointerup', () => { isDragging = false; });
+      window.addEventListener('pointercancel', () => { isDragging = false; });
+
+      // Continuous animation loop: rotates strictly along vertical Y axis in place
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!isDragging) {
+          velX *= 0.94;
+          earthSpin.rotation.y += 0.003 + velX;
+        }
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+  </script>
+
+</body>
+
+</html>
