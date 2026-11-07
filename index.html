@@ -2048,124 +2048,6 @@
       color: #FFFBEB !important;
     }
 
-    #chapter-06.story-chapter {
-      padding-top: 60px !important;
-    }
-
-    /* ── CHAPTER 06: THE EVIDENCE: WATER MONITORING & WILDLIFE REPORTS ── */
-    .evidence-dual-container {
-      display: flex;
-      flex-direction: column;
-      gap: 60px;
-    }
-
-    /* Part A: Water Watch Dashboard */
-    .water-dashboard-card {
-      background: #ffffff;
-      border-radius: 32px;
-      padding: 44px;
-      border: 1px solid rgba(23, 75, 56, 0.12);
-      box-shadow: 0 30px 60px -15px rgba(23, 75, 56, 0.08);
-    }
-
-    .water-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .water-location-select {
-      padding: 10px 20px;
-      border-radius: 12px;
-      border: 1px solid rgba(23, 75, 56, 0.2);
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--forest-green);
-      background: #F7F8F3;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .indicators-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .indicator-card {
-      background: #F7F8F3;
-      border-radius: 18px;
-      padding: 22px;
-      border: 1px solid rgba(23, 75, 56, 0.08);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      transition: var(--transition-smooth);
-    }
-
-    .indicator-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 25px -8px rgba(23, 75, 56, 0.1);
-      border-color: var(--primary);
-    }
-
-    .ind-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .ind-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--botanical-grey);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .ind-status-pill {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: rgba(23, 75, 56, 0.08);
-      color: var(--forest-green);
-      border: 1px solid rgba(23, 75, 56, 0.12);
-    }
-
-    .ind-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--forest-deep);
-    }
-
-    .ind-unit {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-light);
-      margin-left: 4px;
-    }
-
-    .ind-meaning {
-      font-size: 12.5px;
-      line-height: 1.5;
-      color: var(--text-muted);
-    }
-
-    .water-data-disclaimer {
-      font-size: 12px;
-      color: var(--text-light);
-      font-style: italic;
-      padding-top: 14px;
-      border-top: 1px solid rgba(23, 75, 56, 0.08);
-    }
-
     /* Part B: Wildlife Watch Submission Interface */
     .wildlife-report-container {
       background: #ffffff;
@@ -3574,14 +3456,11 @@
     <div class="chapter-indicator-dot" data-target="chapter-05" title="Chapter 04: Ecological Threats">
       <span class="chapter-tooltip">04 • Ecological Threats</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-06" title="Chapter 05: Habitat Health">
-      <span class="chapter-tooltip">05 • Habitat Health</span>
+    <div class="chapter-indicator-dot" data-target="chapter-07" title="Chapter 05: Conservation Action">
+      <span class="chapter-tooltip">05 • Conservation Action</span>
     </div>
-    <div class="chapter-indicator-dot" data-target="chapter-07" title="Chapter 06: Conservation Action">
-      <span class="chapter-tooltip">06 • Conservation Action</span>
-    </div>
-    <div class="chapter-indicator-dot" data-target="chapter-08" title="Chapter 07: Sustainable Future">
-      <span class="chapter-tooltip">07 • Sustainable Future</span>
+    <div class="chapter-indicator-dot" data-target="chapter-08" title="Chapter 06: Sustainable Future">
+      <span class="chapter-tooltip">06 • Sustainable Future</span>
     </div>
   </nav>
 
@@ -3871,160 +3750,11 @@
       </div>
     </section>
 
-    <!-- ── CHAPTER 05 – THE EVIDENCE: HABITAT HEALTH & ECOLOGICAL MONITORING ── -->
-    <section id="chapter-06" class="story-chapter">
-      <div class="chapter-header">
-        <div class="chapter-tag">
-          <span>Chapter 05 / Habitat Health</span>
-        </div>
-        <h2 class="chapter-title">Reading the vital signs of Western Ghats ecosystems.</h2>
-        <p class="chapter-subtitle">
-          Building a sustainable future requires sound ecological science. By monitoring forest stream chemistry,
-          microclimate temperatures, and indicator species, communities gather the data needed to safeguard vulnerable
-          habitats.
-        </p>
-      </div>
-
-      <div class="evidence-dual-container">
-
-        <!-- PART A: WATER WATCH DASHBOARD -->
-        <div class="water-dashboard-card" id="water-watch">
-          <div class="water-header-row">
-            <div>
-              <span class="chapter-tag" style="margin-bottom: 8px;">Pillar 03 / Watershed &amp; Stream Health
-                Station</span>
-              <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: var(--forest-deep);">
-                Living waters are the lifeblood of the Ghats.
-              </h3>
-              <p style="font-size: 14.5px; color: var(--botanical-grey); margin-top: 4px;">
-                Western Ghats headwaters sustain 44 rivers and thousands of endemic species. Monitoring physical and
-                chemical
-                stream markers reveals the ecological health of forest catchments.
-              </p>
-            </div>
-
-            <div>
-              <label for="water-site-select"
-                style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--forest-green); display: block; margin-bottom: 6px;">Catchment
-                Station</label>
-              <select id="water-site-select" class="water-location-select">
-                <option value="kadalundi">Kadalundi Estuary • Mangrove Nursery Station</option>
-                <option value="chaliyar">Chaliyar River • Foothill Riparian Corridor</option>
-                <option value="kallai">Kallai Estuary • Coastal Riparian Transition</option>
-                <option value="kakkayam">Kakkayam Reservoir • Upland Shola Source</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Indicators Grid -->
-          <div class="indicators-grid" id="indicators-container">
-
-            <div class="indicator-card">
-              <div class="ind-top">
-                <span class="ind-name">pH Level</span>
-                <span class="ind-status-pill" id="val-ph-status">Optimal</span>
-              </div>
-              <div>
-                <span class="ind-value" id="val-ph">7.4</span>
-                <span class="ind-unit">pH</span>
-              </div>
-              <p class="ind-meaning">Amphibian Bio-Indicator: Neutral stream pH is essential for skin respiration and
-                egg development in endemic torrent frogs.</p>
-            </div>
-
-            <div class="indicator-card">
-              <div class="ind-top">
-                <span class="ind-name">Dissolved Oxygen</span>
-                <span class="ind-status-pill" id="val-do-status">Healthy</span>
-              </div>
-              <div>
-                <span class="ind-value" id="val-do">6.8</span>
-                <span class="ind-unit">mg/L</span>
-              </div>
-              <p class="ind-meaning">Stream Fauna Respiration: High oxygen saturation sustains rheophilic stream fish,
-                freshwater crabs, and aquatic insect larvae.</p>
-            </div>
-
-            <div class="indicator-card">
-              <div class="ind-top">
-                <span class="ind-name">Turbidity</span>
-                <span class="ind-status-pill" id="val-tur-status">Clear</span>
-              </div>
-              <div>
-                <span class="ind-value" id="val-tur">4.2</span>
-                <span class="ind-unit">NTU</span>
-              </div>
-              <p class="ind-meaning">Canopy Siltation Marker: Low turbidity ensures sunlight reaches aquatic riverbed
-                moss where hornbills and kingfishers hunt.</p>
-            </div>
-
-            <div class="indicator-card">
-              <div class="ind-top">
-                <span class="ind-name">Water Temp</span>
-                <span class="ind-status-pill" id="val-temp-status">Normal</span>
-              </div>
-              <div>
-                <span class="ind-value" id="val-temp">26.8</span>
-                <span class="ind-unit">°C</span>
-              </div>
-              <p class="ind-meaning">Microclimate Equilibrium: Regulates dissolved gas levels and metabolic rates of
-                temperature-sensitive montane aquatic species.</p>
-            </div>
-
-            <div class="indicator-card">
-              <div class="ind-top">
-                <span class="ind-name">Conductivity</span>
-                <span class="ind-status-pill" id="val-ec-status">Normal</span>
-              </div>
-              <div>
-                <span class="ind-value" id="val-ec">420</span>
-                <span class="ind-unit">µS/cm</span>
-              </div>
-              <p class="ind-meaning">Dissolved Mineral Baseline: Gauges baseline dissolved minerals; sharp spikes reveal
-                soil erosion or agricultural leaching.</p>
-            </div>
-
-            <div class="indicator-card">
-              <div class="ind-top">
-                <span class="ind-name">Nitrates</span>
-                <span class="ind-status-pill" id="val-nit-status">Low</span>
-              </div>
-              <div>
-                <span class="ind-value" id="val-nit">0.8</span>
-                <span class="ind-unit">mg/L</span>
-              </div>
-              <p class="ind-meaning">Nutrient Balance: Pristine forest springs maintain minimal nitrates, preventing
-                weed choking of native forest pools.</p>
-            </div>
-
-          </div>
-
-          <div class="water-data-disclaimer">
-            * Ecological baseline indicators curated from Western Ghats watershed research and Kerala environmental
-            survey data. Habitat biometric tracking provides conservationists with empirical benchmarks to protect
-            endangered stream ecosystems.
-            * Benchmark Sample Data: Curated from Western Ghats watershed research and Kerala State Pollution Control
-            Board baseline survey standards. Habitat biometric tracking provides conservationists with empirical
-            benchmarks to protect endangered stream ecosystems.
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Narrative Bridge -->
-      <div class="narrative-bridge">
-        <p class="narrative-bridge-text">
-          "When ecological science joins hands with community stewardship, observation turns into conservation.
-          Together, we can build a sustainable future."
-        </p>
-      </div>
-    </section>
-
-    <!-- ── CHAPTER 06 – THE ACTION: COMMUNITY CONSERVATION ── -->
+    <!-- ── CHAPTER 05 – THE ACTION: COMMUNITY CONSERVATION ── -->
     <section id="chapter-07" class="story-chapter">
       <div class="chapter-header">
         <div class="chapter-tag">
-          <span>Chapter 06 / Conservation in Action</span>
+          <span>Chapter 05 / Conservation in Action</span>
         </div>
         <h2 class="chapter-title">Conservation is not just something we watch. It is something we do.</h2>
         <p class="chapter-subtitle">
@@ -4048,13 +3778,13 @@
         </div>
 
         <div class="action-pillar-card">
-          <span class="pillar-num">02 / SCIENCE</span>
-          <h3 class="pillar-title">MEASURE</h3>
+          <span class="pillar-num">02 / HABITATS</span>
+          <h3 class="pillar-title">MAP</h3>
           <p class="pillar-desc">
-            Monitor local forest stream health, seasonal rainfall, and microclimates to detect ecological stress before
-            habitats decline.
+            Map regional sacred groves, reserve boundaries, and vulnerable wetlands to maintain connected biological
+            corridors for wildlife.
           </p>
-          <a href="#water-watch" class="pillar-cta-link">View Habitat Health Station &rarr;</a>
+          <a href="#chapter-04" class="pillar-cta-link">Explore Sanctuaries &rarr;</a>
         </div>
 
         <div class="action-pillar-card">
@@ -4251,7 +3981,7 @@
           <div class="footer-links-col">
             <span class="footer-links-head">Conservation</span>
             <a href="#chapter-05" class="footer-link-a">Ecological Threats</a>
-            <a href="#water-watch" class="footer-link-a">Habitat Health Station</a>
+            <a href="#chapter-07" class="footer-link-a">Conservation Action</a>
             <a href="#energy-conservation" class="footer-link-a">Ecological Energy</a>
             <a href="#action-banner" class="footer-link-a">Community Field Wall</a>
           </div>
@@ -4849,7 +4579,7 @@
       // ── 1. CHAPTER PROGRESS RAIL INTERSECTION OBSERVER & HERO VISIBILITY ──
       const navRail = document.querySelector('.chapter-nav-rail');
       const dots = document.querySelectorAll('.chapter-indicator-dot');
-      const sectionIds = ['hero-wrapper', 'chapter-01', 'chapter-03', 'chapter-04', 'chapter-05', 'chapter-06', 'chapter-07', 'chapter-08'];
+      const sectionIds = ['hero-wrapper', 'chapter-01', 'chapter-03', 'chapter-04', 'chapter-05', 'chapter-07', 'chapter-08'];
       const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
       function updateNavRailVisibility() {
@@ -5227,61 +4957,6 @@
         }, { threshold: 0.1 });
         mapObserver.observe(mapEl);
       }
-
-      // ── 5. CHAPTER 06: PART A - WATER WATCH DATA SWITCHER ──
-      const waterSitesData = {
-        kadalundi: {
-          ph: 7.4, phStatus: "Optimal",
-          do: 6.8, doStatus: "Healthy",
-          tur: 4.2, turStatus: "Clear",
-          temp: 26.8, tempStatus: "Normal",
-          ec: 420, ecStatus: "Normal",
-          nit: 0.8, nitStatus: "Low"
-        },
-        chaliyar: {
-          ph: 7.1, phStatus: "Optimal",
-          do: 6.2, doStatus: "Good",
-          tur: 6.8, turStatus: "Moderate",
-          temp: 27.4, tempStatus: "Normal",
-          ec: 480, ecStatus: "Normal",
-          nit: 1.2, nitStatus: "Moderate"
-        },
-        kallai: {
-          ph: 6.8, phStatus: "Acceptable",
-          do: 4.6, doStatus: "Caution",
-          tur: 11.5, turStatus: "High Turbidity",
-          temp: 28.5, tempStatus: "Elevated",
-          ec: 780, ecStatus: "High Ions",
-          nit: 2.8, nitStatus: "Elevated"
-        },
-        kakkayam: {
-          ph: 7.6, phStatus: "Pristine",
-          do: 8.2, doStatus: "Optimal",
-          tur: 1.8, turStatus: "Crystal Clear",
-          temp: 23.2, tempStatus: "Cool Forest",
-          ec: 140, ecStatus: "Pure",
-          nit: 0.2, nitStatus: "Ultra Low"
-        }
-      };
-
-      const siteSelect = document.getElementById('water-site-select');
-      siteSelect?.addEventListener('change', (e) => {
-        const d = waterSitesData[e.target.value];
-        if (!d) return;
-
-        document.getElementById('val-ph').textContent = d.ph;
-        document.getElementById('val-ph-status').textContent = d.phStatus;
-        document.getElementById('val-do').textContent = d.do;
-        document.getElementById('val-do-status').textContent = d.doStatus;
-        document.getElementById('val-tur').textContent = d.tur;
-        document.getElementById('val-tur-status').textContent = d.turStatus;
-        document.getElementById('val-temp').textContent = d.temp;
-        document.getElementById('val-temp-status').textContent = d.tempStatus;
-        document.getElementById('val-ec').textContent = d.ec;
-        document.getElementById('val-ec-status').textContent = d.ecStatus;
-        document.getElementById('val-nit').textContent = d.nit;
-        document.getElementById('val-nit-status').textContent = d.nitStatus;
-      });
 
       // ── CHAPTER 05 SPOTLIGHT CARDS (REACT BITS) ──
       initSpotlightCards('#chapter-05 .challenge-card', {

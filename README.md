@@ -27,7 +27,7 @@
 
 **Green Tomorrow** is an immersive, editorial-documentary web experience dedicated to regional ecological conservation, biodiversity preservation, and clean energy innovation with a special focus on the **Western Ghats of Kerala** — one of the world's eight "hottest hotspots" of biological diversity.
 
-Rather than presenting passive text, the platform engages students, researchers, and citizens through **real-time 3D WebGL specimens**, **interactive geospatial mapping**, **empirical river water monitoring stations**, and **kinetic clean-energy orbital galleries**. It bridges grassroots local action with global ecological stewardship.
+Rather than presenting passive text, the platform engages students, researchers, and citizens through **real-time 3D WebGL specimens**, **interactive geospatial mapping**, **kinetic clean-energy orbital galleries**, and **grassroots conservation networks**. It bridges local field action with global ecological stewardship.
 
 ---
 
@@ -46,15 +46,15 @@ The **Western Ghats**, older than the Himalayas, is recognized by UNESCO and the
 | :--- | :--- |
 | **Biodiversity & Local Nature** | Highlighting endemic flora and fauna of the Western Ghats (Malabar Giant Squirrel, Malabar Grey Hornbill, Purple Frog, Nilgiri Langur, Malabar Gliding Frog, Neelakurinji) via an interactive GSAP-powered **Accordion Gallery** with verified IUCN conservation statuses. |
 | **Spatial Habitat Cartography** | Interactive **Leaflet GIS Map** visualizing protected reserves (Kadalundi Estuary, Sarovaram Wetland, Kakkayam Reserve, Janakikkadu Forest), fragile mangrove buffer corridors, and priority rewilding sectors across Kerala. |
-| **Open Data & Climate Advocacy** | Empirical **Habitat Health Station** monitoring pH, Dissolved Oxygen (DO), Turbidity, Temperature, Conductivity, and Nitrates across 4 critical Kerala river basins based on KSPCB baseline standards. |
 | **Clean Energy & Decarbonisation** | Interactive 3D Offshore Wind Turbine specimen with dynamic PBR lighting and an 8-stage bounded **Orbital Wheel** detailing modern renewable microgrids, tidal rotors, and agrivoltaics. |
 | **Grassroots Empowerment** | **Green Citizen Wall** celebrating real-world community stewardship by students, research clubs, and local protectors across Kerala. |
+| **Global Equilibrium** | Interactive 3D Earth specimen embedded within the "Protect Our WORLD" typographical finale, connecting local conservation with planetary resilience. |
 
 ---
 
 ## ✨ Features & Interactive Architecture
 
-The platform is structured into a continuous, cinematic vertical documentary journey across 8 narrative chapters:
+The platform is structured into a continuous, cinematic vertical documentary journey across 6 core narrative chapters:
 
 ```
 [ Hero: 3D Living Tree Specimen ] 
@@ -67,11 +67,9 @@ The platform is structured into a continuous, cinematic vertical documentary jou
        ↓
 [ Ch. 04: Environmental Challenges ] ── Highlighting fragmentation, wetland encroachment, and fringe conflict
        ↓
-[ Ch. 05: Habitat Health Station ] ── Multi-basin river chemistry dashboard (pH, DO, Turbidity, Nitrates)
+[ Ch. 05: Conservation Action & Clean Energy ] ── Floating 3D wind turbine + bounded orbital wheel + Green Citizen Wall
        ↓
-[ Ch. 06: Conservation Action & Clean Energy ] ── Floating 3D wind turbine + bounded orbital wheel
-       ↓
-[ Ch. 07: Green Citizen Wall ] ── Verified grassroots conservation contributions
+[ Ch. 06: Global Future & 3D Earth ] ── Interactive Earth typography climax & call to action
        ↓
 [ Footer: Minimal Botanical Footer ] ── Navigation, verified citations, and Kerala GPS coordinates
 ```
@@ -80,8 +78,10 @@ The platform is structured into a continuous, cinematic vertical documentary jou
 - **Hero 3D Specimen:** Photorealistic 3D Shola forest tree rendered with Three.js, directional sunlight shadows, soft camera orbit damping, camera perspective presets (*Canopy Top*, *Bark Detail*, *Reset Center*), and progressive loading indicator.
 - **Endemic Species Gallery:** GSAP-driven responsive accordion with 3D panel tilt, parallax image drift, IUCN Red List status badges, and deep-dive scientific modal dialogs.
 - **Interactive GIS Map:** Leaflet.js cartography with custom SVG botanical pins, sanctuary boundary telemetry, and fly-to coordinate transitions.
-- **Water Quality Benchmarks:** Dynamic river selector comparing Kadalundi Estuary, Chaliyar River, Kallai Canal, and Kakkayam Headwaters across 6 empirical health metrics.
+- **Ecological Challenges Grid:** High-definition photography and spotlight cards detailing linear infrastructure dissection, Shola monoculture encroachment, and fringe conflict.
 - **Clean Energy Orbital Wheel:** Non-infinite bounded scroll wheel presenting 8 decarbonisation solutions paired with an animated 3D offshore wind turbine on a floating bio-island.
+- **Green Citizen Wall:** Grassroots community showcase celebrating conservation contributions from students, researchers, and indigenous stewards across Kerala.
+- **Global Typography Stage:** Interactive 3D Earth specimen seamlessly integrated into the typographic wordmark `W[O]RLD` with drag-to-inspect rotation.
 - **Modern Botanical Footer:** Clean, zero-emoji, high-contrast dark botanical footer (`#061811`) with internal navigation, conservation links, verified data citations, and coordinates (`11.2588° N, 75.7804° E`).
 
 ---
