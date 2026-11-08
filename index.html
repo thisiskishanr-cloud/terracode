@@ -180,6 +180,12 @@
       height: 100vh;
       min-height: 700px;
       overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-wrapper.hero-ready {
+      opacity: 1;
     }
 
     /* ── 3D CANVAS LAYER (HERO PRESERVED) ── */
@@ -4308,13 +4314,13 @@
       });
     });
 
-    // Show "Enter Documentary" button after 2.5 seconds so judges are never stuck
-    setTimeout(() => {
-      if (enterEarlyBtn) enterEarlyBtn.style.display = 'inline-flex';
-    }, 2500);
+    let isTreeFullyLoaded = false;
 
     function dismissPrologue() {
       clearInterval(factInterval);
+      const heroEl = document.getElementById('hero-wrapper');
+      if (heroEl) heroEl.classList.add('hero-ready');
+
       if (loadingEl && !loadingEl.classList.contains('hidden')) {
         loadingEl.classList.add('hidden');
         setTimeout(() => loadingEl.remove(), 800);
@@ -4325,6 +4331,14 @@
       e.preventDefault();
       dismissPrologue();
     });
+
+    // Fallback safeguard: Only display the manual bypass button if network stalls for > 35s
+    setTimeout(() => {
+      if (!isTreeFullyLoaded && enterEarlyBtn) {
+        enterEarlyBtn.style.display = 'inline-flex';
+        if (statusTextEl) statusTextEl.textContent = '3D specimen taking longer to load. Click to enter:';
+      }
+    }, 35000);
 
     // ── 3D MODEL LOADER ──
     const loader = new GLTFLoader();
@@ -4338,6 +4352,7 @@
     loader.load(
       'assets/models/tree.glb',
       (gltf) => {
+        isTreeFullyLoaded = true;
         treeModel = gltf.scene;
 
         treeModel.traverse((node) => {
@@ -4392,9 +4407,16 @@
         ground.receiveShadow = true;
         scene.add(ground);
 
+        // Pre-render a frame immediately so the tree is already drawn before dissolving loader
+        renderer.render(scene, camera);
+
         if (progressFillEl) progressFillEl.style.width = '100%';
-        if (statusTextEl) statusTextEl.textContent = 'Documentary ready. Entering Western Ghats...';
+        if (statusTextEl) statusTextEl.textContent = 'Canopy loaded. Entering Western Ghats...';
         if (progressEl) progressEl.textContent = '100%';
+
+        // Ensure hero wrapper is ready, then smoothly reveal
+        const heroEl = document.getElementById('hero-wrapper');
+        if (heroEl) heroEl.classList.add('hero-ready');
 
         setTimeout(() => {
           dismissPrologue();
@@ -4428,21 +4450,20 @@
         console.error('Initial model load error:', err);
         setTimeout(() => {
           loader.load('assets/models/tree.glb', (retryGltf) => {
+            isTreeFullyLoaded = true;
             treeModel = retryGltf.scene;
             scene.add(treeModel);
             fitTreeTopToBottom();
+            renderer.render(scene, camera);
             dismissPrologue();
-          }, null, () => {
-            dismissPrologue();
+          }, null, (fatalErr) => {
+            console.error('Model load fatal error:', fatalErr);
+            if (statusTextEl) statusTextEl.textContent = 'Unable to stream 3D model.';
+            if (enterEarlyBtn) enterEarlyBtn.style.display = 'inline-flex';
           });
         }, 1200);
       }
     );
-
-    // Safeguard: Never block user behind loading curtain for more than 7s under any network condition
-    setTimeout(() => {
-      dismissPrologue();
-    }, 7000);
 
     // ── HERO UI INTERACTION HOOKS (PRESERVED) ──
     const spinBtn = document.getElementById('btn-toggle-spin');
