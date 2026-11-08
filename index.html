@@ -4056,6 +4056,8 @@
       if (hasRevealedSite) return;
       if (isTreeFullyLoaded && isTypewriterFinished) {
         hasRevealedSite = true;
+        window.__HERO_READY__ = true;
+        window.dispatchEvent(new CustomEvent('hero:revealed'));
         const heroEl = document.getElementById('hero-wrapper');
         if (heroEl) heroEl.classList.add('hero-ready');
 
@@ -5055,6 +5057,11 @@
             });
           }
 
+          // Pre-compile shaders so there is zero jank when scrolling into view
+          if (renderer && scene && camera) {
+            renderer.compile(scene, camera);
+          }
+
           // Smoothly remove loading overlay
           if (loadingOverlay) {
             loadingOverlay.classList.add('hidden');
@@ -5062,6 +5069,9 @@
               loadingOverlay.style.display = 'none';
             }, 500);
           }
+
+          window.__TURBINE_LOADED__ = true;
+          window.dispatchEvent(new CustomEvent('turbine:loaded'));
         },
         (xhr) => {
           if (xhr.lengthComputable && progressFill) {
@@ -5091,7 +5101,8 @@
       resizeObserver.observe(container);
 
       // ── VIEWPORT INTERSECTION OBSERVER FOR WIND TURBINE ──
-      let isTurbineVisible = true;
+      // Starts as false to consume 0% GPU/CPU until actually scrolled into view
+      let isTurbineVisible = false;
       const turbineObserver = new IntersectionObserver((entries) => {
         isTurbineVisible = entries[0].isIntersecting;
       }, { threshold: 0.05 });
@@ -5137,17 +5148,54 @@
         if (canvas) canvas.style.display = 'none';
         const turbineStage = document.querySelector('.energy-turbine-stage');
         if (turbineStage) turbineStage.style.display = 'none';
+        window.__TURBINE_LOADED__ = true;
+        window.dispatchEvent(new CustomEvent('turbine:loaded'));
       } else if (!isDesktopTurbineInitialized) {
-        // Desktop: Initialize full Three.js scene & load model
+        // Desktop: Initialize full Three.js scene & load model in background
         isDesktopTurbineInitialized = true;
         initDesktopTurbine();
       }
     }
 
-    checkAndInitTurbine();
-    window.addEventListener('resize', () => {
+    let isTurbineLoadTriggered = false;
+    function triggerTurbineLoad() {
+      if (isTurbineLoadTriggered) return;
+      isTurbineLoadTriggered = true;
       checkAndInitTurbine();
-    });
+    }
+
+    // 1. Proactive scroll proximity: if user scrolls towards Chapter 05 (trigger 1400px ahead)
+    const turbineTriggerEl = document.getElementById('chapter-05') || document.getElementById('chapter-07') || container;
+    if (turbineTriggerEl) {
+      const proximityObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          triggerTurbineLoad();
+          proximityObserver.disconnect();
+        }
+      }, { rootMargin: '1400px 0px 1400px 0px' });
+      proximityObserver.observe(turbineTriggerEl);
+    }
+
+    // 2. Idle background scheduler: Once hero is revealed and calm, preload quietly
+    function scheduleIdleTurbine() {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => triggerTurbineLoad(), { timeout: 3500 });
+      } else {
+        setTimeout(triggerTurbineLoad, 2000);
+      }
+    }
+
+    if (window.__HERO_READY__) {
+      scheduleIdleTurbine();
+    } else {
+      window.addEventListener('hero:revealed', scheduleIdleTurbine, { once: true });
+    }
+
+    window.addEventListener('resize', () => {
+      if (isDesktopTurbineInitialized) {
+        checkAndInitTurbine();
+      }
+    }, { passive: true });
 
     // ══════════════════════════════════════════════════════════════════
     // ORBITAL IMAGE WHEEL INITIALIZATION (orbital-image-wheel.tsx)
@@ -5237,15 +5285,19 @@
   <!-- ══════════════════════════════════════════════════════════════════
        CHAPTER 08: 3D EARTH VIEWER (FITS INTO 'O' OF 'WORLD')
        Smooth 96x96 SphereGeometry with transparent clear color & vertical-axis spin
+       Deferred background loading after hero & turbine are loaded, or on scroll proximity
        ══════════════════════════════════════════════════════════════════ -->
   <script type="module">
     import * as THREE from 'three';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
     const canvas = document.getElementById('earth-canvas');
     const container = document.getElementById('earth-3d-slot');
+    let isEarthInitialized = false;
 
-    if (canvas && container) {
+    function initEarthViewer() {
+      if (!canvas || !container || isEarthInitialized) return;
+      isEarthInitialized = true;
+
       const isEarthMobile = window.innerWidth <= 900 || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
@@ -5334,15 +5386,17 @@
 
         const earthMesh = new THREE.Mesh(sphereGeo, sphereMat);
         earthSpin.add(earthMesh);
+
+        // Pre-compile shader so there is zero jank when scrolling into view
+        renderer.compile(scene, camera);
       }
 
-      // Load the photorealistic Earth texture
+      // Load the photorealistic Earth texture in the background
       const textureLoader = new THREE.TextureLoader();
       textureLoader.load(
         'assets/textures/earth-texture.jpg',
         (tex) => {
           createSmoothEarth(tex);
-          console.log('HQ Smooth 96x96 Sphere Earth loaded successfully.');
         },
         undefined,
         (err) => {
@@ -5359,7 +5413,7 @@
         isDragging = true;
         prevX = e.clientX;
         velX = 0;
-      });
+      }, { passive: true });
 
       window.addEventListener('pointermove', (e) => {
         if (!isDragging) return;
@@ -5367,13 +5421,14 @@
         prevX = e.clientX;
         velX = deltaX * 0.007;
         earthSpin.rotation.y += velX;
-      });
+      }, { passive: true });
 
-      window.addEventListener('pointerup', () => { isDragging = false; });
-      window.addEventListener('pointercancel', () => { isDragging = false; });
+      window.addEventListener('pointerup', () => { isDragging = false; }, { passive: true });
+      window.addEventListener('pointercancel', () => { isDragging = false; }, { passive: true });
 
       // ── VIEWPORT INTERSECTION OBSERVER FOR EARTH VIEWER ──
-      let isEarthVisible = true;
+      // Initialized to false: 0% GPU/CPU overhead during scroll until entering screen
+      let isEarthVisible = false;
       const earthObserver = new IntersectionObserver((entries) => {
         isEarthVisible = entries[0].isIntersecting;
       }, { threshold: 0.05 });
@@ -5399,6 +5454,43 @@
         renderer.render(scene, camera);
       }
       animate();
+    }
+
+    let isEarthLoadTriggered = false;
+    function triggerEarthLoad() {
+      if (isEarthLoadTriggered) return;
+      isEarthLoadTriggered = true;
+      initEarthViewer();
+    }
+
+    // 1. Proactive scroll proximity: if user scrolls towards Chapter 07/08 (trigger 1400px ahead)
+    const earthTriggerEl = document.getElementById('chapter-07') || document.getElementById('chapter-08') || container;
+    if (earthTriggerEl) {
+      const proximityObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          triggerEarthLoad();
+          proximityObserver.disconnect();
+        }
+      }, { rootMargin: '1400px 0px 1400px 0px' });
+      proximityObserver.observe(earthTriggerEl);
+    }
+
+    // 2. Sequential background queue: Once turbine is loaded (or fallback after hero), load Earth during browser idle
+    function scheduleIdleEarth() {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => triggerEarthLoad(), { timeout: 3500 });
+      } else {
+        setTimeout(triggerEarthLoad, 2000);
+      }
+    }
+
+    if (window.__TURBINE_LOADED__) {
+      scheduleIdleEarth();
+    } else {
+      window.addEventListener('turbine:loaded', scheduleIdleEarth, { once: true });
+      window.addEventListener('hero:revealed', () => {
+        setTimeout(scheduleIdleEarth, 4500);
+      }, { once: true });
     }
   </script>
 
