@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=Syne:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <!-- Leaflet CSS for Chapter 04 Green Maps -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -583,7 +583,7 @@
       color: var(--primary);
     }
 
-    /* ── CINEMATIC PROLOGUE & ECOLOGICAL DOSSIER LOADER ── */
+    /* ── MINIMALIST SEQUENTIAL TYPEWRITER LOADING SCREEN ── */
     #loading {
       position: fixed;
       inset: 0;
@@ -591,265 +591,78 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #061811;
+      background: #101211;
       z-index: 9999;
-      padding: 24px;
+      padding: clamp(24px, 6vw, 64px);
+      box-sizing: border-box;
       overflow: hidden;
-      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.75s;
+      cursor: default;
+      transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.1s ease;
     }
 
     #loading.hidden {
       opacity: 0;
-      transform: scale(1.02);
       pointer-events: none;
       visibility: hidden;
     }
 
-    .prologue-ambient-glow {
-      position: absolute;
-      width: min(650px, 90vw);
-      height: min(650px, 90vw);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.16) 0%, rgba(6, 24, 17, 0) 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .prologue-container {
+    .tw-screen-container {
       width: 100%;
-      max-width: 600px;
-      position: relative;
-      z-index: 2;
+      max-width: 860px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: clamp(18px, 2.6vw, 28px);
+      text-align: left;
     }
 
-    .prologue-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      padding-bottom: 4px;
+    .tw-line {
+      font-family: 'Space Mono', 'SF Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: clamp(15px, 1.8vw, 20px);
+      line-height: 1.75;
+      color: #9CAEA9;
+      letter-spacing: -0.015em;
+      margin: 0;
+      min-height: 1.75em;
+      word-break: break-word;
     }
 
-    .prologue-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #a7f3d0;
-      background: rgba(16, 185, 129, 0.12);
-      padding: 6px 14px;
-      border-radius: 100px;
-      border: 1px solid rgba(16, 185, 129, 0.28);
-    }
-
-    .prologue-pulse-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
-      animation: pulseDot 1.8s ease-in-out infinite;
-    }
-
-    @keyframes pulseDot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
-    .prologue-submeta {
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      color: #6ee7b7;
-      opacity: 0.75;
+    .tw-line-4 {
+      font-family: 'Space Mono', 'SF Mono', 'Roboto Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: clamp(16px, 2.1vw, 22px);
+      line-height: 1.65;
       font-weight: 500;
+      color: #9CAEA9;
+      letter-spacing: -0.015em;
+      margin: clamp(10px, 1.6vw, 20px) 0 0 0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .prologue-fact-card {
-      background: rgba(10, 32, 23, 0.78);
-      border: 1px solid rgba(52, 211, 153, 0.22);
-      border-radius: 20px;
-      padding: 26px 30px;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-      min-height: 200px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
+    .tw-line-4.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    .prologue-card-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
+    .tw-white {
+      color: #FFFFFF;
+      font-weight: 700;
     }
 
-    .fact-category-tag {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: #34d399;
-      text-transform: uppercase;
-    }
-
-    .fact-counter {
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.4);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .fact-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 22px;
-      line-height: 1.25;
-      color: #f0fdf4;
-      margin: 0 0 10px 0;
-      font-weight: 600;
-      letter-spacing: -0.2px;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-    }
-
-    .fact-text {
-      font-size: 13.5px;
-      line-height: 1.6;
-      color: #cbd5e1;
-      margin: 0 0 16px 0;
-      font-weight: 400;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-    }
-
-    .fact-carousel-dots {
-      display: flex;
-      gap: 7px;
-      align-items: center;
-      margin-top: 4px;
-    }
-
-    .dot-btn {
-      width: 22px;
-      height: 4px;
-      border-radius: 2px;
-      border: none;
-      background: rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 0;
-    }
-
-    .dot-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-    }
-
-    .dot-btn.active {
-      width: 38px;
-      background: #34d399;
-      box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
-    }
-
-    .prologue-footer {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-top: 4px;
-    }
-
-    .prologue-status-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11.5px;
-      color: #94a3b8;
-    }
-
-    .prologue-status-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #cbd5e1;
-    }
-
-    .status-spinner-ring {
+    .tw-cursor {
       display: inline-block;
-      width: 11px;
-      height: 11px;
-      border: 2px solid rgba(52, 211, 153, 0.25);
-      border-top-color: #34d399;
-      border-radius: 50%;
-      animation: spin 0.75s linear infinite;
+      width: 2px;
+      height: 1.15em;
+      background: #FFFFFF;
+      vertical-align: -0.15em;
+      margin-left: 4px;
+      animation: twBlink 0.75s steps(2, start) infinite;
     }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .prologue-progress-pct {
-      font-weight: 700;
-      font-size: 12px;
-      color: #34d399;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .prologue-progress-track {
-      width: 100%;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.09);
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .prologue-progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #059669, #34d399);
-      border-radius: 10px;
-      transition: width 0.25s ease;
-    }
-
-    .prologue-action-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 4px;
-    }
-
-    .prologue-hint {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.35);
-    }
-
-    .btn-enter-early {
-      background: #10b981;
-      color: #061811;
-      border: none;
-      font-size: 11.5px;
-      font-weight: 700;
-      padding: 5px 14px;
-      border-radius: 100px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.2s ease;
-    }
-
-    .btn-enter-early:hover {
-      background: #34d399;
-      transform: translateY(-1px);
+    @keyframes twBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     /* Entrance animations */
@@ -3395,63 +3208,15 @@
     <div class="marble-overlay"></div>
   </div>
 
-  <!-- Cinematic Ecological Dossier & Prologue Loader -->
-  <div id="loading" class="eco-prologue-screen">
-    <div class="prologue-ambient-glow"></div>
-
-    <div class="prologue-container">
-      <!-- Top Dossier Meta -->
-      <div class="prologue-header">
-        <span class="prologue-pill">
-          <span class="prologue-pulse-dot"></span>
-          <span>FIELD DOSSIER &bull; KERALA BIODIVERSITY HOTSPOT</span>
-        </span>
-        <span class="prologue-submeta">UNESCO Serial Heritage &bull; 44 Living Rivers</span>
-      </div>
-
-      <!-- Main Facts Carousel Card -->
-      <div class="prologue-fact-card">
-        <div class="prologue-card-head">
-          <span class="fact-category-tag" id="fact-category">SUBTERRANEAN LIVING FOSSIL</span>
-          <span class="fact-counter" id="fact-counter">01 / 05</span>
-        </div>
-
-        <h3 class="fact-title" id="fact-title">The 130-Million-Year-Old Purple Frog</h3>
-
-        <p class="fact-text" id="fact-text">
-          <em>Nasikabatrachus sahyadrensis</em> evolved when the Indian landmass was still connected to Madagascar. It spends 99% of its life buried up to 3 meters deep in Kerala's rainforest soils, surfacing only for a few days during pre-monsoon showers to breed.
-        </p>
-
-        <!-- Carousel Pagination Dots -->
-        <div class="fact-carousel-dots" id="fact-dots">
-          <button type="button" class="dot-btn active" data-index="0" aria-label="Insight 1"></button>
-          <button type="button" class="dot-btn" data-index="1" aria-label="Insight 2"></button>
-          <button type="button" class="dot-btn" data-index="2" aria-label="Insight 3"></button>
-          <button type="button" class="dot-btn" data-index="3" aria-label="Insight 4"></button>
-          <button type="button" class="dot-btn" data-index="4" aria-label="Insight 5"></button>
-        </div>
-      </div>
-
-      <!-- Bottom Interactive Loader & Telemetry -->
-      <div class="prologue-footer">
-        <div class="prologue-status-row">
-          <div class="prologue-status-label">
-            <span class="status-spinner-ring"></span>
-            <span id="loader-status-text">Streaming 3D Shola canopy &amp; WebGL shaders...</span>
-          </div>
-          <span id="progress" class="prologue-progress-pct">0%</span>
-        </div>
-
-        <!-- Glowing Progress Track -->
-        <div class="prologue-progress-track">
-          <div class="prologue-progress-fill" id="progress-fill"></div>
-        </div>
-
-        <div class="prologue-action-row">
-          <span class="prologue-hint">Click dots to preview Western Ghats insights</span>
-          <button type="button" id="btn-enter-early" class="btn-enter-early" style="display: none;">Enter Documentary &rarr;</button>
-        </div>
-      </div>
+  <!-- Minimalist Sequential Typewriter Loading Screen -->
+  <div id="loading" class="typewriter-screen" aria-live="polite">
+    <div class="tw-screen-container">
+      <p class="tw-line" id="tw-line-1"></p>
+      <p class="tw-line" id="tw-line-2"></p>
+      <p class="tw-line" id="tw-line-3"></p>
+      <p class="tw-line-4" id="tw-line-4">
+        It's time for action. Welcome to <span class="tw-white">Terracode 2026</span>. Let's engineer a <span class="tw-white">Green Tomorrow</span>.
+      </p>
     </div>
   </div>
 
@@ -4272,112 +4037,116 @@
       controls.update();
     }
 
-    // ── PROLOGUE FACTS CAROUSEL & LOADER ORCHESTRATION ──
-    const ecoPrologueFacts = [
-      {
-        category: "SUBTERRANEAN LIVING FOSSIL",
-        title: "The 130-Million-Year-Old Purple Frog",
-        text: "<em>Nasikabatrachus sahyadrensis</em> evolved when the Indian landmass was still connected to Madagascar. It spends 99% of its life buried up to 3 meters deep in Kerala's rainforest soils, surfacing only for a few days during pre-monsoon showers to breed."
-      },
-      {
-        category: "REGIONAL WATER LIFELINE",
-        title: "44 Perennial Rivers Born From Montane Mist",
-        text: "The Western Ghats act as a colossal natural sponge. High-altitude Shola grasslands and montane cloud forests intercept oceanic monsoon clouds, replenishing 44 river basins that provide drinking water and agriculture for 40+ million people."
-      },
-      {
-        category: "KEYSTONE CANOPY ARCHITECT",
-        title: "The Forest Keepers: Malabar Giant Squirrels",
-        text: "Reaching nearly a meter from head to tail, <em>Ratufa indica</em> constructs multiple spherical twig nests across the rainforest crown. By foraging on wild fruits and dispersing seeds high across tree crowns, they power continuous forest regeneration."
-      },
-      {
-        category: "SYNCHRONOUS MASS FLOWERING",
-        title: "Neelakurinji’s 12-Year Phenomenon",
-        text: "<em>Strobilanthes kunthiana</em> blooms in unison only once every twelve years, transforming high-altitude Shola cliffs into rolling seas of vibrant purplish-blue. This synchronized masting overwhelms seed predators and ensures cross-pollination."
-      },
-      {
-        category: "ANCIENT SANCTUARY",
-        title: "Older Than The Himalayas",
-        text: "Formed over 150 million years ago during the breakup of the supercontinent Gondwana, the Western Ghats shelter more than 5,000 flowering plant species, 508 avian species, and 139 mammals — over 30% of which exist nowhere else on planet Earth."
-      }
-    ];
+    // ── MINIMALIST SEQUENTIAL TYPEWRITER LOADER ──
+    const line1Text = "Over 1.4 million hectares of the Western Ghats' core canopy have been fragmented over the last three decades.";
+    const line2Text = "Every lost hectare releases decades of stored carbon while pushing endemic species past the brink of collapse.";
+    const line3Text = "When the final canopy falls, the silence left behind will be permanent.";
 
-    let currentFactIndex = 0;
-    const factCategoryEl = document.getElementById('fact-category');
-    const factCounterEl = document.getElementById('fact-counter');
-    const factTitleEl = document.getElementById('fact-title');
-    const factTextEl = document.getElementById('fact-text');
-    const factDotBtns = document.querySelectorAll('#fact-dots .dot-btn');
-    const progressFillEl = document.getElementById('progress-fill');
-    const statusTextEl = document.getElementById('loader-status-text');
-    const enterEarlyBtn = document.getElementById('btn-enter-early');
-
-    function renderFact(index) {
-      if (!factTitleEl || !factTextEl) return;
-      currentFactIndex = index;
-
-      factTitleEl.style.opacity = '0';
-      factTitleEl.style.transform = 'translateY(6px)';
-      factTextEl.style.opacity = '0';
-      factTextEl.style.transform = 'translateY(6px)';
-
-      setTimeout(() => {
-        const fact = ecoPrologueFacts[currentFactIndex];
-        if (factCategoryEl) factCategoryEl.textContent = fact.category;
-        if (factCounterEl) factCounterEl.textContent = `0${currentFactIndex + 1} / 05`;
-        factTitleEl.innerHTML = fact.title;
-        factTextEl.innerHTML = fact.text;
-
-        factTitleEl.style.opacity = '1';
-        factTitleEl.style.transform = 'translateY(0)';
-        factTextEl.style.opacity = '1';
-        factTextEl.style.transform = 'translateY(0)';
-
-        factDotBtns.forEach((btn, i) => {
-          btn.classList.toggle('active', i === currentFactIndex);
-        });
-      }, 160);
-    }
-
-    let factInterval = setInterval(() => {
-      renderFact((currentFactIndex + 1) % ecoPrologueFacts.length);
-    }, 3200);
-
-    factDotBtns.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        clearInterval(factInterval);
-        const idx = parseInt(btn.getAttribute('data-index'), 10) || 0;
-        renderFact(idx);
-        factInterval = setInterval(() => {
-          renderFact((currentFactIndex + 1) % ecoPrologueFacts.length);
-        }, 3600);
-      });
-    });
+    const twLine1 = document.getElementById('tw-line-1');
+    const twLine2 = document.getElementById('tw-line-2');
+    const twLine3 = document.getElementById('tw-line-3');
+    const twLine4 = document.getElementById('tw-line-4');
+    const loadingEl = document.getElementById('loading');
 
     let isTreeFullyLoaded = false;
+    let isTypewriterFinished = false;
+    let hasRevealedSite = false;
 
-    function dismissPrologue() {
-      clearInterval(factInterval);
-      const heroEl = document.getElementById('hero-wrapper');
-      if (heroEl) heroEl.classList.add('hero-ready');
+    function revealSiteIfReady() {
+      if (hasRevealedSite) return;
+      if (isTreeFullyLoaded && isTypewriterFinished) {
+        hasRevealedSite = true;
+        const heroEl = document.getElementById('hero-wrapper');
+        if (heroEl) heroEl.classList.add('hero-ready');
 
-      if (loadingEl && !loadingEl.classList.contains('hidden')) {
-        loadingEl.classList.add('hidden');
-        setTimeout(() => loadingEl.remove(), 800);
+        if (loadingEl && !loadingEl.classList.contains('hidden')) {
+          loadingEl.classList.add('hidden');
+          setTimeout(() => {
+            try {
+              loadingEl.remove();
+            } catch (e) {}
+          }, 1200);
+        }
       }
     }
 
-    enterEarlyBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      dismissPrologue();
+    const cursorSpan = document.createElement('span');
+    cursorSpan.className = 'tw-cursor';
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    let skipTypewriterRequested = false;
+
+    async function typeString(element, text, charDelay = 22) {
+      if (!element) return;
+      element.textContent = '';
+      element.appendChild(cursorSpan);
+
+      for (let i = 0; i < text.length; i++) {
+        if (skipTypewriterRequested) {
+          element.textContent = text;
+          return;
+        }
+        element.textContent = text.slice(0, i + 1);
+        element.appendChild(cursorSpan);
+        const char = text[i];
+        const delay = (char === '.' || char === '!' || char === '?') ? charDelay * 3 : ((char === ',' || char === ';') ? charDelay * 1.8 : charDelay);
+        await sleep(delay);
+      }
+    }
+
+    async function startTypewriterSequence() {
+      await sleep(300);
+
+      // Line 1 types out (Pause 1.2s)
+      await typeString(twLine1, line1Text, 22);
+      if (!skipTypewriterRequested) await sleep(1200);
+
+      // Line 2 types out (Pause 1.2s)
+      await typeString(twLine2, line2Text, 22);
+      if (!skipTypewriterRequested) await sleep(1200);
+
+      // Line 3 types out (Pause 1.5s)
+      await typeString(twLine3, line3Text, 24);
+      if (cursorSpan.parentNode) {
+        cursorSpan.parentNode.removeChild(cursorSpan);
+      }
+      if (!skipTypewriterRequested) await sleep(1500);
+
+      // Line 4 fades in boldly
+      if (twLine4) {
+        twLine4.classList.add('visible');
+      }
+
+      // Smooth pause on completed statement
+      await sleep(1800);
+
+      isTypewriterFinished = true;
+      revealSiteIfReady();
+    }
+
+    // Optional user fast-forward on click
+    loadingEl?.addEventListener('click', () => {
+      if (isTypewriterFinished) return;
+      skipTypewriterRequested = true;
+      if (twLine1) twLine1.textContent = line1Text;
+      if (twLine2) twLine2.textContent = line2Text;
+      if (twLine3) twLine3.textContent = line3Text;
+      if (cursorSpan.parentNode) cursorSpan.parentNode.removeChild(cursorSpan);
+      if (twLine4) twLine4.classList.add('visible');
+      isTypewriterFinished = true;
+      revealSiteIfReady();
     });
 
-    // Fallback safeguard: Only display the manual bypass button if network stalls for > 35s
+    startTypewriterSequence();
+
+    // Fallback safety timeout: 35s
     setTimeout(() => {
-      if (!isTreeFullyLoaded && enterEarlyBtn) {
-        enterEarlyBtn.style.display = 'inline-flex';
-        if (statusTextEl) statusTextEl.textContent = '3D specimen taking longer to load. Click to enter:';
-      }
+      isTreeFullyLoaded = true;
+      isTypewriterFinished = true;
+      revealSiteIfReady();
     }, 35000);
 
     // ── 3D MODEL LOADER ──
@@ -4385,9 +4154,6 @@
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/libs/draco/');
     loader.setDRACOLoader(dracoLoader);
-
-    const progressEl = document.getElementById('progress');
-    const loadingEl = document.getElementById('loading');
 
     loader.load(
       'assets/models/tree.glb',
@@ -4450,43 +4216,10 @@
         // Pre-render a frame immediately so the tree is already drawn before dissolving loader
         renderer.render(scene, camera);
 
-        if (progressFillEl) progressFillEl.style.width = '100%';
-        if (statusTextEl) statusTextEl.textContent = 'Canopy loaded. Entering Western Ghats...';
-        if (progressEl) progressEl.textContent = '100%';
-
-        // Ensure hero wrapper is ready, then smoothly reveal
-        const heroEl = document.getElementById('hero-wrapper');
-        if (heroEl) heroEl.classList.add('hero-ready');
-
-        setTimeout(() => {
-          dismissPrologue();
-        }, 400);
+        revealSiteIfReady();
       },
-      (xhr) => {
-        let pct = 0;
-        if (xhr.total && xhr.total > 0) {
-          pct = Math.round((xhr.loaded / xhr.total) * 100);
-        } else {
-          // If Content-Length is missing or chunked, estimate based on loaded bytes
-          pct = Math.min(94, Math.round((xhr.loaded / (56 * 1048576)) * 100));
-        }
-        if (progressEl) progressEl.textContent = `${pct}%`;
-        if (progressFillEl) progressFillEl.style.width = `${pct}%`;
-
-        if (statusTextEl) {
-          if (pct < 25) {
-            statusTextEl.textContent = 'Streaming 3D Shola canopy & WebGL geometry...';
-          } else if (pct < 60) {
-            statusTextEl.textContent = 'Calibrating PBR foliage lighting & wind shaders...';
-          } else if (pct < 90) {
-            statusTextEl.textContent = 'Initializing GIS sanctuaries & river telemetry...';
-          } else {
-            statusTextEl.textContent = 'Preparing interactive documentary...';
-          }
-        }
-      },
+      undefined,
       (err) => {
-        if (statusTextEl) statusTextEl.textContent = 'Retrying model streaming...';
         console.error('Initial model load error:', err);
         setTimeout(() => {
           loader.load('assets/models/tree.glb', (retryGltf) => {
@@ -4495,11 +4228,11 @@
             scene.add(treeModel);
             fitTreeTopToBottom();
             renderer.render(scene, camera);
-            dismissPrologue();
-          }, null, (fatalErr) => {
+            revealSiteIfReady();
+          }, undefined, (fatalErr) => {
             console.error('Model load fatal error:', fatalErr);
-            if (statusTextEl) statusTextEl.textContent = 'Unable to stream 3D model.';
-            if (enterEarlyBtn) enterEarlyBtn.style.display = 'inline-flex';
+            isTreeFullyLoaded = true;
+            revealSiteIfReady();
           });
         }, 1200);
       }
