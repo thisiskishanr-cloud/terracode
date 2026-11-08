@@ -2603,10 +2603,12 @@
 
     .citizen-contribution-card {
       padding: 24px 26px;
-      background: #0B3322;
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 20px;
-      border: 1px solid rgba(167, 243, 208, 0.28);
-      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25);
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -2615,7 +2617,8 @@
 
     .citizen-contribution-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 22px 45px -10px rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 22px 45px -10px rgba(0, 0, 0, 0.35);
     }
 
     .citizen-contribution-card.spotlight-card {
@@ -5102,9 +5105,9 @@
       // ── GREEN CITIZEN WALL SPOTLIGHT CARDS (EXACT SAME AS CH4) ──
       initSpotlightCards('.citizen-contribution-card', {
         theme: 'dark',
-        surface: '#0B3322',
-        border: 'rgba(167, 243, 208, 0.32)',
-        shadow: '0 20px 45px -12px rgba(0, 0, 0, 0.45)',
+        surface: 'rgba(255, 255, 255, 0.08)',
+        border: 'rgba(255, 255, 255, 0.18)',
+        shadow: '0 20px 45px -12px rgba(0, 0, 0, 0.25)',
         spotlightColor: '#ffffff',
         intensity: 0.18,
         spotlightSize: 280,
