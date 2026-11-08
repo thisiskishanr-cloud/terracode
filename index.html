@@ -2620,6 +2620,20 @@
       transform: translateY(-3px);
     }
 
+    .citizen-contribution-card.spotlight-card {
+      border-color: transparent;
+      background-color: var(--spotlight-card-surface, rgba(255, 255, 255, 0.08));
+    }
+
+    .citizen-contribution-card.spotlight-card:hover {
+      border-color: transparent;
+    }
+
+    .citizen-contribution-card > * {
+      position: relative;
+      z-index: 3;
+    }
+
     .contrib-top {
       display: flex;
       justify-content: space-between;
@@ -3937,7 +3951,7 @@
 
         <div class="citizen-wall-grid">
 
-          <div class="citizen-contribution-card">
+          <div class="citizen-contribution-card spotlight-card">
             <div class="contrib-top">
               <span class="contrib-author">Calicut University Eco Club</span>
               <span class="contrib-role-tag">Student Researchers</span>
@@ -3947,7 +3961,7 @@
             <span class="contrib-date">Kozhikode District • Verified Oct 2026</span>
           </div>
 
-          <div class="citizen-contribution-card">
+          <div class="citizen-contribution-card spotlight-card">
             <div class="contrib-top">
               <span class="contrib-author">Western Ghats River Protectors</span>
               <span class="contrib-role-tag">Community Action</span>
@@ -3958,7 +3972,7 @@
             <span class="contrib-date">Kallai Estuary • Verified Nov 2026</span>
           </div>
 
-          <div class="citizen-contribution-card">
+          <div class="citizen-contribution-card spotlight-card">
             <div class="contrib-top">
               <span class="contrib-author">Wayanad Shola Alliance</span>
               <span class="contrib-role-tag">Indigenous Stewards</span>
@@ -5054,6 +5068,25 @@
         shape: 'circle',
         borderGlow: 0.6,
         proximity: 70,
+        smoothing: 0.3,
+        ambient: false,
+        flare: true,
+        grain: 0
+      });
+
+      // ── GREEN CITIZEN WALL SPOTLIGHT CARDS (REACT BITS) ──
+      initSpotlightCards('.citizen-contribution-card', {
+        theme: 'dark',
+        surface: 'rgba(255, 255, 255, 0.08)',
+        border: 'rgba(255, 255, 255, 0.16)',
+        shadow: '0 20px 45px -12px rgba(0, 0, 0, 0.45)',
+        spotlightColor: '#a7f3d0',
+        intensity: 0.24,
+        spotlightSize: 260,
+        softness: 0.75,
+        shape: 'circle',
+        borderGlow: 0.8,
+        proximity: 90,
         smoothing: 0.3,
         ambient: false,
         flare: true,
