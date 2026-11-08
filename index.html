@@ -2602,36 +2602,35 @@
     }
 
     .citizen-contribution-card {
-      padding: 22px 24px;
-      background: rgba(255, 255, 255, 0.08);
+      padding: 24px 26px;
+      background: #0B3322;
       border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(167, 243, 208, 0.28);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.35);
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+      gap: 12px;
+      transition: var(--transition-smooth);
     }
 
     .citizen-contribution-card:hover {
-      background: rgba(255, 255, 255, 0.13);
-      border-color: rgba(167, 243, 208, 0.45);
-      transform: translateY(-3px);
+      transform: translateY(-4px);
+      box-shadow: 0 22px 45px -10px rgba(0, 0, 0, 0.5);
     }
 
     .citizen-contribution-card.spotlight-card {
-      border-color: transparent;
-      background-color: var(--spotlight-card-surface, rgba(255, 255, 255, 0.08));
+      border-color: transparent !important;
     }
 
     .citizen-contribution-card.spotlight-card:hover {
-      border-color: transparent;
+      border-color: transparent !important;
     }
 
-    .citizen-contribution-card > * {
+    .citizen-contribution-card .contrib-top,
+    .citizen-contribution-card .contrib-action,
+    .citizen-contribution-card .contrib-date {
       position: relative;
-      z-index: 3;
+      z-index: 1;
     }
 
     .contrib-top {
@@ -5100,18 +5099,18 @@
         grain: 0
       });
 
-      // ── GREEN CITIZEN WALL SPOTLIGHT CARDS (REACT BITS) ──
+      // ── GREEN CITIZEN WALL SPOTLIGHT CARDS (EXACT SAME AS CH4) ──
       initSpotlightCards('.citizen-contribution-card', {
         theme: 'dark',
-        surface: 'rgba(255, 255, 255, 0.08)',
-        border: 'rgba(255, 255, 255, 0.16)',
+        surface: '#0B3322',
+        border: 'rgba(167, 243, 208, 0.32)',
         shadow: '0 20px 45px -12px rgba(0, 0, 0, 0.45)',
-        spotlightColor: '#a7f3d0',
-        intensity: 0.24,
-        spotlightSize: 260,
-        softness: 0.75,
+        spotlightColor: '#ffffff',
+        intensity: 0.18,
+        spotlightSize: 280,
+        softness: 0.7,
         shape: 'circle',
-        borderGlow: 0.8,
+        borderGlow: 0.65,
         proximity: 90,
         smoothing: 0.3,
         ambient: false,
