@@ -177,14 +177,47 @@
     flex-direction: column;
     perspective: none;
     height: auto !important;
+    gap: 8px;
+    margin: 10px 0 24px 0;
   }
   .ag-panel {
-    min-height: 100px;
+    min-height: 58px;
+    border-radius: 14px;
     transform: none !important;
+  }
+  .ag-panel.ag-panel--active {
+    min-height: 200px;
   }
   .accordion-gallery .ag-panel__media {
     width: 100%;
-    height: var(--ag-media-size);
+    height: 100%;
+  }
+  .ag-panel__label {
+    left: 14px;
+    bottom: 12px;
+    right: 14px;
+    gap: 8px;
+  }
+  .ag-panel__bar {
+    height: 22px;
+    width: 3px;
+  }
+  .ag-panel__text {
+    font-size: 15px;
+    line-height: 1.2;
+  }
+  .ag-panel__category {
+    font-size: 9.5px;
+  }
+  .ag-panel__subtext {
+    font-size: 11px;
+  }
+  .ag-panel__highlight {
+    font-size: 10.5px;
+    line-height: 1.35;
+    padding: 4px 8px;
+    margin-top: 4px;
+    border-radius: 6px;
   }
 }
 
