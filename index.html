@@ -183,8 +183,9 @@
       min-height: 700px;
       overflow: hidden;
       opacity: 0;
-      transform: scale(0.99);
-      transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(0.995);
+      transition: opacity 1.5s cubic-bezier(0.4, 0, 0.15, 1), transform 1.5s cubic-bezier(0.4, 0, 0.15, 1);
+      will-change: opacity, transform;
     }
 
     .hero-wrapper.hero-ready {
@@ -599,18 +600,20 @@
       box-sizing: border-box;
       overflow: hidden;
       cursor: default;
-      transition: opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 1.3s ease;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 1.5s cubic-bezier(0.4, 0, 0.15, 1), visibility 1.5s ease;
+      will-change: opacity;
     }
 
-    #loading.fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    #loading.hidden {
+    #loading.dissolve-out {
       opacity: 0;
       pointer-events: none;
       visibility: hidden;
+    }
+
+    #loading.hidden {
+      display: none !important;
     }
 
     .tw-screen-container {
@@ -621,12 +624,7 @@
       flex-direction: column;
       gap: clamp(18px, 2.6vw, 28px);
       text-align: left;
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .tw-screen-container.fade-out {
-      opacity: 0;
-      transform: translateY(-8px);
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.15, 1);
     }
 
     .tw-line {
@@ -4050,7 +4048,7 @@
       controls.update();
     }
 
-    // ── MINIMALIST SEQUENTIAL TYPEWRITER LOADER (TIED DIRECTLY TO 3D LOAD EVENT) ──
+    // ── MINIMALIST SEQUENTIAL TYPEWRITER LOADER (SMART CACHE & REFRESH AWARE) ──
     const line1Text = "Over 1.4 million hectares of the Western Ghats' core canopy have been fragmented over the last three decades.";
     const line2Text = "Every lost hectare releases decades of stored carbon while pushing endemic species past the brink of collapse.";
     const line3Text = "When the final canopy falls, the silence left behind will be permanent.";
@@ -4061,41 +4059,67 @@
     const twLine4 = document.getElementById('tw-line-4');
     const loadingEl = document.getElementById('loading');
 
+    // ── CACHE & REFRESH DETECTION ──
+    let isHardReload = false;
+    try {
+      const navEntries = performance.getEntriesByType('navigation');
+      if (navEntries && navEntries.length > 0) {
+        const nav = navEntries[0];
+        // On hard refresh, transferSize reflects uncached document download (>15KB)
+        if (nav.type === 'reload' && (nav.transferSize > 15000 || (nav.decodedBodySize > 0 && nav.transferSize >= nav.decodedBodySize * 0.5))) {
+          isHardReload = true;
+        }
+      }
+    } catch (e) {}
+
+    // On hard reload, clear intro seen flag so the full text animation plays again
+    if (isHardReload) {
+      try {
+        sessionStorage.removeItem('terracode_intro_seen');
+      } catch (e) {}
+    }
+
+    let hasSeenIntro = false;
+    try {
+      hasSeenIntro = sessionStorage.getItem('terracode_intro_seen') === '1';
+    } catch (e) {}
+
     let is3DAssetReady = false;
     let isTypewriterFinished = false;
     let hasRevealedSite = false;
+    let typewriterStarted = false;
 
+    // Simultaneous filmic cross-dissolve from loading screen directly into hero
     function executeFadeOutIfReady() {
       if (hasRevealedSite) return;
-      // Strictly require BOTH: 3D asset confirmed ready AND typewriter text gracefully completed
-      if (!is3DAssetReady || !isTypewriterFinished) return;
+
+      // If user has already seen the intro once, and 3D assets are ready (e.g. from cache):
+      // Dissolve immediately without keeping them waiting to finish the full text animation!
+      // If it's a first visit, hard reload, or 3D elements needed to be downloaded again:
+      // Require both 3D asset ready AND typewriter text animation to finish.
+      if (!is3DAssetReady) return;
+      if (!hasSeenIntro && !isTypewriterFinished) return;
+
       hasRevealedSite = true;
 
-      const heroEl = document.getElementById('hero-wrapper');
-      const twContainer = document.querySelector('.tw-screen-container');
+      try {
+        sessionStorage.setItem('terracode_intro_seen', '1');
+      } catch (e) {}
 
-      // Step 1: Smoothly fade out typewriter text content
-      if (twContainer) {
-        twContainer.classList.add('fade-out');
+      window.__HERO_READY__ = true;
+      window.dispatchEvent(new CustomEvent('hero:revealed'));
+
+      const heroEl = document.getElementById('hero-wrapper');
+
+      // True simultaneous cross-dissolve: outgoing dark slate dissolves out as hero blooms in
+      if (loadingEl) {
+        loadingEl.classList.add('dissolve-out');
+      }
+      if (heroEl) {
+        heroEl.classList.add('hero-ready');
       }
 
-      // Step 2: Smooth fade transition from loading screen into hero section
-      setTimeout(() => {
-        if (loadingEl) {
-          loadingEl.classList.add('fade-out');
-        }
-
-        // Step 3: Gracefully display hero section with bloom transition as loading screen dissolves
-        setTimeout(() => {
-          window.__HERO_READY__ = true;
-          window.dispatchEvent(new CustomEvent('hero:revealed'));
-          if (heroEl) {
-            heroEl.classList.add('hero-ready');
-          }
-        }, 350);
-      }, 550);
-
-      // Step 4: Clean up loading element after complete transition
+      // Clean up after the dissolve completes
       setTimeout(() => {
         if (loadingEl) {
           loadingEl.classList.add('hidden');
@@ -4103,7 +4127,7 @@
             loadingEl.remove();
           } catch (e) {}
         }
-      }, 2200);
+      }, 1600);
     }
 
     const cursorSpan = document.createElement('span');
@@ -4121,7 +4145,7 @@
       element.appendChild(cursorSpan);
 
       for (let i = 0; i < text.length; i++) {
-        if (skipTypewriterRequested) {
+        if (skipTypewriterRequested || (hasSeenIntro && is3DAssetReady)) {
           element.textContent = text;
           return;
         }
@@ -4138,30 +4162,30 @@
     }
 
     async function startTypewriterSequence() {
-      await sleep(350);
+      await sleep(250);
 
       // Line 1 types out with relaxed, cinematic pace (Pause 1.5s)
       await typeString(twLine1, line1Text, 38);
-      if (!skipTypewriterRequested) await sleep(1500);
+      if (!skipTypewriterRequested && (!hasSeenIntro || !is3DAssetReady)) await sleep(1500);
 
       // Line 2 types out (Pause 1.5s)
       await typeString(twLine2, line2Text, 38);
-      if (!skipTypewriterRequested) await sleep(1500);
+      if (!skipTypewriterRequested && (!hasSeenIntro || !is3DAssetReady)) await sleep(1500);
 
       // Line 3 types out (Pause 1.8s)
       await typeString(twLine3, line3Text, 42);
       if (cursorSpan.parentNode) {
         cursorSpan.parentNode.removeChild(cursorSpan);
       }
-      if (!skipTypewriterRequested) await sleep(1800);
+      if (!skipTypewriterRequested && (!hasSeenIntro || !is3DAssetReady)) await sleep(1800);
 
       // Line 4 fades in boldly
       if (twLine4) {
         twLine4.classList.add('visible');
       }
 
-      // Smooth pause to let user take in the full statement
-      if (!skipTypewriterRequested) await sleep(2200);
+      // Dedicated pause to let user absorb the statement
+      if (!skipTypewriterRequested && (!hasSeenIntro || !is3DAssetReady)) await sleep(2200);
 
       isTypewriterFinished = true;
       executeFadeOutIfReady();
@@ -4180,7 +4204,29 @@
       executeFadeOutIfReady();
     });
 
-    startTypewriterSequence();
+    // If returning user and 3D assets may already be downloaded in cache:
+    // Allow a 400ms window for cached 3D load to trigger immediate dissolve.
+    // If 3D elements need to be loaded again (cache miss or slow network):
+    // start the typewriter animation so the user is engaged while 3D downloads!
+    if (hasSeenIntro) {
+      setTimeout(() => {
+        if (!hasRevealedSite && !is3DAssetReady && !typewriterStarted) {
+          typewriterStarted = true;
+          startTypewriterSequence();
+        }
+      }, 400);
+    } else {
+      // First visit or hard refresh: start sequence right away
+      typewriterStarted = true;
+      startTypewriterSequence();
+    }
+
+    // Safety failsafe: If 3D takes > 30s, force dissolve
+    setTimeout(() => {
+      is3DAssetReady = true;
+      isTypewriterFinished = true;
+      executeFadeOutIfReady();
+    }, 30000);
 
     // ── 3D MODEL LOADER WITH THREE.LOADINGMANAGER ONLOAD EVENT LISTENER ──
     const loadingManager = new THREE.LoadingManager();
