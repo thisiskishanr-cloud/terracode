@@ -4037,7 +4037,7 @@
       controls.update();
     }
 
-    // ── MINIMALIST SEQUENTIAL TYPEWRITER LOADER ──
+    // ── MINIMALIST SEQUENTIAL TYPEWRITER LOADER (TIED DIRECTLY TO 3D LOAD EVENT) ──
     const line1Text = "Over 1.4 million hectares of the Western Ghats' core canopy have been fragmented over the last three decades.";
     const line2Text = "Every lost hectare releases decades of stored carbon while pushing endemic species past the brink of collapse.";
     const line3Text = "When the final canopy falls, the silence left behind will be permanent.";
@@ -4048,33 +4048,28 @@
     const twLine4 = document.getElementById('tw-line-4');
     const loadingEl = document.getElementById('loading');
 
-    let assetLoadProgress = 0.05;
-    let isTreeFullyLoaded = false;
+    let is3DAssetReady = false;
     let isTypewriterFinished = false;
     let hasRevealedSite = false;
-    let loadFailsafeTimer = null;
 
-    function revealSiteIfReady() {
+    function executeFadeOutIfReady() {
       if (hasRevealedSite) return;
-      if (isTreeFullyLoaded && isTypewriterFinished) {
-        hasRevealedSite = true;
-        if (loadFailsafeTimer) {
-          clearTimeout(loadFailsafeTimer);
-          loadFailsafeTimer = null;
-        }
-        window.__HERO_READY__ = true;
-        window.dispatchEvent(new CustomEvent('hero:revealed'));
-        const heroEl = document.getElementById('hero-wrapper');
-        if (heroEl) heroEl.classList.add('hero-ready');
+      // Strictly require BOTH: 3D asset confirmed ready AND typewriter text gracefully completed
+      if (!is3DAssetReady || !isTypewriterFinished) return;
+      hasRevealedSite = true;
 
-        if (loadingEl && !loadingEl.classList.contains('hidden')) {
-          loadingEl.classList.add('hidden');
-          setTimeout(() => {
-            try {
-              loadingEl.remove();
-            } catch (e) {}
-          }, 800);
-        }
+      window.__HERO_READY__ = true;
+      window.dispatchEvent(new CustomEvent('hero:revealed'));
+      const heroEl = document.getElementById('hero-wrapper');
+      if (heroEl) heroEl.classList.add('hero-ready');
+
+      if (loadingEl && !loadingEl.classList.contains('hidden')) {
+        loadingEl.classList.add('hidden');
+        setTimeout(() => {
+          try {
+            loadingEl.remove();
+          } catch (e) {}
+        }, 850);
       }
     }
 
@@ -4087,18 +4082,7 @@
 
     let skipTypewriterRequested = false;
 
-    function getDynamicCharDelay() {
-      if (isTreeFullyLoaded) return 4; // Instant/cached asset: accelerated smooth typing sweep
-      // Real-time dynamic speed scaling based on asset loading progress (0 -> 1)
-      return Math.max(5, Math.round(18 * (1 - assetLoadProgress * 0.72)));
-    }
-
-    function getDynamicPauseDelay(basePause) {
-      if (isTreeFullyLoaded) return 120; // If already loaded, compressed pause
-      return Math.max(160, Math.round(basePause * (1 - assetLoadProgress * 0.7)));
-    }
-
-    async function typeString(element, text) {
+    async function typeString(element, text, charDelay = 20) {
       if (!element) return;
       element.textContent = '';
       element.appendChild(cursorSpan);
@@ -4112,94 +4096,86 @@
         element.appendChild(cursorSpan);
 
         const char = text[i];
-        const baseDelay = getDynamicCharDelay();
         const delay = (char === '.' || char === '!' || char === '?') 
-          ? (isTreeFullyLoaded ? 18 : Math.round(baseDelay * 2.2)) 
-          : ((char === ',' || char === ';') ? (isTreeFullyLoaded ? 10 : Math.round(baseDelay * 1.5)) : baseDelay);
+          ? charDelay * 2.5 
+          : ((char === ',' || char === ';') ? charDelay * 1.6 : charDelay);
 
         await sleep(delay);
       }
     }
 
     async function startTypewriterSequence() {
-      await sleep(isTreeFullyLoaded ? 40 : 180);
+      await sleep(220);
 
-      // Line 1 types out
-      await typeString(twLine1, line1Text);
-      if (!skipTypewriterRequested) await sleep(getDynamicPauseDelay(1000));
+      // Line 1 types out gracefully
+      await typeString(twLine1, line1Text, 20);
+      if (!skipTypewriterRequested) await sleep(850);
 
-      // Line 2 types out
-      await typeString(twLine2, line2Text);
-      if (!skipTypewriterRequested) await sleep(getDynamicPauseDelay(1000));
+      // Line 2 types out gracefully
+      await typeString(twLine2, line2Text, 20);
+      if (!skipTypewriterRequested) await sleep(850);
 
-      // Line 3 types out
-      await typeString(twLine3, line3Text);
-      if (cursorSpan.parentNode) {
-        cursorSpan.parentNode.removeChild(cursorSpan);
-      }
-      if (!skipTypewriterRequested) await sleep(getDynamicPauseDelay(1200));
+      // Line 3 types out gracefully
+      await typeString(twLine3, line3Text, 22);
+      if (!skipTypewriterRequested) await sleep(950);
 
       // Line 4 fades in boldly
       if (twLine4) {
         twLine4.classList.add('visible');
       }
 
+      // Keep cursor live on Line 4 to provide a subtle breathing state if 3D is still loading
+      if (twLine4 && !skipTypewriterRequested) {
+        twLine4.appendChild(cursorSpan);
+      }
+
       isTypewriterFinished = true;
 
-      // The moment the assets are fully loaded and sequence completes,
-      // trigger an IMMEDIATE smooth fade-out into the hero section (zero post-text dead time)
-      if (isTreeFullyLoaded) {
-        revealSiteIfReady();
-      } else {
-        // Fallback Safety failsafe (1.8s max failsafe just in case a load event hangs)
-        loadFailsafeTimer = setTimeout(() => {
-          console.warn('3D asset load failsafe reached. Revealing hero section.');
-          isTreeFullyLoaded = true;
-          revealSiteIfReady();
-        }, 1800);
-      }
+      // If the 3D model's load event has already fired, fade out immediately.
+      // If the 3D model takes longer, keep the final line on screen until the load event fires!
+      executeFadeOutIfReady();
     }
 
     // Optional user fast-forward on click
     loadingEl?.addEventListener('click', () => {
-      if (isTypewriterFinished && isTreeFullyLoaded) return;
+      if (isTypewriterFinished && is3DAssetReady) return;
       skipTypewriterRequested = true;
       if (twLine1) twLine1.textContent = line1Text;
       if (twLine2) twLine2.textContent = line2Text;
       if (twLine3) twLine3.textContent = line3Text;
-      if (cursorSpan.parentNode) cursorSpan.parentNode.removeChild(cursorSpan);
       if (twLine4) twLine4.classList.add('visible');
+      if (cursorSpan.parentNode) cursorSpan.parentNode.removeChild(cursorSpan);
       isTypewriterFinished = true;
-      if (loadFailsafeTimer) {
-        clearTimeout(loadFailsafeTimer);
-        loadFailsafeTimer = null;
-      }
-      revealSiteIfReady();
+      executeFadeOutIfReady();
     });
 
     startTypewriterSequence();
 
-    // Global failsafe: Max 5s fallback from initial page load just in case network stalls completely
-    setTimeout(() => {
-      if (!hasRevealedSite) {
-        isTreeFullyLoaded = true;
-        if (isTypewriterFinished) {
-          revealSiteIfReady();
-        }
-      }
-    }, 5000);
-
-    // ── 3D MODEL LOADER ──
-    const loader = new GLTFLoader();
+    // ── 3D MODEL LOADER WITH THREE.LOADINGMANAGER ONLOAD EVENT LISTENER ──
+    const loadingManager = new THREE.LoadingManager();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/libs/draco/');
+    const loader = new GLTFLoader(loadingManager);
     loader.setDRACOLoader(dracoLoader);
+
+    // Official Three.js LoadingManager onLoad event: fired when 3D asset is completely ready
+    loadingManager.onLoad = () => {
+      is3DAssetReady = true;
+      if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+      }
+      executeFadeOutIfReady();
+    };
+
+    loadingManager.onError = (url) => {
+      console.warn('3D LoadingManager reported error on:', url);
+      is3DAssetReady = true;
+      executeFadeOutIfReady();
+    };
 
     loader.load(
       'assets/models/tree.glb',
       (gltf) => {
-        assetLoadProgress = 1.0;
-        isTreeFullyLoaded = true;
         treeModel = gltf.scene;
 
         treeModel.traverse((node) => {
@@ -4254,42 +4230,27 @@
         ground.receiveShadow = true;
         scene.add(ground);
 
-        // Pre-render a frame immediately so the tree is already drawn before dissolving loader
+        // Pre-render a frame immediately so the tree is 100% drawn before dissolving loader
         renderer.render(scene, camera);
 
-        if (loadFailsafeTimer) {
-          clearTimeout(loadFailsafeTimer);
-          loadFailsafeTimer = null;
-        }
-
-        revealSiteIfReady();
+        is3DAssetReady = true;
+        executeFadeOutIfReady();
       },
-      (xhr) => {
-        if (xhr.total && xhr.total > 0) {
-          assetLoadProgress = Math.max(assetLoadProgress, Math.min(0.96, xhr.loaded / xhr.total));
-        } else if (xhr.loaded) {
-          assetLoadProgress = Math.max(assetLoadProgress, Math.min(0.96, xhr.loaded / (56 * 1048576)));
-        }
-      },
+      undefined,
       (err) => {
         console.error('Initial model load error:', err);
         setTimeout(() => {
           loader.load('assets/models/tree.glb', (retryGltf) => {
-            assetLoadProgress = 1.0;
-            isTreeFullyLoaded = true;
             treeModel = retryGltf.scene;
             scene.add(treeModel);
             fitTreeTopToBottom();
             renderer.render(scene, camera);
-            if (loadFailsafeTimer) {
-              clearTimeout(loadFailsafeTimer);
-              loadFailsafeTimer = null;
-            }
-            revealSiteIfReady();
+            is3DAssetReady = true;
+            executeFadeOutIfReady();
           }, undefined, (fatalErr) => {
             console.error('Model load fatal error:', fatalErr);
-            isTreeFullyLoaded = true;
-            revealSiteIfReady();
+            is3DAssetReady = true;
+            executeFadeOutIfReady();
           });
         }, 1200);
       }
