@@ -183,11 +183,13 @@
       min-height: 700px;
       overflow: hidden;
       opacity: 0;
-      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(0.99);
+      transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .hero-wrapper.hero-ready {
       opacity: 1;
+      transform: scale(1);
     }
 
     /* ── 3D CANVAS LAYER (HERO PRESERVED) ── */
@@ -597,7 +599,12 @@
       box-sizing: border-box;
       overflow: hidden;
       cursor: default;
-      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.75s ease;
+      transition: opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 1.3s ease;
+    }
+
+    #loading.fade-out {
+      opacity: 0;
+      pointer-events: none;
     }
 
     #loading.hidden {
@@ -614,6 +621,12 @@
       flex-direction: column;
       gap: clamp(18px, 2.6vw, 28px);
       text-align: left;
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tw-screen-container.fade-out {
+      opacity: 0;
+      transform: translateY(-8px);
     }
 
     .tw-line {
@@ -637,7 +650,7 @@
       margin: clamp(10px, 1.6vw, 20px) 0 0 0;
       opacity: 0;
       transform: translateY(10px);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .tw-line-4.visible {
@@ -4058,19 +4071,39 @@
       if (!is3DAssetReady || !isTypewriterFinished) return;
       hasRevealedSite = true;
 
-      window.__HERO_READY__ = true;
-      window.dispatchEvent(new CustomEvent('hero:revealed'));
       const heroEl = document.getElementById('hero-wrapper');
-      if (heroEl) heroEl.classList.add('hero-ready');
+      const twContainer = document.querySelector('.tw-screen-container');
 
-      if (loadingEl && !loadingEl.classList.contains('hidden')) {
-        loadingEl.classList.add('hidden');
+      // Step 1: Smoothly fade out typewriter text content
+      if (twContainer) {
+        twContainer.classList.add('fade-out');
+      }
+
+      // Step 2: Smooth fade transition from loading screen into hero section
+      setTimeout(() => {
+        if (loadingEl) {
+          loadingEl.classList.add('fade-out');
+        }
+
+        // Step 3: Gracefully display hero section with bloom transition as loading screen dissolves
         setTimeout(() => {
+          window.__HERO_READY__ = true;
+          window.dispatchEvent(new CustomEvent('hero:revealed'));
+          if (heroEl) {
+            heroEl.classList.add('hero-ready');
+          }
+        }, 350);
+      }, 550);
+
+      // Step 4: Clean up loading element after complete transition
+      setTimeout(() => {
+        if (loadingEl) {
+          loadingEl.classList.add('hidden');
           try {
             loadingEl.remove();
           } catch (e) {}
-        }, 850);
-      }
+        }
+      }, 2200);
     }
 
     const cursorSpan = document.createElement('span');
@@ -4082,7 +4115,7 @@
 
     let skipTypewriterRequested = false;
 
-    async function typeString(element, text, charDelay = 20) {
+    async function typeString(element, text, charDelay = 38) {
       if (!element) return;
       element.textContent = '';
       element.appendChild(cursorSpan);
@@ -4097,42 +4130,40 @@
 
         const char = text[i];
         const delay = (char === '.' || char === '!' || char === '?') 
-          ? charDelay * 2.5 
-          : ((char === ',' || char === ';') ? charDelay * 1.6 : charDelay);
+          ? charDelay * 3.5 
+          : ((char === ',' || char === ';') ? charDelay * 2.2 : charDelay);
 
         await sleep(delay);
       }
     }
 
     async function startTypewriterSequence() {
-      await sleep(220);
+      await sleep(350);
 
-      // Line 1 types out gracefully
-      await typeString(twLine1, line1Text, 20);
-      if (!skipTypewriterRequested) await sleep(850);
+      // Line 1 types out with relaxed, cinematic pace (Pause 1.5s)
+      await typeString(twLine1, line1Text, 38);
+      if (!skipTypewriterRequested) await sleep(1500);
 
-      // Line 2 types out gracefully
-      await typeString(twLine2, line2Text, 20);
-      if (!skipTypewriterRequested) await sleep(850);
+      // Line 2 types out (Pause 1.5s)
+      await typeString(twLine2, line2Text, 38);
+      if (!skipTypewriterRequested) await sleep(1500);
 
-      // Line 3 types out gracefully
-      await typeString(twLine3, line3Text, 22);
-      if (!skipTypewriterRequested) await sleep(950);
+      // Line 3 types out (Pause 1.8s)
+      await typeString(twLine3, line3Text, 42);
+      if (cursorSpan.parentNode) {
+        cursorSpan.parentNode.removeChild(cursorSpan);
+      }
+      if (!skipTypewriterRequested) await sleep(1800);
 
       // Line 4 fades in boldly
       if (twLine4) {
         twLine4.classList.add('visible');
       }
 
-      // Keep cursor live on Line 4 to provide a subtle breathing state if 3D is still loading
-      if (twLine4 && !skipTypewriterRequested) {
-        twLine4.appendChild(cursorSpan);
-      }
+      // Smooth pause to let user take in the full statement
+      if (!skipTypewriterRequested) await sleep(2200);
 
       isTypewriterFinished = true;
-
-      // If the 3D model's load event has already fired, fade out immediately.
-      // If the 3D model takes longer, keep the final line on screen until the load event fires!
       executeFadeOutIfReady();
     }
 
