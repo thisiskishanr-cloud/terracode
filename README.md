@@ -18,8 +18,10 @@
 5. [Verified Scientific Data Sources & Citations](#-verified-scientific-data-sources--citations)
 6. [Repository Structure](#-repository-structure)
 7. [Local Setup & Run Instructions](#-local-setup--run-instructions)
-8. [Pre-Submission Verification Checklist](#-pre-submission-verification-checklist)
-9. [Transparency & Note on AI Assistance](#-transparency--note-on-ai-assistance)
+8. [Team Members](#-team-members)
+9. [Screenshots & Previews](#-screenshots--previews)
+10. [Pre-Submission Verification Checklist](#-pre-submission-verification-checklist)
+11. [Transparency & Note on AI Assistance](#-transparency--note-on-ai-assistance)
 
 ---
 
@@ -190,6 +192,28 @@ Right-click `index.html` inside VS Code and choose **"Open with Live Server"**.
 ### Deploying to Vercel / GitHub Pages
 - **Vercel:** Connect the GitHub repository directly to Vercel; zero build commands or output directories are needed (`vercel.json` is preconfigured).
 - **GitHub Pages:** Go to **Settings > Pages > Branch: main / root** and click Save.
+
+---
+
+## 👥 Team Members
+
+| Name | Role | Institution / Department |
+| :--- | :--- | :--- |
+| **[Kishan R / Participant Name]** | Lead Designer & Fullstack Developer | Department of CSE, MEA Engineering College |
+| *[Team Member 2 - Optional]* | *[Role]* | *[Department / Institution]* |
+
+---
+
+## 📸 Screenshots & Previews
+
+| Chapter / Feature | Viewport Preview |
+| :--- | :--- |
+| **01. Cinematic Loading Screen & 3D Shola Specimen** | *Interactive 3D tree specimen with real-time PBR lighting, orbit controls, and typewriter narrative.* |
+| **02. Endemic Species 3D Accordion Gallery** | *GSAP-powered expanding accordion showcasing Kerala's biodiversity with verified IUCN statuses.* |
+| **03. Spatial Habitat Cartography** | *Interactive Leaflet GIS map visualizing fragile ecological reserves and river corridors.* |
+| **04. Ecological Challenges Grid** | *Spotlight cards exploring habitat fragmentation, wetland encroachment, and fringe conflict.* |
+| **05. Clean Energy Orbital Wheel & 3D Turbine** | *Bounded 8-solution clean energy kinetic wheel paired with floating 3D offshore wind turbine.* |
+| **06. Global Equilibrium "Protect Our WORLD"** | *Interactive 3D Earth specimen integrated into typography.* |
 
 ---
 
