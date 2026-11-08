@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#043828"/>
+      <stop offset="50%" stop-color="#065f46"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#bgGrad)"/>
+  <!-- Botanical Leaf Specimen Logo -->
+  <path d="M32 11 C32 11 48 16 48 33 C48 43.5 40.5 51 32 53 C23.5 51 16 43.5 16 33 C16 16 32 11 32 11 Z" fill="url(#leafGrad)"/>
+  <path d="M32 19 V47" stroke="#043828" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M32 27 C37 25 41 27 41 27" stroke="#043828" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M32 35 C27 33 23 35 23 35" stroke="#043828" stroke-width="2.4" stroke-linecap="round"/>
+</svg>
